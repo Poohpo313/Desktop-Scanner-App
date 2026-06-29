@@ -43,7 +43,7 @@ export const devicePresenceService = {
     }
 
     if (activeSerialNumber) {
-      await disconnectDeviceOnline(activeSerialNumber);
+      await disconnectDeviceOnline(activeSerialNumber, activeUserId ?? undefined);
     }
 
     activeUserId = null;

@@ -18,6 +18,8 @@ const help_ipc_1 = require("./ipc/help.ipc");
 const gateway_ipc_1 = require("./ipc/gateway.ipc");
 const auth_service_1 = require("./services/auth.service");
 const gateway_config_service_1 = require("./services/gateway-config.service");
+const gateway_discovery_service_1 = require("./services/gateway-discovery.service");
+const api_service_1 = require("./services/api.service");
 const device_presence_service_1 = require("./services/device-presence.service");
 const db_service_1 = require("./services/db.service");
 const session_store_1 = require("./services/session-store");
@@ -83,9 +85,17 @@ electron_1.app.whenReady().then(async () => {
     (0, help_ipc_1.registerHelpIpc)(electron_1.ipcMain);
     await fs_service_1.fsService.ensureDefaultStorageRoot();
     (0, bundled_gateway_service_1.initBundledGatewayLifecycle)();
-    void (0, bundled_gateway_service_1.ensureBundledGatewayRunning)();
+    await (0, bundled_gateway_service_1.ensureBundledGatewayRunning)();
+    const currentGateway = (0, gateway_config_service_1.getGatewayApiUrl)();
+    const discovered = (await (0, gateway_discovery_service_1.discoverGatewayUrlFast)(currentGateway)) ?? (await (0, gateway_discovery_service_1.discoverGatewayUrl)(currentGateway));
+    if (discovered) {
+        (0, gateway_config_service_1.setGatewayApiUrl)(discovered);
+    }
+    else if (!(await (0, api_service_1.isOnlineAvailable)(currentGateway))) {
+        console.warn("[startup] Gateway not reachable at", currentGateway);
+    }
+    await (0, db_service_1.initDatabase)(electron_1.app.getAppPath());
     createWindow();
-    void (0, db_service_1.initDatabase)(electron_1.app.getAppPath());
 });
 electron_1.app.on("before-quit", (event) => {
     if (device_presence_service_1.devicePresenceService.isStopping())

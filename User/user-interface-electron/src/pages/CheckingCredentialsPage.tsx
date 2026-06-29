@@ -6,8 +6,15 @@ import { useSession } from "../context/SessionContext";
 type LoginState = {
   username: string;
   password: string;
-  attempts?: number;
 };
+
+const ACTIVATION_ERROR = "Account not Activated : Activate account first to access";
+
+function formatAttemptsMessage(attemptsRemaining: number) {
+  return `Invalid username or password. ${attemptsRemaining} attempt${
+    attemptsRemaining === 1 ? "" : "s"
+  } remaining.`;
+}
 
 export default function CheckingCredentialsPage() {
   const navigate = useNavigate();
@@ -39,20 +46,21 @@ export default function CheckingCredentialsPage() {
       });
 
       if (!result.success || !result.token || result.userId == null) {
-        const attempts = (state.attempts ?? 0) + 1;
-        const activationError = "Account not Activated : Activate account first to access";
         const errorMessage =
-          result.error === activationError
-            ? activationError
-            : result.error && result.error !== "Invalid credentials"
-              ? result.error
-              : `Invalid username or password. ${Math.max(0, 5 - attempts)} attempts remaining.`;
+          result.error === ACTIVATION_ERROR
+            ? ACTIVATION_ERROR
+            : result.error ??
+              (result.attemptsRemaining != null
+                ? formatAttemptsMessage(result.attemptsRemaining)
+                : "Invalid username or password.");
 
         navigate("/login", {
           replace: true,
           state: {
             error: errorMessage,
-            attempts,
+            attemptsRemaining: result.attemptsRemaining,
+            lockedUntil: result.lockedUntil,
+            username: state.username,
           },
         });
         return;

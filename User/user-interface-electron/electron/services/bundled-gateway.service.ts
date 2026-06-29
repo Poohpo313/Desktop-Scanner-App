@@ -40,9 +40,15 @@ export async function ensureBundledGatewayRunning(): Promise<void> {
       NODE_ENV: "production",
       BACKEND_ROLE: "gateway",
       HOST: "0.0.0.0",
+      PORT: String(new URL(apiUrl).port || 3000),
     },
   });
   bundledGatewayProcess.unref();
+
+  for (let attempt = 0; attempt < 30; attempt += 1) {
+    if (await probeGatewayHealth(apiUrl, 1_000)) return;
+    await new Promise((resolve) => setTimeout(resolve, 500));
+  }
 }
 
 export function stopBundledGateway() {

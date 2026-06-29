@@ -4,13 +4,18 @@ import { deviceService } from "./device.service";
 import { devicePresenceService } from "./device-presence.service";
 import { hashService } from "./hash.service";
 import { keysService } from "./keys.service";
-import { getGatewayApiUrl } from "./gateway-config.service";
-import { probeGatewayHealth } from "./gateway-discovery.service";
+import { getGatewayApiUrl, setGatewayApiUrl } from "./gateway-config.service";
+import {
+  discoverGatewayUrl,
+  discoverGatewayUrlFast,
+  probeGatewayHealth,
+} from "./gateway-discovery.service";
 import {
   activateUserAccountOnline,
   changeUserPasswordOnline,
   fetchUserSupportContactOnline,
   fetchPublicSupportContactOnline,
+  isOnlineAvailable,
   loginOnline,
   setOnlineAccessToken,
   submitUserRecovery as submitUserRecoveryOnline,
@@ -43,7 +48,10 @@ type Session = {
 const NOT_ACTIVATED_ERROR = "Account not Activated : Activate account first to access";
 
 const sessions = new Map<string, Session>();
-const failedAttempts = new Map<string, { count: number; lockedUntil: number }>();
+type FailedLoginState = { count: number; lockedUntil: number; lockTier: number };
+const failedAttempts = new Map<string, FailedLoginState>();
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOGIN_LOCK_DURATIONS_MS = [30_000, 60_000, 120_000, 300_000, 600_000, 900_000, 1_800_000];
 const USER_SESSION_MS = 30 * 24 * 60 * 60 * 1000;
 
 function persistSessions() {
@@ -559,6 +567,36 @@ function isOnlineUnavailableMessage(message: string) {
   );
 }
 
+const NETWORK_LOGIN_ERROR =
+  "Could not reach the server. Connect to your office network and try again.";
+
+function isInvalidCredentialsMessage(message: string) {
+  const lower = message.toLowerCase();
+  return lower.includes("invalid credentials") || lower.includes("invalid username or password");
+}
+
+async function ensureGatewayReachable() {
+  const current = getGatewayApiUrl();
+  if (await isOnlineAvailable(current)) return true;
+
+  const discovered =
+    (await discoverGatewayUrlFast(current)) ?? (await discoverGatewayUrl(current));
+  if (discovered) {
+    setGatewayApiUrl(discovered);
+    return true;
+  }
+  return false;
+}
+
+async function refreshLocalUserFromOnline(username: string, password: string) {
+  const synced = await syncUserFromOnline(username, password);
+  if (!synced.success) {
+    return { synced, user: null as Awaited<ReturnType<typeof findLocalUserByUsername>> };
+  }
+  const user = await findLocalUserByUsername(username);
+  return { synced, user };
+}
+
 type ActivateKeyResult =
   | { success: true; userId: number; token: string; role: "user" }
   | { success: false; error: string };
@@ -878,22 +916,44 @@ export const authService = {
   },
 
   async login(username: string, password: string) {
-    const lock = failedAttempts.get(username);
-    if (lock && lock.lockedUntil > Date.now()) {
-      return { success: false, error: "Account locked. Try again later." };
+    const normalizedUsername = username.trim();
+    const lock = failedAttempts.get(normalizedUsername);
+    if (lock?.lockedUntil && lock.lockedUntil > Date.now()) {
+      return buildLockedLoginResponse(lock);
+    }
+    if (lock?.lockedUntil && lock.lockedUntil <= Date.now()) {
+      failedAttempts.set(normalizedUsername, {
+        count: 0,
+        lockedUntil: 0,
+        lockTier: lock.lockTier,
+      });
     }
 
-    let user = await findLocalUserByUsername(username);
+    let user = await findLocalUserByUsername(normalizedUsername);
 
     if (user) {
       if (user.account_status !== "active") {
         return { success: false, error: NOT_ACTIVATED_ERROR };
       }
 
-      const valid = await hashService.verifyPassword(user.password_hash, password);
-      if (!valid) return bumpFail(username, "Invalid credentials");
+      let valid = await hashService.verifyPassword(user.password_hash, password);
+      if (!valid && (await ensureGatewayReachable())) {
+        const refreshed = await refreshLocalUserFromOnline(normalizedUsername, password);
+        if (refreshed.synced.success && refreshed.user) {
+          user = refreshed.user;
+          valid = await hashService.verifyPassword(user.password_hash, password);
+        } else if (
+          refreshed.synced.error &&
+          !isInvalidCredentialsMessage(refreshed.synced.error) &&
+          isOnlineUnavailableMessage(refreshed.synced.error)
+        ) {
+          return { success: false, error: NETWORK_LOGIN_ERROR };
+        }
+      }
 
-      failedAttempts.delete(username);
+      if (!valid) return bumpFail(normalizedUsername, "Invalid credentials");
+
+      failedAttempts.delete(normalizedUsername);
       const token = createUserSession(user.user_id);
       const loggedInUserId = user.user_id;
 
@@ -902,19 +962,23 @@ export const authService = {
         [loggedInUserId, "login", JSON.stringify({ method: "password" })],
       );
 
-      void syncUserFromOnline(username, password);
-      void authenticateOnline(loggedInUserId, username, password).then(async (online) => {
+      void syncUserFromOnline(normalizedUsername, password);
+      void authenticateOnline(loggedInUserId, normalizedUsername, password).then(async (online) => {
         if (online) {
-          await resolveAccountContext(loggedInUserId, username);
+          await resolveAccountContext(loggedInUserId, normalizedUsername);
           await syncPendingOnlineActivations();
         }
       });
-      void deviceService.syncClientDevicesForUser(loggedInUserId, username);
+      void deviceService.syncClientDevicesForUser(loggedInUserId, normalizedUsername);
 
       return { success: true, token, role: "user" as const, userId: loggedInUserId };
     }
 
-    const synced = await syncUserFromOnline(username, password);
+    if (!(await ensureGatewayReachable())) {
+      return { success: false, error: NETWORK_LOGIN_ERROR };
+    }
+
+    const synced = await syncUserFromOnline(normalizedUsername, password);
     if (synced.success) {
       user = await findLocalUserByUsername(synced.data.username ?? username);
 
@@ -930,9 +994,9 @@ export const authService = {
       }
 
       const valid = await hashService.verifyPassword(user.password_hash, password);
-      if (!valid) return bumpFail(username, "Invalid credentials");
+      if (!valid) return bumpFail(normalizedUsername, "Invalid credentials");
 
-      failedAttempts.delete(username);
+      failedAttempts.delete(normalizedUsername);
       const token = createUserSession(user.user_id);
 
       await query(
@@ -940,8 +1004,8 @@ export const authService = {
         [user.user_id, "login", JSON.stringify({ method: "password", source: "online-sync" })],
       );
 
-      void authenticateOnline(user.user_id, username, password);
-      void deviceService.syncClientDevicesForUser(user.user_id, username);
+      void authenticateOnline(user.user_id, normalizedUsername, password);
+      void deviceService.syncClientDevicesForUser(user.user_id, normalizedUsername);
 
       return { success: true, token, role: "user" as const, userId: user.user_id };
     }
@@ -950,7 +1014,15 @@ export const authService = {
       return { success: false, error: NOT_ACTIVATED_ERROR };
     }
 
-    return bumpFail(username, "Invalid credentials");
+    if (synced.error && isOnlineUnavailableMessage(synced.error)) {
+      return { success: false, error: NETWORK_LOGIN_ERROR };
+    }
+
+    if (synced.error && !isInvalidCredentialsMessage(synced.error)) {
+      return { success: false, error: synced.error };
+    }
+
+    return bumpFail(normalizedUsername, "Invalid credentials");
   },
 
   async logout(token: string) {
@@ -1394,16 +1466,57 @@ export const authService = {
   },
 };
 
+function loginLockDurationMs(lockTier: number) {
+  return LOGIN_LOCK_DURATIONS_MS[
+    Math.min(Math.max(lockTier, 0), LOGIN_LOCK_DURATIONS_MS.length - 1)
+  ];
+}
+
+function buildLockedLoginResponse(lock: FailedLoginState) {
+  const lockSecondsRemaining = Math.max(1, Math.ceil((lock.lockedUntil - Date.now()) / 1000));
+  return {
+    success: false as const,
+    error: `Account locked. Try again in ${lockSecondsRemaining} seconds.`,
+    attemptsRemaining: 0,
+    lockedUntil: lock.lockedUntil,
+    lockSecondsRemaining,
+  };
+}
+
 function bumpFail(username: string, error: string) {
-  const prev = failedAttempts.get(username) ?? { count: 0, lockedUntil: 0 };
-  const count = prev.count + 1;
-  if (count >= 5) {
-    failedAttempts.set(username, {
-      count,
-      lockedUntil: Date.now() + 15 * 60 * 1000,
-    });
-    return { success: false, error: "Account locked after 5 failed attempts" };
+  const normalizedUsername = username.trim();
+  const now = Date.now();
+  const prev = failedAttempts.get(normalizedUsername) ?? {
+    count: 0,
+    lockedUntil: 0,
+    lockTier: 0,
+  };
+
+  if (prev.lockedUntil > now) {
+    return buildLockedLoginResponse(prev);
   }
-  failedAttempts.set(username, { count, lockedUntil: 0 });
-  return { success: false, error };
+
+  const count = prev.count + 1;
+  if (count >= MAX_LOGIN_ATTEMPTS) {
+    const lockedUntil = now + loginLockDurationMs(prev.lockTier);
+    const next: FailedLoginState = {
+      count: 0,
+      lockedUntil,
+      lockTier: prev.lockTier + 1,
+    };
+    failedAttempts.set(normalizedUsername, next);
+    return buildLockedLoginResponse(next);
+  }
+
+  failedAttempts.set(normalizedUsername, {
+    count,
+    lockedUntil: 0,
+    lockTier: prev.lockTier,
+  });
+
+  return {
+    success: false as const,
+    error,
+    attemptsRemaining: MAX_LOGIN_ATTEMPTS - count,
+  };
 }

@@ -12,7 +12,9 @@ import { registerDevicesIpc } from "./ipc/devices.ipc";
 import { registerHelpIpc } from "./ipc/help.ipc";
 import { registerGatewayIpc } from "./ipc/gateway.ipc";
 import { authService } from "./services/auth.service";
-import { initGatewayConfig } from "./services/gateway-config.service";
+import { initGatewayConfig, setGatewayApiUrl, getGatewayApiUrl } from "./services/gateway-config.service";
+import { discoverGatewayUrl, discoverGatewayUrlFast } from "./services/gateway-discovery.service";
+import { isOnlineAvailable } from "./services/api.service";
 import { devicePresenceService } from "./services/device-presence.service";
 import { initDatabase } from "./services/db.service";
 import { initSessionStore } from "./services/session-store";
@@ -87,10 +89,19 @@ app.whenReady().then(async () => {
   await fsService.ensureDefaultStorageRoot();
 
   initBundledGatewayLifecycle();
-  void ensureBundledGatewayRunning();
+  await ensureBundledGatewayRunning();
 
+  const currentGateway = getGatewayApiUrl();
+  const discovered =
+    (await discoverGatewayUrlFast(currentGateway)) ?? (await discoverGatewayUrl(currentGateway));
+  if (discovered) {
+    setGatewayApiUrl(discovered);
+  } else if (!(await isOnlineAvailable(currentGateway))) {
+    console.warn("[startup] Gateway not reachable at", currentGateway);
+  }
+
+  await initDatabase(app.getAppPath());
   createWindow();
-  void initDatabase(app.getAppPath());
 });
 
 app.on("before-quit", (event) => {

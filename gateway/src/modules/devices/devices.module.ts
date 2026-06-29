@@ -4,10 +4,7 @@ import { ActivityLogService } from "../../shared/services/activity-log.service";
 import { SharedScopeModule } from "../../shared/shared-scope.module";
 import { AdminsModule } from "../admins/admins.module";
 import { NotificationsModule } from "../notifications/notifications.module";
-import {
-  DeviceRegistrationController,
-  DevicesController
-} from "./devices.controller";
+import { DevicesController } from "./devices.controller";
 import { DevicesService } from "./devices.service";
 import { DeviceEntity } from "./entities/device.entity";
 
@@ -18,7 +15,7 @@ import { DeviceEntity } from "./entities/device.entity";
     AdminsModule,
     SharedScopeModule,
   ],
-  controllers: [DevicesController, DeviceRegistrationController],
+  controllers: [DevicesController],
   providers: [DevicesService, ActivityLogService],
   exports: [DevicesService]
 })

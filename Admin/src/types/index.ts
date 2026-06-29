@@ -36,6 +36,11 @@ export type Device = {
   assignedUser?: number | null;
   status: string;
   lastSeen?: string | null;
+  isPrimary?: boolean | null;
+  parentDeviceId?: number | null;
+  parentDeviceName?: string | null;
+  warningNote?: string | null;
+  isOnline?: boolean;
 };
 
 export type ActivityLog = {

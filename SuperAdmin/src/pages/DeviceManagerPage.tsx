@@ -10,6 +10,7 @@ import { usersApi } from "../api/users.api";
 import { useNotificationStore } from "../store/notificationStore";
 import { extractApiError } from "../lib/extractApiError";
 import { isActionableRevocationRecord } from "../lib/normalizeRevocations";
+import { isUnauthorizedSecondaryDevice, orderDevicesForHierarchy } from "../lib/deviceHierarchy";
 import type { AdminUser, Device, RevocationRecord } from "../types";
 import "../styles/device-management.css";
 
@@ -139,8 +140,10 @@ export default function DeviceManagerPage() {
 
   const filteredDevices = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
-    const list = devices.filter((device) => {
-      if (device.status === "unauthorized") return false;
+    const list = orderDevicesForHierarchy(devices).filter((device) => {
+      if (device.status === "unauthorized" && !isUnauthorizedSecondaryDevice(device)) {
+        return false;
+      }
       const user = users.find((item) => item.userId === device.assignedUser);
       const department = user?.department ?? "";
       const matchesDepartment = !departmentFilter || department === departmentFilter;

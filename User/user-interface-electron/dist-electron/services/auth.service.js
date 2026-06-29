@@ -16,6 +16,8 @@ const pending_activation_store_1 = require("./pending-activation-store");
 const NOT_ACTIVATED_ERROR = "Account not Activated : Activate account first to access";
 const sessions = new Map();
 const failedAttempts = new Map();
+const MAX_LOGIN_ATTEMPTS = 5;
+const LOGIN_LOCK_DURATIONS_MS = [30_000, 60_000, 120_000, 300_000, 600_000, 900_000, 1_800_000];
 const USER_SESSION_MS = 30 * 24 * 60 * 60 * 1000;
 function persistSessions() {
     (0, session_store_1.saveStoredSessions)([...sessions.values()]);
@@ -383,6 +385,30 @@ function isOnlineUnavailableMessage(message) {
         message.toLowerCase().includes("fetch failed") ||
         message.toLowerCase().includes("network"));
 }
+const NETWORK_LOGIN_ERROR = "Could not reach the server. Connect to your office network and try again.";
+function isInvalidCredentialsMessage(message) {
+    const lower = message.toLowerCase();
+    return lower.includes("invalid credentials") || lower.includes("invalid username or password");
+}
+async function ensureGatewayReachable() {
+    const current = (0, gateway_config_service_1.getGatewayApiUrl)();
+    if (await (0, api_service_1.isOnlineAvailable)(current))
+        return true;
+    const discovered = (await (0, gateway_discovery_service_1.discoverGatewayUrlFast)(current)) ?? (await (0, gateway_discovery_service_1.discoverGatewayUrl)(current));
+    if (discovered) {
+        (0, gateway_config_service_1.setGatewayApiUrl)(discovered);
+        return true;
+    }
+    return false;
+}
+async function refreshLocalUserFromOnline(username, password) {
+    const synced = await syncUserFromOnline(username, password);
+    if (!synced.success) {
+        return { synced, user: null };
+    }
+    const user = await findLocalUserByUsername(username);
+    return { synced, user };
+}
 async function finishOnlineActivation(onlineActivation, normalizedUsername) {
     const userId = await upsertOfflineUser(onlineActivation.data, "", onlineActivation.data.passwordHash);
     const verifiedUser = await (0, db_service_1.queryOne)(`SELECT user_id FROM users WHERE user_id = $1 AND deleted_at IS NULL`, [userId]);
@@ -586,33 +612,56 @@ exports.authService = {
         restoreOnlineAuthForSessions();
     },
     async login(username, password) {
-        const lock = failedAttempts.get(username);
-        if (lock && lock.lockedUntil > Date.now()) {
-            return { success: false, error: "Account locked. Try again later." };
+        const normalizedUsername = username.trim();
+        const lock = failedAttempts.get(normalizedUsername);
+        if (lock?.lockedUntil && lock.lockedUntil > Date.now()) {
+            return buildLockedLoginResponse(lock);
         }
-        let user = await findLocalUserByUsername(username);
+        if (lock?.lockedUntil && lock.lockedUntil <= Date.now()) {
+            failedAttempts.set(normalizedUsername, {
+                count: 0,
+                lockedUntil: 0,
+                lockTier: lock.lockTier,
+            });
+        }
+        let user = await findLocalUserByUsername(normalizedUsername);
         if (user) {
             if (user.account_status !== "active") {
                 return { success: false, error: NOT_ACTIVATED_ERROR };
             }
-            const valid = await hash_service_1.hashService.verifyPassword(user.password_hash, password);
+            let valid = await hash_service_1.hashService.verifyPassword(user.password_hash, password);
+            if (!valid && (await ensureGatewayReachable())) {
+                const refreshed = await refreshLocalUserFromOnline(normalizedUsername, password);
+                if (refreshed.synced.success && refreshed.user) {
+                    user = refreshed.user;
+                    valid = await hash_service_1.hashService.verifyPassword(user.password_hash, password);
+                }
+                else if (refreshed.synced.error &&
+                    !isInvalidCredentialsMessage(refreshed.synced.error) &&
+                    isOnlineUnavailableMessage(refreshed.synced.error)) {
+                    return { success: false, error: NETWORK_LOGIN_ERROR };
+                }
+            }
             if (!valid)
-                return bumpFail(username, "Invalid credentials");
-            failedAttempts.delete(username);
+                return bumpFail(normalizedUsername, "Invalid credentials");
+            failedAttempts.delete(normalizedUsername);
             const token = createUserSession(user.user_id);
             const loggedInUserId = user.user_id;
             await (0, db_service_1.query)("INSERT INTO activity_logs (user_id, action, details) VALUES ($1, $2, $3)", [loggedInUserId, "login", JSON.stringify({ method: "password" })]);
-            void syncUserFromOnline(username, password);
-            void authenticateOnline(loggedInUserId, username, password).then(async (online) => {
+            void syncUserFromOnline(normalizedUsername, password);
+            void authenticateOnline(loggedInUserId, normalizedUsername, password).then(async (online) => {
                 if (online) {
-                    await resolveAccountContext(loggedInUserId, username);
+                    await resolveAccountContext(loggedInUserId, normalizedUsername);
                     await syncPendingOnlineActivations();
                 }
             });
-            void device_service_1.deviceService.syncClientDevicesForUser(loggedInUserId, username);
+            void device_service_1.deviceService.syncClientDevicesForUser(loggedInUserId, normalizedUsername);
             return { success: true, token, role: "user", userId: loggedInUserId };
         }
-        const synced = await syncUserFromOnline(username, password);
+        if (!(await ensureGatewayReachable())) {
+            return { success: false, error: NETWORK_LOGIN_ERROR };
+        }
+        const synced = await syncUserFromOnline(normalizedUsername, password);
         if (synced.success) {
             user = await findLocalUserByUsername(synced.data.username ?? username);
             if (!user) {
@@ -626,18 +675,24 @@ exports.authService = {
             }
             const valid = await hash_service_1.hashService.verifyPassword(user.password_hash, password);
             if (!valid)
-                return bumpFail(username, "Invalid credentials");
-            failedAttempts.delete(username);
+                return bumpFail(normalizedUsername, "Invalid credentials");
+            failedAttempts.delete(normalizedUsername);
             const token = createUserSession(user.user_id);
             await (0, db_service_1.query)("INSERT INTO activity_logs (user_id, action, details) VALUES ($1, $2, $3)", [user.user_id, "login", JSON.stringify({ method: "password", source: "online-sync" })]);
-            void authenticateOnline(user.user_id, username, password);
-            void device_service_1.deviceService.syncClientDevicesForUser(user.user_id, username);
+            void authenticateOnline(user.user_id, normalizedUsername, password);
+            void device_service_1.deviceService.syncClientDevicesForUser(user.user_id, normalizedUsername);
             return { success: true, token, role: "user", userId: user.user_id };
         }
         if (synced.error === NOT_ACTIVATED_ERROR) {
             return { success: false, error: NOT_ACTIVATED_ERROR };
         }
-        return bumpFail(username, "Invalid credentials");
+        if (synced.error && isOnlineUnavailableMessage(synced.error)) {
+            return { success: false, error: NETWORK_LOGIN_ERROR };
+        }
+        if (synced.error && !isInvalidCredentialsMessage(synced.error)) {
+            return { success: false, error: synced.error };
+        }
+        return bumpFail(normalizedUsername, "Invalid credentials");
     },
     async logout(token) {
         await device_presence_service_1.devicePresenceService.stop();
@@ -950,16 +1005,49 @@ exports.authService = {
         return { success: true };
     },
 };
+function loginLockDurationMs(lockTier) {
+    return LOGIN_LOCK_DURATIONS_MS[Math.min(Math.max(lockTier, 0), LOGIN_LOCK_DURATIONS_MS.length - 1)];
+}
+function buildLockedLoginResponse(lock) {
+    const lockSecondsRemaining = Math.max(1, Math.ceil((lock.lockedUntil - Date.now()) / 1000));
+    return {
+        success: false,
+        error: `Account locked. Try again in ${lockSecondsRemaining} seconds.`,
+        attemptsRemaining: 0,
+        lockedUntil: lock.lockedUntil,
+        lockSecondsRemaining,
+    };
+}
 function bumpFail(username, error) {
-    const prev = failedAttempts.get(username) ?? { count: 0, lockedUntil: 0 };
-    const count = prev.count + 1;
-    if (count >= 5) {
-        failedAttempts.set(username, {
-            count,
-            lockedUntil: Date.now() + 15 * 60 * 1000,
-        });
-        return { success: false, error: "Account locked after 5 failed attempts" };
+    const normalizedUsername = username.trim();
+    const now = Date.now();
+    const prev = failedAttempts.get(normalizedUsername) ?? {
+        count: 0,
+        lockedUntil: 0,
+        lockTier: 0,
+    };
+    if (prev.lockedUntil > now) {
+        return buildLockedLoginResponse(prev);
     }
-    failedAttempts.set(username, { count, lockedUntil: 0 });
-    return { success: false, error };
+    const count = prev.count + 1;
+    if (count >= MAX_LOGIN_ATTEMPTS) {
+        const lockedUntil = now + loginLockDurationMs(prev.lockTier);
+        const next = {
+            count: 0,
+            lockedUntil,
+            lockTier: prev.lockTier + 1,
+        };
+        failedAttempts.set(normalizedUsername, next);
+        return buildLockedLoginResponse(next);
+    }
+    failedAttempts.set(normalizedUsername, {
+        count,
+        lockedUntil: 0,
+        lockTier: prev.lockTier,
+    });
+    return {
+        success: false,
+        error,
+        attemptsRemaining: MAX_LOGIN_ATTEMPTS - count,
+    };
 }

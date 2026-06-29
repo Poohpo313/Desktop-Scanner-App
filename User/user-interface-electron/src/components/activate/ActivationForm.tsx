@@ -72,7 +72,10 @@ export function ActivationForm({
               id="activate-serial-key"
               placeholder="XXXX-XXXX-XXXX-XXXX"
               value={serialKey}
-              onChange={(e) => onSerialKeyChange(e.target.value.toUpperCase())}
+              onChange={(e) => onSerialKeyChange(e.target.value)}
+              autoCapitalize="off"
+              autoCorrect="off"
+              spellCheck={false}
               required
             />
           </div>

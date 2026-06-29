@@ -10,6 +10,9 @@ declare global {
           role?: string;
           userId?: number;
           error?: string;
+          attemptsRemaining?: number;
+          lockedUntil?: number;
+          lockSecondsRemaining?: number;
         }>;
         logout: (p: { token: string }) => Promise<{ success: boolean }>;
         activateKey: (p: {

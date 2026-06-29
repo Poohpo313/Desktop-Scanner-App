@@ -26,6 +26,11 @@ export type DeviceCatalogRow = {
   status: DeviceCatalogStatus;
   /** Server registration state (active = in use, inactive = allow-new-device completed). */
   registrationStatus: string;
+  isPrimary?: boolean;
+  parentDeviceId?: number | null;
+  parentDeviceName?: string | null;
+  warningNote?: string | null;
+  isChildRow?: boolean;
 };
 
 export const DEVICE_CATALOG_STATS = {

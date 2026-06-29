@@ -259,17 +259,31 @@ export default function DeviceManagementScreenBody({
                 </tr>
               ) : (
                 pageRows.map((row) => (
-                  <tr key={row.id}>
-                    <td className="device-catalog__device-name">{row.deviceName}</td>
+                  <tr
+                    key={row.id}
+                    className={row.isChildRow ? "device-catalog__row--child" : undefined}
+                  >
+                    <td className="device-catalog__device-name">
+                      {row.isChildRow ? (
+                        <span className="device-catalog__child-prefix" aria-hidden="true">
+                          └
+                        </span>
+                      ) : null}
+                      {row.deviceName}
+                    </td>
                     <td className="device-catalog__serial-key">{row.serialKey}</td>
                     <td>{row.registeredUser}</td>
                     <td>{row.department}</td>
                     <td>
-                      <span
-                        className={`device-catalog__status device-catalog__status--${row.status}`}
-                      >
-                        {row.status === "active" ? "Online" : "Offline"}
-                      </span>
+                      {row.warningNote ? (
+                        <span className="device-catalog__warning-note">{row.warningNote}</span>
+                      ) : (
+                        <span
+                          className={`device-catalog__status device-catalog__status--${row.status}`}
+                        >
+                          {row.status === "active" ? "Online" : "Offline"}
+                        </span>
+                      )}
                     </td>
                     <td>
                       <div className="device-catalog__actions">

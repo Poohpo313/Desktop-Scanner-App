@@ -1,5 +1,9 @@
 import type { AdminUser, Device } from "../types";
 import { formatDeviceOnlineStatus, isDeviceOnline } from "../lib/statusDisplay";
+import {
+  isUnauthorizedSecondaryDevice,
+  orderDevicesForHierarchy,
+} from "../lib/deviceHierarchy";
 
 type Props = {
   devices: Device[];
@@ -19,7 +23,8 @@ const getUserOrganization = (user?: AdminUser) =>
   user?.company ?? "-";
 
 export default function DeviceGrid({ devices, users, onRevoke }: Props) {
-  const hasDevices = devices.length > 0;
+  const orderedDevices = orderDevicesForHierarchy(devices);
+  const hasDevices = orderedDevices.length > 0;
 
   return (
     <section className="device-management-card">
@@ -37,25 +42,43 @@ export default function DeviceGrid({ devices, users, onRevoke }: Props) {
             </tr>
           </thead>
           <tbody>
-            {devices.map((device) => {
+            {orderedDevices.map((device) => {
               const user = users.find((item) => item.userId === device.assignedUser);
               const department = user?.department ?? "-";
               const online = isDeviceOnline(device);
+              const isChildRow = Boolean(device.parentDeviceId);
+              const unauthorized = isUnauthorizedSecondaryDevice(device);
 
               return (
-                <tr key={device.deviceId}>
-                  <td>{device.deviceName ?? "-"}</td>
+                <tr
+                  key={device.deviceId}
+                  className={isChildRow ? "device-management-table__row--child" : undefined}
+                >
+                  <td>
+                    {isChildRow ? (
+                      <span className="device-management-table__child-prefix" aria-hidden="true">
+                        └
+                      </span>
+                    ) : null}
+                    {device.deviceName ?? "-"}
+                  </td>
                   <td>{device.serialNumber ?? "-"}</td>
                   <td>{getUserName(user)}</td>
                   <td>{getUserOrganization(user)}</td>
                   <td>{department}</td>
                   <td>
-                    <span className={`device-status device-status--${online ? "online" : "offline"}`}>
-                      {formatDeviceStatus(device)}
-                    </span>
+                    {unauthorized ? (
+                      <span className="device-status device-status--unauthorized">
+                        {device.warningNote ?? "Unauthorized Device"}
+                      </span>
+                    ) : (
+                      <span className={`device-status device-status--${online ? "online" : "offline"}`}>
+                        {formatDeviceStatus(device)}
+                      </span>
+                    )}
                   </td>
                   <td>
-                    {device.status !== "unauthorized" ? (
+                    {!unauthorized && device.status !== "unauthorized" ? (
                       <button
                         className="device-action-button"
                         type="button"
@@ -72,7 +95,7 @@ export default function DeviceGrid({ devices, users, onRevoke }: Props) {
               );
             })}
 
-            {devices.length === 0 && (
+            {orderedDevices.length === 0 && (
               <tr>
                 <td className="device-management-table__empty" colSpan={7}>
                   No devices registered.
@@ -86,7 +109,7 @@ export default function DeviceGrid({ devices, users, onRevoke }: Props) {
       <div className="device-management-footer">
         <span>
           {hasDevices
-            ? `Showing 1 to ${Math.min(devices.length, 5)} of ${devices.length} entries`
+            ? `Showing 1 to ${Math.min(orderedDevices.length, 5)} of ${orderedDevices.length} entries`
             : "Showing 0 entries"}
         </span>
         {hasDevices && (

@@ -3,6 +3,10 @@ import type { UserConcernRow } from "../api/userConcerns.api";
 import type { HelpSupportReportRow, HelpSupportReportStatus } from "../data/demoHelpSupportCatalog";
 import type { DeviceCatalogRow, DeviceCatalogStatus } from "../data/demoDeviceCatalog";
 import { isDeviceOnline } from "./statusDisplay";
+import {
+  isUnauthorizedSecondaryDevice,
+  orderDevicesForHierarchy,
+} from "./deviceHierarchy";
 import type {
   LicenseKeyCatalogRow,
   LicenseKeyCatalogStatus,
@@ -204,8 +208,9 @@ export function mapDevicesToCatalogRows(
   users: AdminUser[],
   organization: string,
 ): DeviceCatalogRow[] {
-  return devices.map((device) => {
+  return orderDevicesForHierarchy(devices).map((device) => {
       const user = users.find((item) => Number(item.userId) === Number(device.assignedUser));
+      const isChildRow = Boolean(device.parentDeviceId);
 
       const department = user
         ? ((user as AdminUser & { department?: string }).department ?? "-")
@@ -223,6 +228,13 @@ export function mapDevicesToCatalogRows(
         departmentKey: slug(department) as DeviceCatalogRow["departmentKey"],
         status: mapDeviceStatus(device),
         registrationStatus: device.status ?? "active",
+        isPrimary: Boolean(device.isPrimary),
+        parentDeviceId: device.parentDeviceId ?? null,
+        parentDeviceName: device.parentDeviceName ?? null,
+        warningNote: isUnauthorizedSecondaryDevice(device)
+          ? device.warningNote ?? "Unauthorized Device"
+          : null,
+        isChildRow,
       };
     });
 }

@@ -22,4 +22,13 @@ export class DeviceEntity {
 
   @Column({ name: "last_seen", type: "timestamp", nullable: true })
   lastSeen?: Date;
+
+  @Column({ name: "is_primary", default: false })
+  isPrimary!: boolean;
+
+  @Column({ name: "parent_device_id", nullable: true })
+  parentDeviceId?: number | null;
+
+  @Column({ name: "warning_note", nullable: true })
+  warningNote?: string | null;
 }

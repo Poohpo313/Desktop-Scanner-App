@@ -3,7 +3,7 @@ import { keysService } from "../services/keys.service";
 
 export function registerKeysIpc(ipcMain: IpcMain) {
   ipcMain.handle("keys:validate", async (_event, payload: { serialKey: string }) => {
-    const normalized = payload.serialKey.trim().toUpperCase();
+    const normalized = payload.serialKey.trim();
     if (!keysService.validateFormat(normalized)) {
       return { valid: false, error: "Invalid serial key format" };
     }

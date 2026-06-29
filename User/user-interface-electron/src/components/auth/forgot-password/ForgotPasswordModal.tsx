@@ -1,8 +1,13 @@
 import { CircleHelp } from "lucide-react";
+import { useSearchParams } from "react-router-dom";
+import { forgotPasswordCloseTarget } from "../../../lib/authReturnRoutes";
 import { CloseButton } from "../need-account-access/CloseButton";
 import { ForgotPasswordOptionsList } from "./ForgotPasswordOptionsList";
 
 export function ForgotPasswordModal() {
+  const [searchParams] = useSearchParams();
+  const username = searchParams.get("username")?.trim() || undefined;
+
   return (
     <div
       className="relative box-border flex w-[560px] max-w-full flex-col items-center gap-[15px] rounded-[28px] border border-[rgba(226,232,240,0.95)] px-[46px] pb-10 pt-11 max-h-[calc(100vh-64px)] overflow-y-auto auth-modal--enter"
@@ -15,7 +20,7 @@ export function ForgotPasswordModal() {
       }}
       data-screen="forgot-password"
     >
-      <CloseButton fallbackTo="/login" />
+      <CloseButton fallbackTo={forgotPasswordCloseTarget(username)} />
 
       <div
         className="mb-2 mt-2 flex h-14 w-14 items-center justify-center rounded-[18px] border border-[rgba(0,135,104,0.15)] bg-[linear-gradient(180deg,#DDF0ED_0%,#CFE7E3_100%)]"

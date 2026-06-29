@@ -264,6 +264,15 @@
   color: #dc2626;
 }
 
+.device-management-table__row--child td:first-child {
+  padding-left: 18px;
+}
+
+.device-management-table__child-prefix {
+  margin-right: 6px;
+  color: #94a3b8;
+}
+
 .device-action-button {
   display: inline-flex;
   width: 34px;

@@ -311,6 +311,26 @@
   font-size: var(--text-caption);
 }
 
+.device-catalog__row--child .device-catalog__device-name {
+  padding-left: 8px;
+}
+
+.device-catalog__child-prefix {
+  margin-right: 6px;
+  color: var(--color-granny-smith);
+}
+
+.device-catalog__warning-note {
+  display: inline-flex;
+  align-items: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #fff4e5;
+  color: #9a5b00;
+  font-size: var(--text-caption);
+  font-weight: 600;
+}
+
 @media (max-width: 960px) {
   .device-catalog__stats {
     grid-template-columns: 1fr;

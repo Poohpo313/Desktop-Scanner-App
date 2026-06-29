@@ -9,10 +9,6 @@ export function CloseButton({ fallbackTo = "/activate" }: CloseButtonProps) {
   const navigate = useNavigate();
 
   function handleClose() {
-    if (window.history.length > 1) {
-      navigate(-1);
-      return;
-    }
     navigate(fallbackTo, { replace: true });
   }
 

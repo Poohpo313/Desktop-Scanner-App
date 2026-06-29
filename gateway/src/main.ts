@@ -62,21 +62,30 @@ async function bootstrap() {
     credentials: true
   });
 
-  const swagger = new DocumentBuilder()
-    .setTitle(`Bukolabs.io Scanner API (${role})`)
-    .setDescription(
-      "Online PostgreSQL API for Admin, Super Admin, and User sync. Cloud storage (e.g. GCS) is a separate planned extension."
-    )
-    .setVersion("1.0.0")
-    .addBearerAuth()
-    .build();
-
-  SwaggerModule.setup("api/docs", app, SwaggerModule.createDocument(app, swagger));
+  const isProduction =
+    process.env.APP_ENV === "production" || process.env.NODE_ENV === "production";
 
   const http = app.getHttpAdapter().getInstance();
-  http.get("/", (_req: unknown, res: { redirect: (url: string) => void }) => {
-    res.redirect("/api/docs");
-  });
+
+  if (!isProduction) {
+    const swagger = new DocumentBuilder()
+      .setTitle(`Bukolabs.io Scanner API (${role})`)
+      .setDescription(
+        "Online PostgreSQL API for Admin, Super Admin, and User sync. Cloud storage (e.g. GCS) is a separate planned extension."
+      )
+      .setVersion("1.0.0")
+      .addBearerAuth()
+      .build();
+
+    SwaggerModule.setup("api/docs", app, SwaggerModule.createDocument(app, swagger));
+    http.get("/", (_req: unknown, res: { redirect: (url: string) => void }) => {
+      res.redirect("/api/docs");
+    });
+  } else {
+    http.get("/", (_req: unknown, res: { redirect: (url: string) => void }) => {
+      res.redirect("/api/v1/health");
+    });
+  }
 
   const port = Number(process.env.PORT ?? defaultPort(role));
   const host = process.env.HOST ?? "0.0.0.0";

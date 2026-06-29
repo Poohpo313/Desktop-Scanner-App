@@ -74,6 +74,22 @@ export async function queryOne<T = Record<string, unknown>>(
 
 function memoryQuery(text: string, params: unknown[]) {
   const t = text.toLowerCase();
+  if (t.includes("from users") && t.includes("lower(username)")) {
+    const needle = String(params[0] ?? "").toLowerCase();
+    return memory.users
+      .filter(
+        (user) =>
+          String(user.username ?? "").toLowerCase() === needle && user.deleted_at == null,
+      )
+      .map((user) => ({
+        user_id: user.user_id,
+        password_hash: user.password_hash,
+        account_status: user.account_status,
+        role_id: user.role_id,
+        username: user.username,
+        serial_key: user.serial_key,
+      }));
+  }
   if (t.includes("select user_id from users where username")) {
     const u = memory.users.find((x) => x.username === params[0]);
     return u ? [{ user_id: u.user_id }] : [];

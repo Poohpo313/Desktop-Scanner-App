@@ -1,15 +1,23 @@
 import { AccessOptionsList } from "./AccessOptionsList";
 import { CloseButton } from "./CloseButton";
+import { needAccountAccessCloseTarget } from "../../../lib/authReturnRoutes";
 import { ModalFooterInfo } from "./ModalFooterInfo";
 import { ModalHeader } from "./ModalHeader";
+import { useSearchParams } from "react-router-dom";
 
 type NeedAccountAccessModalProps = {
   closeFallbackTo?: string;
 };
 
 export function NeedAccountAccessModal({
-  closeFallbackTo = "/activate",
+  closeFallbackTo,
 }: NeedAccountAccessModalProps) {
+  const [searchParams] = useSearchParams();
+  const username = searchParams.get("username")?.trim() || undefined;
+  const serialKey = searchParams.get("serialKey")?.trim() || undefined;
+  const closeTo =
+    closeFallbackTo ?? needAccountAccessCloseTarget({ username, serialKey });
+
   return (
     <div
       className="relative box-border flex w-[560px] max-w-full flex-col items-center gap-[15px] rounded-[28px] border border-[rgba(226,232,240,0.95)] px-[46px] pb-10 pt-11 max-h-[calc(100vh-64px)] overflow-y-auto auth-modal--enter"
@@ -22,7 +30,7 @@ export function NeedAccountAccessModal({
       }}
       data-screen="need-account-access"
     >
-      <CloseButton fallbackTo={closeFallbackTo} />
+      <CloseButton fallbackTo={closeTo} />
 
       <ModalHeader />
 

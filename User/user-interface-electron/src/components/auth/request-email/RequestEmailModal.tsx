@@ -7,6 +7,8 @@ import {
 } from "../modals";
 import { appendAdminContactHint } from "../adminSupportCopy";
 import { useAdminSupportContact } from "../../../hooks/useAdminSupportContact";
+import { requestSupportCloseTarget, requestSupportContinueTarget } from "../../../lib/authReturnRoutes";
+import { CloseButton } from "../need-account-access/CloseButton";
 import { EmailIconHeader } from "./EmailIconHeader";
 
 type RequestEmailModalProps = {
@@ -20,18 +22,8 @@ export function RequestEmailModal({ context = "activation" }: RequestEmailModalP
   const serialKey = searchParams.get("serialKey")?.trim() || undefined;
   const { contact } = useAdminSupportContact({ username, serialKey });
 
-  const returnTo =
-    context === "forgot"
-      ? username
-        ? `/forgot?username=${encodeURIComponent(username)}`
-        : "/forgot"
-      : (() => {
-          const params = new URLSearchParams();
-          if (username) params.set("username", username);
-          if (serialKey) params.set("serialKey", serialKey);
-          const suffix = params.toString() ? `?${params.toString()}` : "";
-          return `/need-account-access${suffix}`;
-        })();
+  const closeTo = requestSupportCloseTarget(context, { username, serialKey });
+  const returnTo = requestSupportContinueTarget(context);
 
   const isForgot = context === "forgot";
   const description = appendAdminContactHint(
@@ -44,6 +36,7 @@ export function RequestEmailModal({ context = "activation" }: RequestEmailModalP
 
   return (
     <ModalContainer dataScreen="request-through-email">
+      <CloseButton fallbackTo={closeTo} />
       <EmailIconHeader />
 
       <h1 className="m-0 text-center font-sans text-[32px] font-semibold leading-[1.15] tracking-[-1px] text-[#0F172A] sm:text-[42px]">

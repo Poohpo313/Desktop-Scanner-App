@@ -25,30 +25,59 @@ const LOGIN_BENEFITS = [
 
 type LoginLocationState = {
   error?: string;
-  attempts?: number;
+  lockedUntil?: number;
   activated?: boolean;
+  username?: string;
 };
 
 export default function LoginPage() {
   const navigate = useNavigate();
   const location = useLocation();
   const routeState = (location.state as LoginLocationState | null) ?? {};
-  const [username, setUsername] = useState("");
+  const [username, setUsername] = useState(routeState.username ?? "");
   const [password, setPassword] = useState("");
   const [remember, setRemember] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState(routeState.error ?? "");
+  const [lockedUntil, setLockedUntil] = useState<number | null>(routeState.lockedUntil ?? null);
 
   useEffect(() => {
-    if (routeState.error) {
-      setError(routeState.error);
-      navigate(location.pathname, { replace: true, state: {} });
+    if (!routeState.error && routeState.lockedUntil == null) {
+      return;
     }
-  }, [routeState.error, navigate, location.pathname]);
+
+    if (routeState.error) setError(routeState.error);
+    if (routeState.lockedUntil != null) setLockedUntil(routeState.lockedUntil);
+    if (routeState.username) setUsername(routeState.username);
+
+    navigate(location.pathname, { replace: true, state: {} });
+  }, [routeState.error, routeState.lockedUntil, routeState.username, navigate, location.pathname]);
+
+  useEffect(() => {
+    if (!lockedUntil || lockedUntil <= Date.now()) return;
+
+    const updateLockMessage = () => {
+      const secondsRemaining = Math.max(0, Math.ceil((lockedUntil - Date.now()) / 1000));
+      if (secondsRemaining <= 0) {
+        setLockedUntil(null);
+        setError("");
+        return;
+      }
+      setError(`Account locked. Try again in ${secondsRemaining} seconds.`);
+    };
+
+    updateLockMessage();
+    const intervalId = window.setInterval(updateLockMessage, 1000);
+    return () => window.clearInterval(intervalId);
+  }, [lockedUntil]);
+
+  const isLocked = lockedUntil != null && lockedUntil > Date.now();
 
   function onSubmit(e: FormEvent) {
     e.preventDefault();
     setError("");
+
+    if (isLocked) return;
 
     if (!window.bukolabs) {
       setError("Run the desktop app with Electron (npm run dev in user-interface-electron).");
@@ -59,7 +88,6 @@ export default function LoginPage() {
       state: {
         username,
         password,
-        attempts: routeState.attempts ?? 0,
       },
     });
   }
@@ -103,6 +131,7 @@ export default function LoginPage() {
                     placeholder="Enter your username"
                     autoComplete="username"
                     required
+                    disabled={isLocked}
                   />
                 </div>
               </div>
@@ -134,6 +163,7 @@ export default function LoginPage() {
                     placeholder="Enter your password"
                     autoComplete="current-password"
                     required
+                    disabled={isLocked}
                   />
                   <button
                     type="button"
@@ -152,12 +182,13 @@ export default function LoginPage() {
                   className="login__checkbox"
                   checked={remember}
                   onChange={(e) => setRemember(e.target.checked)}
+                  disabled={isLocked}
                 />
                 <span className="login__checkbox-label">Remember me on this device</span>
               </label>
             </div>
 
-            <button className="login__button" type="submit">
+            <button className="login__button" type="submit" disabled={isLocked}>
               <span aria-hidden>→</span> Sign In
             </button>
           </form>

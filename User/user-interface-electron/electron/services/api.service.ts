@@ -445,11 +445,16 @@ export async function registerDeviceOnline(payload: {
   username?: string;
 }) {
   try {
+    const auth = await ensureOnlineAuthenticated(payload.assignedUser);
+    if (!auth.success) {
+      return { success: false as const, error: auth.error ?? "Not authenticated with the online API" };
+    }
+
     const res = await fetchOnline(`${getOnlineApiUrl()}/devices/register`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+        Authorization: `Bearer ${auth.accessToken}`,
       },
       body: JSON.stringify(payload),
     });
@@ -466,22 +471,36 @@ export async function registerDeviceOnline(payload: {
 
 export async function heartbeatDevice(serialNumber: string, userId?: number) {
   try {
-    await fetch(`${getOnlineApiUrl()}/devices/heartbeat`, {
+    if (userId == null) return;
+    const auth = await ensureOnlineAuthenticated(userId);
+    if (!auth.success || !accessToken) return;
+
+    await fetchOnline(`${getOnlineApiUrl()}/devices/heartbeat`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ serialNumber, userId })
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({ serialNumber, userId }),
     });
   } catch {
     // Offline — ignore
   }
 }
 
-export async function disconnectDeviceOnline(serialNumber: string) {
+export async function disconnectDeviceOnline(serialNumber: string, userId?: number) {
   try {
-    await fetch(`${getOnlineApiUrl()}/devices/disconnect`, {
+    if (userId == null) return;
+    const auth = await ensureOnlineAuthenticated(userId);
+    if (!auth.success || !accessToken) return;
+
+    await fetchOnline(`${getOnlineApiUrl()}/devices/disconnect`, {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ serialNumber })
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${accessToken}`,
+      },
+      body: JSON.stringify({ serialNumber }),
     });
   } catch {
     // Offline — ignore

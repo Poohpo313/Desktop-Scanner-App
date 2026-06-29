@@ -1,4 +1,9 @@
-import { BadRequestException, Injectable, NotFoundException } from "@nestjs/common";
+import {
+  BadRequestException,
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { InjectRepository } from "@nestjs/typeorm";
 import { Repository } from "typeorm";
 import { ActivityLogService } from "../../shared/services/activity-log.service";
@@ -15,6 +20,7 @@ import { NotificationsGateway } from "../notifications/notifications.gateway";
 import { DeviceEntity } from "./entities/device.entity";
 
 const HEARTBEAT_TIMEOUT_MINUTES = 3;
+const UNAUTHORIZED_DEVICE_NOTE = "Unauthorized Device";
 
 const DEVICE_LIST_SELECT = `
   SELECT
@@ -25,14 +31,33 @@ const DEVICE_LIST_SELECT = `
     d.status,
     d.assigned_user AS "assignedUser",
     d.last_seen AS "lastSeen",
+    d.is_primary AS "isPrimary",
+    d.parent_device_id AS "parentDeviceId",
+    d.warning_note AS "warningNote",
+    parent.device_name AS "parentDeviceName",
     (
-      d.status = 'active'
+      d.status IN ('active', 'unauthorized')
       AND d.last_seen IS NOT NULL
       AND d.last_seen >= NOW() - ($1 || ' minutes')::interval
       AND COALESCE(u.account_status, '') = 'active'
     ) AS "isOnline"
   FROM devices d
-  LEFT JOIN users u ON u.user_id = d.assigned_user`;
+  LEFT JOIN users u ON u.user_id = d.assigned_user
+  LEFT JOIN devices parent ON parent.device_id = d.parent_device_id`;
+
+const DEVICE_LIST_WHERE = `
+  WHERE d.device_type = 'workstation'
+    AND (u.user_id IS NULL OR u.account_status <> 'deleted')
+    AND (
+      d.status IN ('active', 'inactive')
+      OR (d.status = 'unauthorized' AND d.warning_note = '${UNAUTHORIZED_DEVICE_NOTE}')
+    )`;
+
+const DEVICE_LIST_ORDER = `
+  ORDER BY
+    COALESCE(d.parent_device_id, d.device_id),
+    d.is_primary DESC,
+    d.last_seen DESC NULLS LAST`;
 
 @Injectable()
 export class DevicesService {
@@ -48,10 +73,8 @@ export class DevicesService {
     return this.detectInactiveDevices().then(() =>
       this.devices.query(
         `${DEVICE_LIST_SELECT}
-        WHERE d.device_type = 'workstation'
-          AND d.status <> 'unauthorized'
-          AND (u.user_id IS NULL OR u.account_status <> 'deleted')
-        ORDER BY d.last_seen DESC NULLS LAST`,
+        ${DEVICE_LIST_WHERE}
+        ${DEVICE_LIST_ORDER}`,
         [HEARTBEAT_TIMEOUT_MINUTES],
       ),
     );
@@ -61,11 +84,9 @@ export class DevicesService {
     if (isSuperAdmin(actor.role)) {
       return queryScopedList(this.devices, {
         baseSql: `${DEVICE_LIST_SELECT}
-        WHERE d.device_type = 'workstation'
-          AND d.status <> 'unauthorized'
-          AND (u.user_id IS NULL OR u.account_status <> 'deleted')`,
+        ${DEVICE_LIST_WHERE}`,
         params: [HEARTBEAT_TIMEOUT_MINUTES],
-        orderSql: "ORDER BY d.last_seen DESC NULLS LAST",
+        orderSql: DEVICE_LIST_ORDER,
         pagination,
         beforeQuery: () => this.detectInactiveDevices().then(() => undefined),
       });
@@ -77,9 +98,7 @@ export class DevicesService {
     const params: unknown[] = [HEARTBEAT_TIMEOUT_MINUTES, scope.company];
     const scopedSql = appendDepartmentScope(
       `${DEVICE_LIST_SELECT}
-        WHERE d.device_type = 'workstation'
-          AND d.status <> 'unauthorized'
-          AND (u.user_id IS NULL OR u.account_status <> 'deleted')
+        ${DEVICE_LIST_WHERE}
           AND LOWER(TRIM(COALESCE(u.company, ''))) = LOWER(TRIM($2))`,
       scope,
       "u.department",
@@ -90,7 +109,7 @@ export class DevicesService {
     return queryScopedList(this.devices, {
       baseSql: scopedSql,
       params,
-      orderSql: "ORDER BY d.last_seen DESC NULLS LAST",
+      orderSql: DEVICE_LIST_ORDER,
       pagination,
       beforeQuery: () => this.detectInactiveDevices().then(() => undefined),
     });
@@ -132,30 +151,84 @@ export class DevicesService {
     throw new BadRequestException("Assigned user not found");
   }
 
-  async register(data: {
-    deviceName?: string;
-    deviceType?: string;
-    serialNumber: string;
-    assignedUser?: number;
-    username?: string;
-  }) {
+  private async findPrimaryDeviceForUser(userId: number) {
+    return this.devices.findOne({
+      where: {
+        assignedUser: userId,
+        deviceType: "workstation",
+        isPrimary: true,
+      },
+    });
+  }
+
+  private async assertDeviceOwnedByUser(serialNumber: string, userId: number) {
+    const device = await this.devices.findOne({ where: { serialNumber } });
+    if (!device) throw new NotFoundException("Device not found");
+    if (device.assignedUser !== userId) {
+      throw new ForbiddenException("Device is not assigned to this account");
+    }
+    return device;
+  }
+
+  async register(
+    data: {
+      deviceName?: string;
+      deviceType?: string;
+      serialNumber: string;
+      assignedUser?: number;
+      username?: string;
+    },
+    authenticatedUserId?: number,
+  ) {
     const serialNumber = data.serialNumber.trim();
     if (!serialNumber.startsWith("ws-") || data.deviceType !== "workstation") {
       throw new BadRequestException("Only app workstation devices can be registered");
     }
 
-    const assignedUser = await this.resolveAssignedUserId(data);
+    const assignedUser = authenticatedUserId ?? (await this.resolveAssignedUserId(data));
+    if (authenticatedUserId && assignedUser !== authenticatedUserId) {
+      throw new ForbiddenException("You can only register devices for your own account");
+    }
 
     const existing = await this.devices.findOne({
       where: { serialNumber }
     });
     if (existing) {
       existing.lastSeen = new Date();
-      existing.status = "active";
       existing.assignedUser = assignedUser;
       if (data.deviceName) existing.deviceName = data.deviceName;
       if (data.deviceType) existing.deviceType = data.deviceType;
-      return this.devices.save(existing);
+
+      if (existing.warningNote === UNAUTHORIZED_DEVICE_NOTE) {
+        existing.status = "unauthorized";
+      } else {
+        existing.status = "active";
+      }
+
+      const saved = await this.devices.save(existing);
+      return this.toRegisterResponse(saved);
+    }
+
+    const primary = await this.findPrimaryDeviceForUser(assignedUser);
+    if (!primary) {
+      const device = this.devices.create({
+        deviceName: data.deviceName,
+        deviceType: data.deviceType,
+        serialNumber,
+        assignedUser,
+        status: "active",
+        isPrimary: true,
+        parentDeviceId: null,
+        warningNote: null,
+        lastSeen: new Date(),
+      });
+      const saved = await this.devices.save(device);
+      await this.activityLog.log(
+        "device.registered",
+        { deviceId: saved.deviceId, isPrimary: true },
+        { userId: assignedUser },
+      );
+      return this.toRegisterResponse(saved);
     }
 
     const device = this.devices.create({
@@ -163,29 +236,63 @@ export class DevicesService {
       deviceType: data.deviceType,
       serialNumber,
       assignedUser,
-      status: "active",
-      lastSeen: new Date()
+      status: "unauthorized",
+      isPrimary: false,
+      parentDeviceId: primary.deviceId,
+      warningNote: UNAUTHORIZED_DEVICE_NOTE,
+      lastSeen: new Date(),
     });
     const saved = await this.devices.save(device);
+    const owner = await this.resolveDeviceOwnerScope(assignedUser);
     await this.activityLog.log(
-      "device.registered",
-      { deviceId: saved.deviceId },
-      { userId: assignedUser }
+      "device.unauthorized_detected",
+      {
+        deviceId: saved.deviceId,
+        parentDeviceId: primary.deviceId,
+        warningNote: UNAUTHORIZED_DEVICE_NOTE,
+      },
+      { userId: assignedUser },
     );
-    return saved;
+    this.notifications.emitDeviceHeartbeat({
+      deviceId: saved.deviceId,
+      serialNumber,
+      userId: assignedUser,
+      warningNote: UNAUTHORIZED_DEVICE_NOTE,
+      parentDeviceId: primary.deviceId,
+      ...owner,
+    });
+    return this.toRegisterResponse(saved);
   }
 
-  async heartbeat(serialNumber: string, userId?: number) {
-    const device = await this.devices.findOne({ where: { serialNumber } });
-    if (!device) throw new NotFoundException("Device not found");
+  private toRegisterResponse(device: DeviceEntity) {
+    return {
+      deviceId: device.deviceId,
+      deviceName: device.deviceName,
+      deviceType: device.deviceType,
+      serialNumber: device.serialNumber,
+      assignedUser: device.assignedUser,
+      status: device.status,
+      isPrimary: device.isPrimary,
+      parentDeviceId: device.parentDeviceId,
+      warningNote: device.warningNote,
+      lastSeen: device.lastSeen,
+    };
+  }
+
+  async heartbeat(serialNumber: string, userId: number) {
+    const device = await this.assertDeviceOwnedByUser(serialNumber, userId);
     device.lastSeen = new Date();
-    device.status = "active";
+    if (device.warningNote !== UNAUTHORIZED_DEVICE_NOTE) {
+      device.status = "active";
+    }
     const saved = await this.devices.save(device);
     const owner = await this.resolveDeviceOwnerScope(saved.assignedUser);
     this.notifications.emitDeviceHeartbeat({
       deviceId: saved.deviceId,
       serialNumber,
-      userId: userId ?? saved.assignedUser,
+      userId,
+      warningNote: saved.warningNote,
+      parentDeviceId: saved.parentDeviceId,
       ...owner,
     });
     return saved;
@@ -200,15 +307,16 @@ export class DevicesService {
     return rows[0] ?? { company: null, department: null };
   }
 
-  async disconnect(serialNumber: string) {
+  async disconnect(serialNumber: string, userId: number) {
     const normalized = serialNumber.trim();
     if (!normalized) return { success: true };
 
-    const device = await this.devices.findOne({ where: { serialNumber: normalized } });
-    if (!device) return { success: true };
+    const device = await this.assertDeviceOwnedByUser(normalized, userId);
 
     device.lastSeen = device.lastSeen ?? new Date();
-    device.status = "inactive";
+    if (device.warningNote !== UNAUTHORIZED_DEVICE_NOTE) {
+      device.status = "inactive";
+    }
     await this.devices.save(device);
     const owner = await this.resolveDeviceOwnerScope(device.assignedUser);
     this.notifications.emitDeviceInactive({
@@ -263,6 +371,7 @@ export class DevicesService {
     const device = await this.devices.findOne({ where: { deviceId: id } });
     if (!device) throw new NotFoundException("Device not found");
     device.status = "unauthorized";
+    device.warningNote = null;
     const saved = await this.devices.save(device);
     await this.activityLog.log("device.revoked", { deviceId: id, reason: "Unauthorized Device" }, { adminId });
     return saved;

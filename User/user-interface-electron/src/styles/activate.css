@@ -236,7 +236,6 @@
 .activation-form__input--mono {
   font-family: ui-monospace, "Cascadia Code", monospace;
   letter-spacing: 0.08em;
-  text-transform: uppercase;
 }
 
 .activation-form__actions {
