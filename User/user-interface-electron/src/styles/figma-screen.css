@@ -1,0 +1,95 @@
+/* Synced with public/shared/figma-screen.css — Figma user prototype frames */
+
+.figma-screen {
+  box-sizing: border-box;
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: var(--color-cyan-10, #003534);
+}
+
+.figma-screen--in-shell {
+  min-height: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: transparent;
+}
+
+.figma-screen__viewport {
+  box-sizing: border-box;
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 24px 120px;
+  overflow: auto;
+}
+
+.figma-screen__viewport--in-shell {
+  padding: 0;
+  align-items: stretch;
+  justify-content: stretch;
+  overflow: hidden;
+}
+
+.figma-screen__img {
+  max-width: min(1440px, 100%);
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+}
+
+.figma-screen__img--in-shell {
+  width: 100%;
+  max-width: 100%;
+  border-radius: 0;
+  box-shadow: none;
+  object-fit: contain;
+  object-position: top center;
+}
+
+.figma-screen__embed {
+  width: min(1440px, 100%);
+  height: min(900px, calc(100vh - 140px));
+  border: 0;
+  border-radius: 12px;
+  background: #fff;
+}
+
+.figma-screen__embed--in-shell {
+  width: 100%;
+  max-width: 100%;
+  flex: 1;
+  min-height: 480px;
+  height: calc(100vh - 200px);
+  border-radius: 0;
+}
+
+.figma-screen__overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.figma-screen__overlay > * {
+  pointer-events: auto;
+}
+
+.figma-screen__actions {
+  position: fixed;
+  bottom: 96px;
+  left: 50%;
+  z-index: 10;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  transform: translateX(-50%);
+  width: min(480px, calc(100% - 48px));
+}
+
+body.has-flow-nav .figma-screen__viewport {
+  padding-bottom: 160px;
+}

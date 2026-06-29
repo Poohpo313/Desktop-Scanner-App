@@ -1,0 +1,96 @@
+@import "./figma-tokens.css";
+
+.figma-modal--dismiss-all-notifications {
+  width: min(380px, 100%);
+  border-radius: 18px;
+  border: 1px solid #e8edf0;
+  box-shadow: 0 18px 40px rgba(15, 45, 65, 0.12);
+}
+
+.figma-modal--dismiss-all-notifications .figma-modal__body {
+  padding: 28px 28px 24px;
+}
+
+.dismiss-all-notifications {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.dismiss-all-notifications__icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  margin-bottom: 18px;
+  border-radius: 12px;
+  background: #fdecec;
+  color: #c62828;
+}
+
+.dismiss-all-notifications__title {
+  margin: 0 0 12px;
+  font-size: 1.35rem;
+  font-weight: var(--font-weight-semibold);
+  color: #1f3d56;
+  letter-spacing: -0.35px;
+  line-height: var(--line-height-tight);
+}
+
+.dismiss-all-notifications__message {
+  margin: 0;
+  max-width: 300px;
+  font-size: var(--text-caption);
+  line-height: 1.55;
+  color: #6b7f86;
+}
+
+.dismiss-all-notifications__message strong {
+  font-weight: var(--font-weight-semibold);
+  color: #1f3d56;
+}
+
+.dismiss-all-notifications__actions {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.dismiss-all-notifications__confirm-btn {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 18px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--color-rain-forest);
+  color: var(--color-white);
+  font: inherit;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: background 0.15s ease;
+}
+
+.dismiss-all-notifications__confirm-btn:hover {
+  background: var(--color-rain-forest-light);
+}
+
+.dismiss-all-notifications__cancel-btn {
+  border: 0;
+  background: transparent;
+  padding: 4px 8px;
+  color: var(--color-rain-forest);
+  font: inherit;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+}
+
+.dismiss-all-notifications__cancel-btn:hover {
+  color: var(--color-rain-forest-light);
+}

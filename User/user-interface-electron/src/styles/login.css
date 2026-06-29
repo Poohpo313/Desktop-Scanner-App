@@ -1,0 +1,662 @@
+@import "./tokens.css";
+
+/* ── Auth page shell ────────────────────────────────────────── */
+.auth-page {
+  box-sizing: border-box;
+  min-height: 100vh;
+  display: flex;
+  align-items: safe center;
+  justify-content: center;
+  padding: 32px 24px calc(32px + var(--auth-scroll-end-spacing));
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  background: #f4f8f6;
+  font-family: var(--font-family);
+}
+
+.auth-page__container {
+  box-sizing: border-box;
+  width: min(1160px, 100%);
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 24px 64px rgba(0, 53, 52, 0.08);
+  overflow: hidden;
+}
+
+.auth-page__split {
+  position: relative;
+  display: flex;
+  min-height: 640px;
+  isolation: isolate;
+  background: linear-gradient(
+    90deg,
+    rgba(234, 246, 244, 0.5) 0%,
+    rgba(247, 250, 249, 0.25) 42%,
+    #fff 72%
+  );
+}
+
+/*
+ * Auth watermark — matches Figma login/activate left panel graphic:
+ * tall oblong ring, rotated, arching through info panel into auth card.
+ * (Ref: original .login__aside-shape — 560×760, 70px stroke, -18deg)
+ */
+.auth-watermark {
+  position: absolute;
+  z-index: 0;
+  pointer-events: none;
+  left: 40%;
+  top: 50%;
+  width: 560px;
+  height: 760px;
+  transform: translate(-62%, -50%) rotate(-18deg);
+  box-sizing: border-box;
+}
+
+.auth-watermark__oval {
+  position: absolute;
+  box-sizing: border-box;
+  border-radius: 50%;
+  background: transparent;
+}
+
+/* Outer oblong ring */
+.auth-watermark__oval--outer {
+  inset: 0;
+  border: 70px solid rgba(0, 167, 165, 0.065);
+}
+
+/* Inner ring ~70% scale */
+.auth-watermark__oval--inner {
+  inset: 13%;
+  border: 40px solid rgba(0, 135, 104, 0.045);
+}
+
+/* Large leaf mark — sits in the visible arc of the left panel */
+.auth-watermark__mark {
+  position: absolute;
+  left: 36%;
+  top: 44%;
+  width: 168px;
+  height: auto;
+  transform: translate(-50%, -50%) rotate(6deg);
+}
+
+.auth-page__form-area {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 60%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 40px;
+  background: transparent;
+}
+
+/* ── Left information panel (40%) ───────────────────────────── */
+.auth-info {
+  position: relative;
+  z-index: 1;
+  flex: 0 0 40%;
+  padding: 56px 48px;
+  background: linear-gradient(
+    180deg,
+    rgba(234, 246, 244, 0.55) 0%,
+    rgba(247, 250, 249, 0.42) 100%
+  );
+  border-right: 1px solid rgba(226, 240, 235, 0.9);
+  overflow: visible;
+}
+
+.auth-info__brand {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 40px;
+}
+
+.auth-info__welcome {
+  position: relative;
+  z-index: 1;
+  margin-bottom: 32px;
+}
+
+.auth-info__kicker {
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  margin-bottom: 6px;
+}
+
+.auth-info__title {
+  font-size: 54px;
+  font-weight: 700;
+  line-height: 1.08;
+  letter-spacing: -1.8px;
+  color: #003534;
+  margin: 0;
+}
+
+.auth-info__desc {
+  margin: 10px 0 0;
+  font-size: 15px;
+  font-weight: 500;
+  line-height: 1.55;
+  color: #6b7280;
+  max-width: 340px;
+}
+
+.auth-info__benefits {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.auth-info__benefit {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.auth-info__benefit-icon {
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #eaf6f4;
+  display: grid;
+  place-items: center;
+}
+
+.auth-info__benefit-icon img {
+  width: 22px;
+  height: 22px;
+  object-fit: contain;
+}
+
+.auth-info__benefit-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #003534;
+  margin: 0 0 4px;
+  line-height: 1.3;
+}
+
+.auth-info__benefit-text {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.45;
+  color: #6b7280;
+  margin: 0;
+}
+
+/* ── Status bar ─────────────────────────────────────────────── */
+.auth-status {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
+  gap: 24px 48px;
+  padding: 16px 32px;
+  border-top: 1px solid #e2f0eb;
+  background: #fafcfb;
+}
+
+.auth-status__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 500;
+  color: #6b7280;
+}
+
+.auth-status__icon {
+  width: 14px;
+  height: 14px;
+  object-fit: contain;
+  opacity: 0.75;
+}
+
+/* ── Login card (450px) ─────────────────────────────────────── */
+.login-card {
+  box-sizing: border-box;
+  width: min(450px, 100%);
+  padding: 32px;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 12px 40px rgba(0, 53, 52, 0.08);
+  border: 1px solid #e8f0ed;
+}
+
+.login-card__header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 8px;
+}
+
+.login-card__icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: #eaf6f4;
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+}
+
+.login-card__icon img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.login-card__title {
+  font-size: 22px;
+  font-weight: 600;
+  color: #003534;
+  margin: 0;
+  line-height: 1.2;
+}
+
+.login-card__subtitle {
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  margin: 4px 0 0;
+}
+
+/* Figma 1802:1619 — form grid */
+.login__form-grid {
+  box-sizing: border-box;
+  display: grid;
+  height: 322.94px;
+  padding-top: 30px;
+  row-gap: 26px;
+  column-gap: 26px;
+  align-self: stretch;
+  grid-template-rows: 80.31px 80.31px 80.31px;
+  grid-template-columns: minmax(0, 446.95px);
+  width: 100%;
+}
+
+.login__form-grid .login__field-group {
+  min-height: 0;
+  justify-content: flex-end;
+}
+
+.login__form-grid .login__checkbox-row {
+  align-self: center;
+}
+
+.login__field-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.login__field-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.login__label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #003534;
+}
+
+.login__link {
+  border: 0;
+  background: transparent;
+  color: #008768;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.login__link:hover {
+  text-decoration: underline;
+}
+
+.login__input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 48px;
+  padding: 0 14px;
+  border-radius: 10px;
+  border: 1px solid #dde8e7;
+  background: #fff;
+  transition: border-color 0.15s ease;
+}
+
+.login__input-wrap:focus-within {
+  border-color: #14b8a6;
+}
+
+.login__input {
+  flex: 1;
+  border: 0;
+  outline: none;
+  font: inherit;
+  font-size: 14px;
+  color: #003534;
+  min-width: 0;
+}
+
+.login__input::placeholder {
+  color: #a8b5b8;
+}
+
+.login__checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.login__checkbox {
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  border: 1px solid #a8b5b8;
+  accent-color: #008768;
+}
+
+.login__checkbox-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: #4b5f62;
+}
+
+.login__error {
+  color: #dc2626;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+
+.login__alert {
+  font-size: 13px;
+  color: #008768;
+  background: #ecfdf5;
+  border: 1px solid #a7f3d0;
+  border-radius: 10px;
+  padding: 10px 14px;
+  margin-bottom: 4px;
+}
+
+.login__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  height: 48px;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 10px;
+  background: #008768;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.login__button:hover {
+  background: #006b52;
+}
+
+.login__button:active {
+  transform: scale(0.99);
+}
+
+.login-card__footer-links {
+  margin-top: 16px;
+  font-size: 13px;
+  color: #6b7280;
+  text-align: center;
+}
+
+.login-card__footer-links a {
+  color: #6b7280;
+  text-decoration: none;
+}
+
+.login-card__footer-links a:hover {
+  color: #008768;
+}
+
+/* ── Activate card (520px) ──────────────────────────────────── */
+.activate-card {
+  box-sizing: border-box;
+  width: min(520px, 100%);
+  padding: 36px 40px;
+  border-radius: 20px;
+  background: #fff;
+  box-shadow: 0 12px 40px rgba(0, 53, 52, 0.08);
+  border: 1px solid #e8f0ed;
+}
+
+.activate-card__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  color: #6b7280;
+  text-decoration: none;
+  margin-bottom: 24px;
+  transition: color 0.15s ease;
+}
+
+.activate-card__back:hover {
+  color: #008768;
+}
+
+.activate-card__title {
+  color: #003534;
+  font-family: var(--font-family);
+  font-size: var(--font-size-54, 54px);
+  font-weight: 500;
+  line-height: var(--line-height-58_32, 58.32px);
+  letter-spacing: var(--letter-spacing--1_8, -1.8px);
+  margin: 0;
+}
+
+.activate-card__subtitle {
+  margin: 12px 0 28px;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1.55;
+  color: #6b7280;
+  max-width: 440px;
+}
+
+.activate-card__form {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.activate-card__actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-top: 8px;
+}
+
+.activate-card__need-access {
+  font-size: 13px;
+  font-weight: 500;
+  color: #008768;
+  text-decoration: none;
+}
+
+.activate-card__need-access:hover {
+  text-decoration: underline;
+}
+
+.activate-card__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 24px;
+  border: 0;
+  border-radius: 10px;
+  background: #008768;
+  color: #fff;
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s ease;
+  white-space: nowrap;
+}
+
+.activate-card__submit:hover {
+  background: #006b52;
+}
+
+.activate-card__info {
+  margin-top: 28px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  border: 1.5px solid #a7f3d0;
+  background: #f0fdf9;
+}
+
+.activate-card__info-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #003534;
+  margin: 0 0 6px;
+}
+
+.activate-card__info-desc {
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+  color: #4b5f62;
+  margin: 0;
+}
+
+.activate-card__request-links {
+  display: flex;
+  gap: 10px;
+  margin-top: 14px;
+}
+
+.activate-card__request-link {
+  flex: 1;
+  text-align: center;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #008768;
+  color: #008768;
+  text-decoration: none;
+  transition: background 0.15s ease;
+}
+
+.activate-card__request-link:hover {
+  background: #ecfdf5;
+}
+
+/* ── Responsive ─────────────────────────────────────────────── */
+@media (max-width: 960px) {
+  .auth-page__split {
+    flex-direction: column;
+    min-height: 0;
+  }
+
+  .auth-watermark {
+    left: 50%;
+    top: 38%;
+    width: min(480px, 90vw);
+    height: min(640px, 115vw);
+    transform: translate(-68%, -50%) rotate(-16deg) scale(0.88);
+  }
+
+  .auth-watermark__oval--outer {
+    border-width: 52px;
+  }
+
+  .auth-watermark__oval--inner {
+    border-width: 30px;
+  }
+
+  .auth-watermark__mark {
+    width: 130px;
+  }
+
+  .auth-info {
+    flex: none;
+    padding: 40px 32px;
+  }
+
+  .auth-page__form-area {
+    flex: none;
+    padding: 32px 24px 40px;
+  }
+
+  .auth-info__title {
+    font-size: 40px;
+    letter-spacing: -1.2px;
+  }
+
+  .activate-card__title {
+    font-size: 36px;
+    line-height: 1.1;
+  }
+
+  .login__form-grid {
+    height: auto;
+    grid-template-rows: auto auto auto;
+  }
+}
+
+@media (max-width: 520px) {
+  .auth-page {
+    padding: 16px 16px calc(16px + var(--auth-scroll-end-spacing));
+  }
+
+  .auth-watermark {
+    left: 55%;
+    top: 26%;
+    width: min(400px, 95vw);
+    height: min(520px, 120vw);
+    transform: translate(-75%, -50%) rotate(-14deg) scale(0.78);
+  }
+
+  .auth-watermark__oval--outer {
+    border-width: 44px;
+  }
+
+  .auth-watermark__oval--inner {
+    border-width: 26px;
+  }
+
+  .auth-watermark__mark {
+    width: 100px;
+    left: 34%;
+    top: 42%;
+  }
+
+  .activate-card__actions {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .activate-card__submit {
+    width: 100%;
+  }
+}

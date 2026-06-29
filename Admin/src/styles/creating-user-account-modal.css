@@ -1,0 +1,181 @@
+@import "./figma-tokens.css";
+
+.figma-modal--register-create {
+  width: min(460px, 100%);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.figma-modal--register-create .figma-modal__body {
+  padding: 34px 36px 30px;
+}
+
+.register-create {
+  text-align: center;
+}
+
+.register-create__hero {
+  margin-bottom: 28px;
+}
+
+.register-create__ring-wrap {
+  position: relative;
+  width: 108px;
+  height: 108px;
+  margin: 0 auto 18px;
+}
+
+.register-create__ring {
+  width: 108px;
+  height: 108px;
+  transform: rotate(-90deg);
+}
+
+.register-create__ring-track,
+.register-create__ring-fill {
+  fill: none;
+  stroke-width: 5;
+}
+
+.register-create__ring-track {
+  stroke: var(--color-stroke-muted);
+}
+
+.register-create__ring-fill {
+  stroke: var(--color-deep-teal);
+  stroke-linecap: round;
+  stroke-dasharray: 327;
+  transition: stroke-dashoffset 0.75s ease;
+}
+
+.register-create__ring-icon {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-deep-teal);
+}
+
+.register-create__ring-icon img,
+.register-create__ring-icon svg {
+  width: 30px;
+  height: 30px;
+}
+
+.register-create__title {
+  margin: 0;
+  font-size: var(--text-step);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  letter-spacing: -0.2px;
+}
+
+.register-create__steps {
+  list-style: none;
+  margin: 0 auto 26px;
+  padding: 0;
+  width: min(100%, 300px);
+  text-align: left;
+}
+
+.register-create__step {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 10px 0;
+}
+
+.register-create__step--dimmed {
+  opacity: 0.45;
+}
+
+.register-create__step-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  flex-shrink: 0;
+}
+
+.register-create__step-icon--complete {
+  background: var(--color-progress-complete);
+  color: var(--color-rain-forest);
+}
+
+.register-create__step-icon--active {
+  color: var(--color-deep-teal);
+}
+
+.register-create__step-icon--active svg {
+  animation: register-create-spin 0.9s linear infinite;
+}
+
+.register-create__step-icon--waiting {
+  color: var(--color-disabled-text);
+}
+
+.register-create__step-copy {
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.register-create__step-label {
+  margin: 0 0 2px;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-brand-slate);
+  line-height: var(--line-height-normal);
+}
+
+.register-create__step--dimmed .register-create__step-label {
+  color: var(--color-granny-smith);
+}
+
+.register-create__step-status {
+  margin: 0;
+  font-size: var(--text-caption);
+  line-height: var(--line-height-normal);
+}
+
+.register-create__step-status--complete {
+  color: var(--color-rain-forest);
+  font-weight: var(--font-weight-medium);
+}
+
+.register-create__step-status--active {
+  color: var(--color-nevada);
+}
+
+.register-create__step-status--waiting {
+  color: var(--color-tower-gray);
+}
+
+.register-create__footer-copy p {
+  margin: 0;
+  font-size: var(--text-caption);
+  color: var(--color-granny-smith);
+  line-height: var(--line-height-relaxed);
+}
+
+.register-create__footer-copy p + p {
+  margin-top: 4px;
+}
+
+@keyframes register-create-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 480px) {
+  .figma-modal--register-create .figma-modal__body {
+    padding: 28px 22px 24px;
+  }
+
+  .register-create__steps {
+    width: 100%;
+  }
+}

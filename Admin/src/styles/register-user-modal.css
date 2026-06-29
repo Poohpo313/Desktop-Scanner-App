@@ -1,0 +1,894 @@
+@import "./figma-tokens.css";
+
+.figma-modal--register-user {
+  --register-modal-radius: 12px;
+  --register-modal-pad-x: 24px;
+  --register-input-bg: #f0f4f8;
+  --register-input-border: #dce5ea;
+  --register-divider: #e8efed;
+
+  width: min(700px, 100%);
+  border-radius: var(--register-modal-radius);
+  border: 1px solid var(--color-mystic);
+  box-shadow: 0 12px 40px rgba(0, 53, 52, 0.1);
+  overflow: hidden;
+  background: var(--color-white);
+}
+
+.figma-modal--register-user .figma-modal__header {
+  align-items: center;
+  padding: 20px var(--register-modal-pad-x) 18px;
+  background: var(--color-white);
+  border-bottom: 1px solid var(--register-divider);
+}
+
+.figma-modal--register-user .figma-modal__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  letter-spacing: -0.35px;
+  line-height: var(--line-height-tight);
+}
+
+.figma-modal--register-user .figma-modal__header-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.figma-modal--register-user .figma-modal__header-icon img {
+  display: block;
+  width: 19px;
+  height: 14px;
+}
+
+.figma-modal--register-user .figma-modal__subtitle {
+  margin-top: 6px;
+  font-size: var(--text-body);
+  color: var(--color-nevada);
+  line-height: var(--line-height-relaxed);
+}
+
+.figma-modal--register-user .figma-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 0;
+  line-height: 1;
+  margin-top: 0;
+  flex-shrink: 0;
+}
+
+.figma-modal--register-user .figma-modal__close img {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.figma-modal--register-user .figma-modal__body {
+  padding: 20px var(--register-modal-pad-x) 8px;
+  background: var(--color-white);
+}
+
+.register-user__form {
+  display: flex;
+  flex-direction: column;
+}
+
+.register-user__notice {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid #b8e6d3;
+  border-radius: 8px;
+  background: #eefbf4;
+  color: #0f5132;
+  font-size: 12px;
+  font-weight: var(--font-weight-medium);
+  line-height: 1.45;
+}
+
+.register-user__notice strong {
+  color: var(--color-rain-forest);
+  font-weight: var(--font-weight-semibold);
+}
+
+.register-user__footer {
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  padding: 18px var(--register-modal-pad-x) 20px;
+  background: var(--color-white);
+  border-top: 1px solid var(--register-divider);
+}
+
+.register-user__cancel-btn {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-brand-slate);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.register-user__submit-btn {
+  min-height: 42px;
+  padding-inline: 18px;
+  font-weight: var(--font-weight-semibold);
+}
+
+.register-user__activate-btn {
+  min-width: 168px;
+  min-height: 44px;
+  padding-inline: 32px;
+  border-radius: 8px;
+  font-weight: var(--font-weight-semibold);
+  box-shadow: 0 6px 16px rgba(0, 122, 94, 0.2);
+}
+
+.register-user__submit-icon {
+  width: 16px;
+  height: 16px;
+  filter: brightness(0) invert(1);
+}
+
+.register-user__section + .register-user__section,
+.register-user__section--personal,
+.register-user__section--contact {
+  margin-top: 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--register-divider);
+}
+
+.register-user__section-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.register-user__section-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.register-user__section-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.register-user__section-icon-img {
+  display: block;
+  width: 18px;
+  height: 18px;
+}
+
+.register-user__section-line {
+  flex: 1;
+  height: 1px;
+  background: var(--color-mystic);
+}
+
+.register-user__section-bar {
+  width: 4px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--color-rain-forest);
+  flex-shrink: 0;
+}
+
+.register-user__section-title {
+  margin: 0;
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--color-rain-forest);
+  white-space: nowrap;
+}
+
+.register-user__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 20px;
+}
+
+.register-user__grid--account {
+  gap: 16px 20px;
+}
+
+.register-user__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.register-user__field--full {
+  grid-column: 1 / -1;
+}
+
+.register-user__field--password {
+  grid-column: 1 / -1;
+}
+
+.figma-modal--register-user:not(.figma-modal--edit-user) .register-user__input-wrap--readonly {
+  background: #e8eef3;
+  border-color: #d5dee6;
+  cursor: not-allowed;
+}
+
+.figma-modal--register-user:not(.figma-modal--edit-user) .register-user__input-wrap--readonly:focus-within {
+  border-color: #d5dee6;
+  box-shadow: none;
+  background: #e8eef3;
+}
+
+.register-user__input--readonly {
+  color: #64748b;
+  cursor: not-allowed;
+}
+
+.register-user__field--password .register-user__input-wrap {
+  width: min(100%, 320px);
+  max-width: 100%;
+}
+
+.register-user__locked-row {
+  margin-top: 4px;
+}
+
+.figma-modal--register-user:not(.figma-modal--edit-user) .register-user__input-wrap--locked {
+  background: #e8eef3;
+  border-color: #d5dee6;
+  cursor: not-allowed;
+}
+
+.figma-modal--register-user:not(.figma-modal--edit-user) .register-user__input-wrap--locked:focus-within {
+  border-color: #d5dee6;
+  box-shadow: none;
+  background: #e8eef3;
+}
+
+.register-user__input-wrap--locked .register-user__input {
+  padding-right: 40px;
+}
+
+.register-user__lock-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-granny-smith);
+  pointer-events: none;
+}
+
+.register-user__input-wrap .register-user__select-wrap {
+  width: 100%;
+}
+
+.register-user__input-wrap .register-user__select-wrap .register-user__input--select {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  min-height: 40px;
+  box-shadow: none;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  background-image: none;
+  padding-right: 38px;
+}
+
+.register-user__name-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.9fr) minmax(64px, 0.55fr) minmax(0, 1.9fr);
+  gap: 16px 20px;
+}
+
+.register-user__label {
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-brand-slate);
+  line-height: 1.3;
+}
+
+.figma-modal--register-user:not(.figma-modal--edit-user) .register-user__input-wrap {
+  border: 1px solid var(--register-input-border);
+  border-radius: 6px;
+  background: var(--register-input-bg);
+  min-height: 42px;
+  box-sizing: border-box;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+.figma-modal--register-user:not(.figma-modal--edit-user) .register-user__input-wrap:focus-within {
+  border-color: var(--color-persian-green);
+  box-shadow: var(--focus-ring);
+  background: var(--color-white);
+}
+
+.figma-modal--register-user:not(.figma-modal--edit-user) .register-user__input-wrap--error {
+  border-color: var(--color-danger);
+  background: var(--color-danger-bg);
+}
+
+.figma-modal--register-user:not(.figma-modal--edit-user) .register-user__input-wrap .register-user__input {
+  border: 0;
+  background: transparent;
+  min-height: 40px;
+  border-radius: 6px;
+  box-shadow: none;
+}
+
+.register-user__input,
+.register-user__select {
+  width: 100%;
+  min-height: 44px;
+  padding: 0 14px;
+  border: 1px solid #e2eaee;
+  border-radius: 8px;
+  background: var(--color-surface-cool-gray);
+  font: inherit;
+  font-size: var(--text-body);
+  color: var(--color-brand-slate);
+  box-sizing: border-box;
+  outline: none;
+}
+
+.register-user__input-wrap {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+
+.figma-modal--register-user:not(.figma-modal--edit-user) .register-user__input-wrap:not(:has(.register-user__eye-btn)) .register-user__input {
+  padding-right: 14px;
+}
+
+.register-user__input-wrap:has(.register-user__eye-btn) .register-user__input {
+  padding-right: 44px;
+}
+
+.register-user__input-wrap--error .register-user__input {
+  border-color: transparent;
+  background: transparent;
+}
+
+.register-user__eye-btn {
+  position: absolute;
+  right: 8px;
+  top: 50%;
+  z-index: 1;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-granny-smith);
+  cursor: pointer;
+}
+
+.register-user__eye-btn:hover .register-user__eye-icon {
+  filter: brightness(0) saturate(100%) invert(35%) sepia(8%) saturate(729%) hue-rotate(131deg)
+    brightness(91%) contrast(88%);
+}
+
+.register-user__eye-icon {
+  width: 19px;
+  height: 13px;
+  display: block;
+  flex-shrink: 0;
+  filter: brightness(0) saturate(100%) invert(47%) sepia(8%) saturate(729%) hue-rotate(131deg)
+    brightness(91%) contrast(88%);
+}
+
+.register-user__password-rules {
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  margin-top: 0;
+  max-width: 100%;
+  font-size: 12px;
+  color: var(--color-nevada);
+  line-height: 1.5;
+}
+
+.register-user__password-rules strong {
+  color: var(--color-brand-slate);
+  font-weight: var(--font-weight-semibold);
+}
+
+.register-user__input::placeholder {
+  color: var(--color-granny-smith);
+}
+
+.register-user__input:focus,
+.register-user__select:focus {
+  outline: none;
+}
+
+.figma-modal--register-user:not(.figma-modal--edit-user) .register-user__input-wrap .register-user__input:focus {
+  box-shadow: none;
+}
+
+.register-user__input--error {
+  border-color: var(--color-danger);
+  background: var(--color-danger-bg);
+}
+
+.register-user__field-error {
+  margin: 0;
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-danger-dark);
+}
+
+.register-user__section-note {
+  margin: 0 0 14px;
+  font-size: var(--text-caption);
+  line-height: 1.55;
+  color: var(--color-text-muted);
+}
+
+.register-user__select-wrap {
+  position: relative;
+  width: 100%;
+}
+
+.register-user__select-icon {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-nevada);
+  pointer-events: none;
+  transform: translateY(-50%);
+}
+
+.register-user__select-wrap .register-user__input--select {
+  padding-right: 38px;
+}
+
+.register-user__select {
+  appearance: none;
+  padding-right: 34px;
+  cursor: pointer;
+}
+
+.register-user__group-label {
+  margin: 0 0 10px;
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-nevada);
+}
+
+.register-user__role-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.register-user__role-card {
+  display: grid;
+  grid-template-columns: auto auto 1fr;
+  align-items: center;
+  gap: 10px;
+  min-height: 54px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-mystic);
+  border-radius: 10px;
+  background: var(--color-white);
+  cursor: pointer;
+  text-align: left;
+  font: inherit;
+  color: var(--color-brand-slate);
+  transition:
+    border-color 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.register-user__role-card:hover {
+  border-color: var(--color-form-border);
+}
+
+.register-user__role-card--selected {
+  border-color: var(--color-mint-accent);
+  background: var(--color-input-focus-bg);
+  box-shadow: inset 0 0 0 1px rgba(0, 122, 94, 0.08);
+}
+
+.register-user__role-radio {
+  width: 16px;
+  height: 16px;
+  border-radius: 999px;
+  border: 1.5px solid var(--color-tower-gray);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.register-user__role-radio--selected {
+  border-color: var(--color-rain-forest);
+}
+
+.register-user__role-radio-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--color-rain-forest);
+}
+
+.register-user__role-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--color-shell-bg);
+  color: var(--color-rain-forest);
+  flex-shrink: 0;
+}
+
+.register-user__role-card--selected .register-user__role-icon {
+  background: var(--color-success-step);
+}
+
+.register-user__role-label {
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-medium);
+}
+
+.register-user__status-card {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border: 1px solid var(--color-mystic);
+  border-radius: 10px;
+  background: var(--color-white);
+  margin-bottom: 16px;
+}
+
+.register-user__status-title {
+  margin: 0 0 2px;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+}
+
+.register-user__status-copy {
+  margin: 0;
+  font-size: var(--text-caption);
+  color: var(--color-nevada);
+}
+
+.register-user__toggle {
+  position: relative;
+  width: 44px;
+  height: 24px;
+  padding: 0;
+  border: 0;
+  border-radius: 999px;
+  background: var(--color-step-inactive);
+  cursor: pointer;
+  flex-shrink: 0;
+  transition: background 0.15s ease;
+}
+
+.register-user__toggle--on {
+  background: var(--color-rain-forest);
+}
+
+.register-user__toggle-thumb {
+  position: absolute;
+  top: 3px;
+  left: 3px;
+  width: 18px;
+  height: 18px;
+  border-radius: 999px;
+  background: var(--color-white);
+  box-shadow: 0 1px 3px rgba(0, 53, 52, 0.18);
+  transition: transform 0.15s ease;
+}
+
+.register-user__toggle--on .register-user__toggle-thumb {
+  transform: translateX(20px);
+}
+
+.register-user__checks {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.register-user__check {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: var(--text-body);
+  color: var(--color-brand-slate);
+  cursor: pointer;
+  user-select: none;
+}
+
+.register-user__check input {
+  position: absolute;
+  opacity: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.register-user__check-box {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid var(--color-mystic);
+  border-radius: 4px;
+  background: var(--color-white);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.register-user__check input:checked + .register-user__check-box {
+  border-color: var(--color-rain-forest);
+  background: var(--color-rain-forest);
+}
+
+.register-user__check input:checked + .register-user__check-box::after {
+  content: "";
+  width: 9px;
+  height: 5px;
+  border-left: 2px solid var(--color-white);
+  border-bottom: 2px solid var(--color-white);
+  transform: rotate(-45deg) translateY(-1px);
+}
+
+@media (max-width: 720px) {
+  .figma-modal--register-user {
+    --register-modal-pad-x: 18px;
+  }
+
+  .register-user__grid,
+  .register-user__role-grid,
+  .register-user__name-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .register-user__field--full,
+  .register-user__field--mi,
+  .register-user__field--password {
+    grid-column: auto;
+  }
+
+  .register-user__field--password .register-user__input-wrap,
+  .register-user__password-rules {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .register-user__footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .register-user__submit-btn,
+  .register-user__activate-btn {
+    width: 100%;
+  }
+}
+
+/* Review User Registration */
+.figma-modal--register-review {
+  width: min(640px, 100%);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.figma-modal--register-review .figma-modal__header {
+  align-items: flex-start;
+  padding: 22px 28px 18px;
+  border-bottom: 1px solid var(--color-mystic);
+}
+
+.figma-modal--register-review .figma-modal__title {
+  font-size: var(--text-modal-heading);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-deep-teal);
+  letter-spacing: -0.3px;
+}
+
+.figma-modal--register-review .figma-modal__subtitle {
+  margin-top: 6px;
+  font-size: var(--text-body);
+  color: var(--color-nevada);
+  line-height: var(--line-height-relaxed);
+}
+
+.figma-modal--register-review .figma-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 0;
+  line-height: 1;
+  margin-top: 4px;
+}
+
+.figma-modal--register-review .figma-modal__close img {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.figma-modal--register-review .figma-modal__body {
+  padding: 22px 28px 10px;
+}
+
+.register-review__summary-card {
+  padding: 20px 22px;
+  border: 1px solid var(--color-blue-border);
+  border-radius: 12px;
+  background: var(--color-surface-blue-tint);
+}
+
+.register-review__summary-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 28px;
+  margin: 0;
+}
+
+.register-review__field {
+  min-width: 0;
+}
+
+.register-review__field dt {
+  margin: 0 0 4px;
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-granny-smith);
+}
+
+.register-review__field dd {
+  margin: 0;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  line-height: var(--line-height-normal);
+  word-break: break-word;
+}
+
+.register-review__status {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.register-review__status-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 999px;
+  background: var(--color-rain-forest);
+  flex-shrink: 0;
+}
+
+.register-review__status-dot--inactive {
+  background: var(--color-granny-smith);
+}
+
+.register-review__notice {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-top: 18px;
+  padding: 14px 16px;
+  border-left: 4px solid var(--color-rain-forest);
+  border-radius: 0 10px 10px 0;
+  background: var(--color-surface-green-tint);
+}
+
+.register-review__notice-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  background: var(--color-rain-forest);
+  color: var(--color-white);
+  flex-shrink: 0;
+}
+
+.register-review__notice p {
+  margin: 0;
+  font-size: var(--text-caption);
+  color: var(--color-river-bed);
+  line-height: var(--line-height-relaxed);
+}
+
+.register-review__footer {
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 28px 22px;
+  background: var(--color-form-bg);
+}
+
+.register-review__back-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 0 18px;
+  border: 1px solid var(--color-mystic);
+  border-radius: 8px;
+  background: var(--color-white);
+  font: inherit;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-brand-slate);
+  cursor: pointer;
+}
+
+.register-review__create-btn {
+  min-height: 42px;
+  padding-inline: 18px;
+  font-weight: var(--font-weight-semibold);
+}
+
+.register-review__create-icon {
+  width: 16px;
+  height: 16px;
+  filter: brightness(0) invert(1);
+}
+
+@media (max-width: 640px) {
+  .register-review__summary-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .register-review__footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+  }
+
+  .register-review__back-btn,
+  .register-review__create-btn {
+    width: 100%;
+  }
+}

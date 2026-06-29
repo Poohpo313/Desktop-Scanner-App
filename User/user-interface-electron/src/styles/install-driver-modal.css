@@ -1,0 +1,282 @@
+.install-driver-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(6px);
+}
+
+.install-driver-modal {
+  box-sizing: border-box;
+  width: min(560px, 100%);
+  max-height: min(92dvh, 820px);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  border-radius: 16px;
+  border: 1px solid #dbe3ee;
+  background: #fff;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
+}
+
+.install-driver-modal__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  flex-shrink: 0;
+  padding: 22px 22px 10px;
+}
+
+.install-driver-modal__title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.install-driver-modal__close {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  color: #64748b;
+  cursor: pointer;
+}
+
+.install-driver-modal__body {
+  flex: 1;
+  min-height: 0;
+  overflow-y: auto;
+  padding: 8px 22px 18px;
+}
+
+.install-driver-modal__section + .install-driver-modal__section {
+  margin-top: 18px;
+}
+
+.install-driver-modal__section-title {
+  margin: 0 0 10px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #334155;
+}
+
+.install-driver-modal__card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+}
+
+.install-driver-modal__card--driver {
+  align-items: flex-start;
+}
+
+.install-driver-modal__device-icon-wrap,
+.install-driver-modal__driver-icon-wrap {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  color: #64748b;
+}
+
+.install-driver-modal__device-icon,
+.install-driver-modal__driver-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.install-driver-modal__device-name,
+.install-driver-modal__driver-name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.install-driver-modal__device-meta,
+.install-driver-modal__driver-meta {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.install-driver-modal__driver-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.install-driver-modal__recommended-badge {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: #dcfce7;
+  font-size: 11px;
+  font-weight: 600;
+  color: #15803d;
+}
+
+.install-driver-modal__alert {
+  display: flex;
+  gap: 12px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid #bfdbfe;
+  background: #eff6ff;
+}
+
+.install-driver-modal__alert-icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #2563eb;
+}
+
+.install-driver-modal__alert-title {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.install-driver-modal__alert-text {
+  margin: 4px 0 0;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #475569;
+}
+
+.install-driver-modal__methods {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.install-driver-modal__method {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 4px 10px;
+  padding: 14px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+}
+
+.install-driver-modal__method--active {
+  border-color: #86efac;
+  background: #f0fdf4;
+}
+
+.install-driver-modal__method-radio {
+  grid-row: 1 / span 2;
+  align-self: start;
+  width: 16px;
+  height: 16px;
+  margin-top: 2px;
+  border-radius: 999px;
+  border: 2px solid #cbd5e1;
+  background: #fff;
+}
+
+.install-driver-modal__method--active .install-driver-modal__method-radio {
+  border-color: #008768;
+  background: radial-gradient(circle at center, #008768 0 5px, #fff 5px 100%);
+}
+
+.install-driver-modal__method-icon {
+  width: 18px;
+  height: 18px;
+  color: #2563eb;
+}
+
+.install-driver-modal__method--active .install-driver-modal__method-icon {
+  color: #008768;
+}
+
+.install-driver-modal__method-title {
+  grid-column: 2;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.install-driver-modal__method-desc {
+  grid-column: 1 / -1;
+  font-size: 12px;
+  line-height: 1.5;
+  color: #64748b;
+}
+
+.install-driver-modal__footer {
+  display: flex;
+  flex-shrink: 0;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 16px 22px 22px;
+  border-top: 1px solid #e6e9f1;
+}
+
+.install-driver-modal__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  min-width: 130px;
+  padding: 0 18px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.install-driver-modal__btn--cancel {
+  border-color: #d7dee8;
+  background: #fff;
+  color: #0f172a;
+}
+
+.install-driver-modal__btn--install {
+  background: #008768;
+  color: #fff;
+}
+
+.install-driver-modal__btn--install:hover {
+  background: #006d56;
+}
+
+@media (max-width: 560px) {
+  .install-driver-modal__methods {
+    grid-template-columns: 1fr;
+  }
+
+  .install-driver-modal__footer {
+    flex-direction: column-reverse;
+  }
+
+  .install-driver-modal__btn {
+    width: 100%;
+  }
+}

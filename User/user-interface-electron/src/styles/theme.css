@@ -1,0 +1,8 @@
+/**
+ * Theme variables and base light/dark hooks.
+ * Component overrides live in theme-dark-overrides.css (loaded last).
+ */
+
+[data-theme="light"] {
+  color-scheme: light;
+}

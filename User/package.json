@@ -1,0 +1,17 @@
+{
+  "name": "bukolabs-desktop-scanner",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Bukolabs.io Desktop Scanner monorepo",
+  "workspaces": [
+    "packages/*",
+    "user-interface-electron",
+    "apps/backend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=user-interface-electron",
+    "dev:web": "npm run dev:web --workspace=user-interface-electron",
+    "build": "npm run build --workspace=user-interface-electron",
+    "postinstall": "npm run build --workspace=@bukolabs/shared-types"
+  }
+}

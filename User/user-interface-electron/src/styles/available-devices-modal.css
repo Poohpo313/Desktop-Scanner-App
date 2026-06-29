@@ -1,0 +1,139 @@
+.available-devices-modal__list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.available-devices-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #e6e9f1;
+  border-radius: 12px;
+  background: #fff;
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.available-devices-card:hover {
+  border-color: #94a3b8;
+}
+
+.available-devices-card--selected {
+  border-color: #008768;
+  background: #f0faf7;
+}
+
+.available-devices-card--offline.available-devices-card--selected {
+  border-color: #008768;
+  background: #f0faf7;
+}
+
+.available-devices-card__radio {
+  width: 18px;
+  height: 18px;
+  border: 2px solid #cbd5e1;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.available-devices-card__radio--on {
+  border-color: #008768;
+  background: radial-gradient(circle, #008768 0 5px, #fff 5px 100%);
+}
+
+.available-devices-card__copy {
+  display: flex;
+  min-width: 0;
+  flex: 1;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.available-devices-card__name {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.available-devices-card__connection {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.available-devices-card__badge {
+  display: inline-flex;
+  flex-shrink: 0;
+  align-items: center;
+  gap: 6px;
+  height: 26px;
+  padding: 0 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.available-devices-card__badge--connected {
+  background: #ecfdf5;
+  color: #047857;
+}
+
+.available-devices-card__badge--offline {
+  background: #fff7ed;
+  color: #c2410c;
+}
+
+.available-devices-card__badge-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: currentColor;
+}
+
+.available-devices-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.available-devices-modal__footer-actions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.available-devices-modal__refresh {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.available-devices-modal__refresh--spinning svg {
+  animation: available-devices-refresh-spin 0.8s linear infinite;
+}
+
+@keyframes available-devices-refresh-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (max-width: 640px) {
+  .available-devices-modal__footer {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .available-devices-modal__footer-actions {
+    justify-content: stretch;
+  }
+
+  .available-devices-modal__footer-actions .scan-btn {
+    flex: 1;
+  }
+}

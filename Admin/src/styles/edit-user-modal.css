@@ -1,0 +1,220 @@
+@import "./register-user-modal.css";
+
+.figma-modal--edit-user {
+  --register-modal-pad-x: 24px;
+  --register-input-bg: #f0f4f8;
+  --register-input-border: #dce5ea;
+  --register-divider: #e8efed;
+
+  width: min(700px, 100%);
+  border-radius: 12px;
+  border: 1px solid var(--color-mystic);
+  box-shadow: 0 12px 40px rgba(0, 53, 52, 0.1);
+  background: var(--color-white);
+}
+
+.figma-modal--edit-user .figma-modal__header {
+  align-items: center;
+  padding: 20px var(--register-modal-pad-x) 18px;
+  background: var(--color-white);
+  border-bottom: 1px solid var(--register-divider);
+}
+
+.figma-modal--edit-user .figma-modal__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  letter-spacing: -0.35px;
+}
+
+.figma-modal--edit-user .figma-modal__body {
+  padding: 20px var(--register-modal-pad-x) 8px;
+}
+
+.edit-user__header-icon {
+  display: block;
+  width: 18px;
+  height: 18px;
+  color: var(--color-rain-forest);
+}
+
+.edit-user__footer {
+  justify-content: flex-end;
+  align-items: center;
+  gap: 20px;
+  padding: 18px var(--register-modal-pad-x) 20px;
+  background: var(--color-white);
+  border-top: 1px solid var(--register-divider);
+}
+
+.edit-user__cancel-btn {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-brand-slate);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.edit-user__save-btn {
+  min-width: 168px;
+  min-height: 44px;
+  padding-inline: 28px;
+  border-radius: 8px;
+  font-weight: var(--font-weight-semibold);
+  box-shadow: 0 6px 16px rgba(0, 122, 94, 0.2);
+}
+
+.figma-modal--edit-user .register-user__section + .register-user__section,
+.figma-modal--edit-user .register-user__section--personal,
+.figma-modal--edit-user .register-user__section--contact,
+.figma-modal--edit-user .register-user__section--license {
+  margin-top: 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--register-divider);
+}
+
+.edit-user__locked-row {
+  margin-top: 16px;
+}
+
+.figma-modal--edit-user .register-user__input-wrap {
+  border: 1px solid var(--register-input-border);
+  border-radius: 6px;
+  background: var(--register-input-bg);
+  min-height: 42px;
+  box-sizing: border-box;
+  transition:
+    border-color 0.15s ease,
+    box-shadow 0.15s ease,
+    background 0.15s ease;
+}
+
+.figma-modal--edit-user .register-user__input-wrap:focus-within {
+  border-color: var(--color-persian-green);
+  box-shadow: var(--focus-ring);
+  background: var(--color-white);
+}
+
+.figma-modal--edit-user .register-user__input-wrap--error {
+  border-color: var(--color-danger);
+  background: var(--color-danger-bg);
+}
+
+.figma-modal--edit-user .register-user__input-wrap--locked {
+  background: #eceff2;
+  border-color: #dde3e8;
+  min-height: 42px;
+  height: auto;
+}
+
+.figma-modal--edit-user .register-user__input-wrap--locked .register-user__input {
+  min-height: 40px;
+  height: auto;
+  line-height: 1.35;
+  padding-top: 10px;
+  padding-bottom: 10px;
+}
+
+.figma-modal--edit-user .register-user__input-wrap--locked:focus-within {
+  border-color: #dde3e8;
+  box-shadow: none;
+  background: #eceff2;
+}
+
+.figma-modal--edit-user .register-user__input-wrap--key {
+  width: min(100%, 320px);
+  max-width: 48%;
+  background: #e8f0fc;
+  border-color: #d4e3f2;
+}
+
+.figma-modal--edit-user .register-user__input-wrap--key:focus-within {
+  border-color: #d4e3f2;
+  box-shadow: none;
+  background: #e8f0fc;
+}
+
+.figma-modal--edit-user .register-user__input-wrap .register-user__input {
+  border: 0;
+  background: transparent;
+  min-height: 40px;
+  border-radius: 6px;
+  box-shadow: none;
+  padding-right: 14px;
+}
+
+.figma-modal--edit-user .register-user__input-wrap--locked .register-user__input {
+  color: var(--color-brand-slate);
+  cursor: default;
+  padding-right: 38px;
+  white-space: normal;
+  text-overflow: clip;
+  overflow: visible;
+}
+
+.figma-modal--edit-user .register-user__input-wrap--locked-multiline {
+  align-items: flex-start;
+}
+
+.figma-modal--edit-user .register-user__input-wrap--locked-multiline .register-user__readonly-value {
+  min-height: 40px;
+  height: auto;
+  line-height: 1.35;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  word-break: break-word;
+}
+
+.figma-modal--edit-user .register-user__input-wrap--locked-multiline .edit-user__lock-icon {
+  top: 14px;
+  transform: none;
+}
+
+.edit-user__lock-icon {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-granny-smith);
+  pointer-events: none;
+}
+
+.edit-user__key-field {
+  max-width: 100%;
+}
+
+@media (max-width: 720px) {
+  .figma-modal--edit-user {
+    --register-modal-pad-x: 18px;
+  }
+
+  .figma-modal--edit-user .register-user__name-grid,
+  .edit-user__locked-row {
+    grid-template-columns: 1fr;
+  }
+
+  .figma-modal--edit-user .register-user__input-wrap--key {
+    max-width: 100%;
+    width: 100%;
+  }
+
+  .edit-user__footer {
+    flex-direction: column-reverse;
+    align-items: stretch;
+    gap: 12px;
+  }
+
+  .edit-user__save-btn {
+    width: 100%;
+  }
+}

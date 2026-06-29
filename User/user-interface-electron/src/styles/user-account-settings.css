@@ -1,0 +1,198 @@
+.user-account-settings-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 120;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(0, 35, 34, 0.48);
+  backdrop-filter: blur(8px);
+}
+
+.user-account-settings-window {
+  width: min(760px, 100%);
+  max-height: min(90vh, 860px);
+  overflow: auto;
+  border-radius: 16px;
+  border: 1px solid #c7d8e5;
+  background: linear-gradient(180deg, #ffffff 0%, #f8fbfd 100%);
+  box-shadow: 0 24px 54px rgba(15, 23, 42, 0.16);
+}
+
+.user-account-settings-window__header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 18px 22px 14px;
+  border-bottom: 1px solid #dbe7ef;
+  background: linear-gradient(180deg, #f3fbf8 0%, #ffffff 100%);
+}
+
+.user-account-settings-window__close {
+  min-height: 36px;
+  padding: 0 14px;
+  border: 1px solid #94a3b8;
+  border-radius: 8px;
+  background: #fff;
+  color: #0f172a;
+  font: inherit;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.user-account-settings-window__body {
+  padding: 4px 22px 20px;
+}
+
+.user-account-settings-window__loading,
+.user-account-settings-window__error {
+  padding: 18px 22px;
+  margin: 0;
+}
+
+.user-account-settings-window__error {
+  color: #b91c1c;
+  font-weight: 500;
+}
+
+.user-account-settings-window__notice {
+  padding: 0 22px 0;
+  margin: 0 0 8px;
+  color: #007a5e;
+  font-size: 0.875rem;
+  font-weight: 500;
+}
+
+.user-account-settings-window.settings-figma {
+  min-height: auto !important;
+}
+
+.user-account-settings-window .settings-figma__section {
+  margin-bottom: 0 !important;
+  display: block !important;
+  flex-direction: unset !important;
+}
+
+.user-account-settings-window .settings-figma__section--account,
+.user-account-settings-window .settings-figma__section--pin {
+  min-height: auto !important;
+  display: block !important;
+}
+
+.user-account-settings-window .settings-figma__panel-title {
+  margin: 0 0 4px;
+}
+
+.user-account-settings-window .settings-figma__panel-subtitle {
+  margin: 0;
+}
+
+.user-account-settings-window .settings-figma__section,
+.user-account-settings-window .settings-figma__section--account,
+.user-account-settings-window .settings-figma__section--pin,
+.user-account-settings-window .settings-figma__section--admin-contact {
+  min-height: auto !important;
+  margin-top: 10px;
+  margin-bottom: 0 !important;
+  padding: 12px 14px 14px;
+  border: 1px solid #dbe7ef;
+  border-radius: 12px;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
+}
+
+.user-account-settings-window .settings-figma__section-title {
+  margin: 0 0 8px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #e8eef3;
+  color: #007a5e;
+  font-size: 0.82rem;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.user-account-settings-window .settings-figma__section--account {
+  background: linear-gradient(180deg, #f8fbff 0%, #ffffff 100%);
+}
+
+.user-account-settings-window .settings-figma__section--admin-contact {
+  background: linear-gradient(180deg, #fff9f0 0%, #ffffff 100%);
+  border-color: #f1dfc7;
+}
+
+.user-account-settings-window .settings-figma__section--pin {
+  background: linear-gradient(180deg, #f6fffb 0%, #ffffff 100%);
+}
+
+.user-account-settings-window .settings-figma__fields {
+  gap: 10px 14px;
+}
+
+.user-account-settings-window .settings-figma__field {
+  gap: 5px;
+}
+
+.user-account-settings-window .settings-figma__label {
+  color: #334155;
+  font-weight: 600;
+  font-size: 0.78rem;
+}
+
+.user-account-settings-window .settings-figma__input {
+  min-height: 38px;
+  padding: 8px 12px;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  background: #fff;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.user-account-settings-window .settings-figma__input:focus {
+  border-color: #008768;
+  box-shadow: 0 0 0 3px rgba(0, 135, 104, 0.12);
+  outline: none;
+}
+
+.user-account-settings-window .settings-figma__input--account-readonly,
+.user-account-settings-window .settings-figma__input--admin-readonly {
+  background: #f1f5f9;
+  color: #475569;
+  border-color: #dbe4ec;
+}
+
+.user-account-settings-window .settings-figma__section-note {
+  margin: 0 0 10px;
+  font-size: 0.78rem;
+  line-height: 1.45;
+  color: #64748b;
+}
+
+.user-account-settings-window .settings-figma__fields--admin-contact {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.user-account-settings-window .settings-figma__fields--admin-contact .settings-figma__field--full {
+  grid-column: 1 / -1;
+}
+
+.user-account-settings-window .settings-figma__save-btn {
+  background: linear-gradient(180deg, #008768 0%, #00755b 100%);
+  border: 0;
+}
+
+.user-account-settings-window .settings-figma__cancel-btn {
+  border: 1px solid #cbd5e1;
+}
+
+.user-account-settings-window .settings-figma__section-actions {
+  margin-top: 4px;
+  padding-top: 4px;
+}
+
+@media (max-width: 640px) {
+  .user-account-settings-window .settings-figma__fields--admin-contact {
+    grid-template-columns: 1fr;
+  }
+}

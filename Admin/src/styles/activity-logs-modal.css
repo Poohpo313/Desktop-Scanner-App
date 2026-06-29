@@ -1,0 +1,80 @@
+@import "./figma-tokens.css";
+@import "./activity-logs.css";
+
+.figma-modal--activity-logs {
+  width: min(920px, 100%);
+  border-radius: 14px;
+}
+
+.figma-modal--activity-logs .figma-modal__header {
+  align-items: flex-start;
+  padding: 20px 24px 0;
+  gap: 20px;
+}
+
+.figma-modal--activity-logs .figma-modal__title {
+  font-size: var(--text-h2);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-deep-teal);
+  letter-spacing: -0.2px;
+}
+
+.figma-modal--activity-logs .figma-modal__subtitle {
+  margin-top: 6px;
+  font-size: var(--text-caption);
+  color: var(--color-nevada);
+}
+
+.figma-modal--activity-logs .figma-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 0;
+}
+
+.figma-modal--activity-logs .figma-modal__close img {
+  width: 14px;
+  height: 14px;
+}
+
+.figma-modal--activity-logs .figma-modal__body {
+  padding: 0;
+}
+
+.figma-modal--activity-logs .activity-logs__toolbar {
+  margin: 0;
+  border-top: 1px solid var(--color-mystic);
+}
+
+.figma-modal--activity-logs .activity-logs__list {
+  max-height: min(52vh, 520px);
+}
+
+.activity-logs-modal__footer-wrap {
+  display: block;
+  border-top: 1px solid var(--color-mystic);
+  padding: 14px 24px 20px;
+}
+
+.activity-logs-modal__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.activity-logs-modal__count {
+  margin: 0;
+  font-size: var(--text-caption);
+  color: var(--color-nevada);
+}
+
+.activity-logs-modal__footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

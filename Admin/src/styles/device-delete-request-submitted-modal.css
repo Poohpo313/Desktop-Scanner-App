@@ -1,0 +1,163 @@
+@import "./figma-tokens.css";
+
+.figma-modal--device-delete-submitted {
+  width: min(500px, 100%);
+  border-radius: 16px;
+  border: 1px solid #e6eef5;
+  box-shadow: 0 16px 40px rgba(0, 53, 52, 0.12);
+  background: var(--color-white);
+}
+
+.figma-modal--device-delete-submitted .figma-modal__body {
+  padding: 32px 32px 28px;
+}
+
+.device-delete-submitted {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.device-delete-submitted__icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 18px;
+  border-radius: 999px;
+  background: #e8edf5;
+  color: #2563eb;
+}
+
+.device-delete-submitted__clipboard-icon {
+  display: block;
+}
+
+.device-delete-submitted__title {
+  margin: 0 0 12px;
+  font-size: 1.75rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.35px;
+  line-height: 1.2;
+  color: #0d1b2a;
+}
+
+.device-delete-submitted__success {
+  margin: 0 0 10px;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.45;
+  color: #006d44;
+}
+
+.device-delete-submitted__subtext {
+  margin: 0 0 20px;
+  max-width: 380px;
+  font-size: var(--text-small);
+  line-height: 1.5;
+  color: #666666;
+}
+
+.device-delete-submitted__status-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  margin-bottom: 16px;
+  padding: 13px 16px;
+  border: 1px solid #f0e2b8;
+  border-radius: 10px;
+  background: #fffbeb;
+  box-sizing: border-box;
+}
+
+.device-delete-submitted__status-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  color: #92400e;
+}
+
+.device-delete-submitted__status-text {
+  margin: 0;
+  font-size: 11px;
+  font-weight: var(--font-weight-bold);
+  line-height: 1.45;
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+  color: #92400e;
+}
+
+.device-delete-submitted__note-panel {
+  width: 100%;
+  padding: 18px 18px 16px;
+  border-radius: 12px;
+  border: 1px solid #e3eaf2;
+  border-left: 4px solid #047857;
+  background: #f0f4ff;
+  box-sizing: border-box;
+  text-align: left;
+}
+
+.device-delete-submitted__note-copy {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.device-delete-submitted__note-icon {
+  display: inline-flex;
+  flex-shrink: 0;
+  margin-top: 2px;
+  color: #007a5e;
+}
+
+.device-delete-submitted__note-text {
+  margin: 0;
+  font-size: var(--text-small);
+  line-height: 1.55;
+  color: #0d1b2a;
+}
+
+.device-delete-submitted__note-text strong {
+  font-weight: var(--font-weight-semibold);
+  color: #0d1b2a;
+}
+
+.device-delete-submitted__done-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 46px;
+  padding: 0 20px;
+  border: 0;
+  border-radius: 10px;
+  background: #007a5e;
+  font: inherit;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-white);
+  cursor: pointer;
+}
+
+.device-delete-submitted__done-btn:hover {
+  filter: brightness(1.04);
+}
+
+@media (max-width: 560px) {
+  .figma-modal--device-delete-submitted .figma-modal__body {
+    padding: 24px 20px 22px;
+  }
+
+  .device-delete-submitted__title {
+    font-size: 1.5rem;
+  }
+
+  .device-delete-submitted__status-text {
+    font-size: 10px;
+  }
+}

@@ -1,0 +1,366 @@
+@import "./figma-tokens.css";
+
+.figma-modal--view-contact {
+  width: min(720px, 100%);
+  border-radius: 12px;
+}
+
+.figma-modal--view-contact .figma-modal__header {
+  padding: 12px 20px 0;
+  justify-content: flex-end;
+  min-height: 40px;
+}
+
+.figma-modal--view-contact .figma-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 0;
+  line-height: 1;
+}
+
+.figma-modal--view-contact .figma-modal__close img {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.figma-modal--view-contact .figma-modal__body {
+  padding: 4px 20px 10px;
+}
+
+.view-contact-layout {
+  display: grid;
+  grid-template-columns: 212px minmax(0, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.view-contact-profile {
+  padding: 16px 14px 18px;
+  border-radius: 10px;
+  border: 1px solid var(--color-mystic);
+  background: var(--color-surface-subtle);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.view-contact-profile__photo-wrap {
+  position: relative;
+  width: 118px;
+  height: 124px;
+  margin: 0 auto 12px;
+  flex-shrink: 0;
+}
+
+.view-contact-profile__avatar {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.view-contact-profile__name {
+  margin: 0 0 3px;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  line-height: 1.3;
+}
+
+.view-contact-profile__role {
+  margin: 0 0 12px;
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-nevada);
+  line-height: 1.4;
+}
+
+.view-contact-profile__badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  margin-top: auto;
+  padding: 5px 11px;
+  border-radius: 999px;
+  background: var(--color-recovery-info-bg);
+  color: var(--color-rain-forest);
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1;
+}
+
+.view-contact-profile__badge-icon {
+  width: 11px;
+  height: 11px;
+  flex-shrink: 0;
+  display: block;
+  object-fit: contain;
+}
+
+.view-contact-main {
+  min-width: 0;
+}
+
+.view-contact-section + .view-contact-section {
+  margin-top: 16px;
+}
+
+.view-contact-section__title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 10px;
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-bold);
+  color: var(--color-tower-gray);
+  letter-spacing: 0.7px;
+  line-height: 1;
+  text-transform: uppercase;
+}
+
+.view-contact-section__title::before,
+.view-contact-section__title::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--color-mystic);
+}
+
+.view-contact-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--color-mystic);
+  background: var(--color-white);
+}
+
+.view-contact-row + .view-contact-row {
+  margin-top: 8px;
+}
+
+.view-contact-row__icon-wrap {
+  width: 34px;
+  height: 34px;
+  border-radius: 8px;
+  background: transparent;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  overflow: hidden;
+}
+
+.view-contact-row__icon {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: contain;
+}
+
+.view-contact-row__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.view-contact-row__label {
+  display: block;
+  margin-bottom: 1px;
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-granny-smith);
+  line-height: var(--line-height-tight);
+}
+
+.view-contact-row__value {
+  display: block;
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  line-height: var(--line-height-snug);
+}
+
+.view-contact-row__sub {
+  display: block;
+  margin-top: 1px;
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-granny-smith);
+  line-height: 1.3;
+}
+
+.view-contact-row__actions {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
+}
+
+.view-contact-row__btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  height: 32px;
+  padding: 0 11px;
+  border-radius: 8px;
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.view-contact-row__btn--copy {
+  background: var(--color-white);
+  border-color: var(--color-mystic);
+  color: var(--color-nevada);
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease,
+    color 0.25s ease;
+}
+
+.view-contact-row__btn--copy.view-contact-row__btn--copied {
+  background: var(--color-recovery-info-bg);
+  border-color: var(--color-persian-green);
+  color: var(--color-rain-forest);
+}
+
+.view-contact-row__btn--primary {
+  background: var(--color-rain-forest);
+  color: var(--color-white);
+  box-shadow: none;
+}
+
+.view-contact-row__btn-icon {
+  width: 13px;
+  height: 13px;
+  flex-shrink: 0;
+  display: block;
+  object-fit: contain;
+}
+
+.view-contact-context {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.view-contact-context-card {
+  padding: 11px 12px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--color-mystic);
+  background: var(--color-aqua-squeeze);
+}
+
+.view-contact-context-card__head {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  margin-bottom: 5px;
+}
+
+.view-contact-context-card__icon-wrap {
+  width: 26px;
+  height: 26px;
+  border-radius: 6px;
+  background: var(--color-recovery-info-bg);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.view-contact-context-card__icon {
+  width: 15px;
+  height: 15px;
+  display: block;
+  object-fit: contain;
+}
+
+.view-contact-context-card__label {
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-rain-forest);
+  line-height: var(--line-height-tight);
+}
+
+.view-contact-context-card__value {
+  margin: 0;
+  padding-left: 33px;
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  line-height: var(--line-height-snug);
+}
+
+.figma-modal--view-contact .figma-modal__footer {
+  padding: 12px 20px 16px;
+  border-top: 1px solid var(--color-mystic);
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.view-contact-footer__cancel {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 88px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 8px;
+  background: var(--color-login-panel);
+  border: 1px solid var(--color-mystic);
+  color: var(--color-nevada);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+}
+
+.view-contact-footer__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 116px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 8px;
+  background: var(--color-rain-forest);
+  color: var(--color-white);
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+  box-shadow: none;
+}
+
+@media (max-width: 680px) {
+  .view-contact-layout {
+    grid-template-columns: 1fr;
+  }
+
+  .view-contact-row {
+    flex-wrap: wrap;
+  }
+
+  .view-contact-row__actions {
+    width: 100%;
+    justify-content: flex-end;
+  }
+
+  .view-contact-context {
+    grid-template-columns: 1fr;
+  }
+
+  .view-contact-context-card__value {
+    padding-left: 0;
+  }
+}

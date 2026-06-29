@@ -1,0 +1,318 @@
+@import "./figma-tokens.css";
+
+.figma-modal--contact-super-admin {
+  width: min(560px, 100%);
+  border-radius: 12px;
+}
+
+.figma-modal--contact-super-admin .figma-modal__header {
+  padding: 18px 24px 14px;
+  align-items: center;
+  background: var(--color-login-panel);
+  border-bottom: 1px solid var(--color-mystic);
+}
+
+.figma-modal--contact-super-admin .figma-modal__title {
+  font-size: var(--text-h2);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-rain-forest);
+  letter-spacing: -0.2px;
+  line-height: 1.3;
+}
+
+.figma-modal--contact-super-admin .figma-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 0;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.figma-modal--contact-super-admin .figma-modal__close img {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.figma-modal--contact-super-admin .figma-modal__body {
+  padding: 16px 24px 8px;
+}
+
+.figma-modal--contact-super-admin .figma-modal__footer {
+  padding: 14px 24px 20px;
+  border-top: 1px solid var(--color-mystic);
+}
+
+.figma-modal--contact-super-admin .figma-modal__footer--continue-only {
+  justify-content: flex-end;
+}
+
+.figma-modal--contact-super-admin .figma-modal__footer--split {
+  justify-content: flex-end;
+  gap: 20px;
+}
+
+.contact-super-admin__profile {
+  display: flex;
+  gap: 20px;
+  align-items: center;
+  padding-bottom: 0;
+  margin-bottom: 0;
+}
+
+.contact-super-admin__photo-wrap {
+  position: relative;
+  flex-shrink: 0;
+}
+
+.contact-super-admin__photo {
+  width: 88px;
+  height: 88px;
+  border-radius: 12px;
+  border: 1px solid var(--color-mystic);
+  object-fit: cover;
+  display: block;
+  box-shadow: 0 2px 8px rgba(0, 35, 34, 0.08);
+}
+
+.contact-super-admin__available {
+  position: absolute;
+  left: 50%;
+  right: auto;
+  bottom: -8px;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 5px 11px 5px 9px;
+  border-radius: 999px;
+  border: 3px solid var(--color-white);
+  background: var(--color-rain-forest);
+  color: var(--color-white);
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-bold);
+  letter-spacing: 0.5px;
+  white-space: nowrap;
+  line-height: 1;
+  box-shadow: 0 2px 6px rgba(0, 53, 52, 0.2);
+  z-index: 1;
+}
+
+.contact-super-admin__available-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--color-white);
+  flex-shrink: 0;
+}
+
+.contact-super-admin__identity {
+  flex: 1;
+  min-width: 0;
+}
+
+.contact-super-admin__name {
+  font-size: var(--text-h2);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  line-height: var(--line-height-tight)5;
+  margin-bottom: 4px;
+}
+
+.contact-super-admin__role {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-rain-forest);
+  line-height: var(--line-height-snug);
+  margin-bottom: 8px;
+}
+
+.contact-super-admin__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.contact-super-admin__meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px 20px;
+}
+
+.contact-super-admin__meta-line {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-nevada);
+  line-height: var(--line-height-snug);
+}
+
+.contact-super-admin__meta-icon {
+  width: auto;
+  height: 14px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.contact-super-admin__meta-line--hours .contact-super-admin__meta-icon {
+  height: 14px;
+}
+
+.contact-super-admin__section-head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 30px 0 14px;
+}
+
+.contact-super-admin__section-title {
+  margin: 0;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  white-space: nowrap;
+}
+
+.contact-super-admin__section-line {
+  flex: 1;
+  height: 1px;
+  background: var(--color-mystic);
+}
+
+.contact-super-admin__grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.contact-super-admin__card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 14px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  background: var(--color-mystic);
+  text-decoration: none;
+  color: inherit;
+  position: relative;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.contact-super-admin__card:hover {
+  border-color: var(--color-mystic);
+}
+
+.contact-super-admin__card--selected {
+  border: 1px solid var(--color-rain-forest);
+  background: var(--color-mint-border);
+}
+
+.contact-super-admin__card--copy:active {
+  background: var(--color-mint-border);
+  border-color: var(--color-rain-forest);
+}
+
+.contact-super-admin__card-check {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  width: 18px;
+  height: 18px;
+}
+
+.contact-super-admin__card-icon-shell {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: var(--color-mystic);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.contact-super-admin__card-icon-shell--selected {
+  background: var(--color-rain-forest);
+}
+
+.contact-super-admin__card-icon-shell svg {
+  display: block;
+}
+
+.contact-method-icon__img {
+  display: block;
+  object-fit: contain;
+}
+
+.contact-super-admin__card-icon-shell--selected .contact-method-icon__img {
+  filter: brightness(0) invert(1);
+}
+
+.contact-super-admin__card-text {
+  min-width: 0;
+}
+
+.contact-super-admin__card-title {
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  line-height: var(--line-height-tight)5;
+  margin-bottom: 2px;
+}
+
+.contact-super-admin__card--selected .contact-super-admin__card-title {
+  color: var(--color-rain-forest);
+}
+
+.contact-super-admin__card-desc {
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-granny-smith);
+  line-height: var(--line-height-snug);
+}
+
+.contact-super-admin__card--selected .contact-super-admin__card-desc {
+  color: var(--color-rain-forest);
+}
+
+.contact-super-admin__back {
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-nevada);
+  text-decoration: none;
+}
+
+.contact-super-admin__back:hover {
+  color: var(--color-brand-slate);
+}
+
+.figma-btn--continue-muted {
+  background: var(--color-jet-stream);
+  color: var(--color-white);
+  box-shadow: none;
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-body);
+  height: 40px;
+  padding: 0 18px;
+  border-radius: 8px;
+  pointer-events: none;
+}
+
+.figma-btn--continue-active {
+  font-weight: var(--font-weight-semibold);
+  font-size: var(--text-body);
+}
+
+@media (max-width: 560px) {
+  .contact-super-admin__grid {
+    grid-template-columns: 1fr;
+  }
+}

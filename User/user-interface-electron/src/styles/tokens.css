@@ -1,0 +1,61 @@
+:root {
+  --scroll-end-spacing: 72px;
+  --auth-scroll-end-spacing: 88px;
+  --sidebar-scroll-end-spacing: 140px;
+  --bukolabs-brand-gap: 2px;
+  --color-cyan-10: #003534;
+  --color-cyan-14: #004847;
+  --color-cyan-330: rgba(0, 167, 165, 0);
+  --item-spacing-11: 11px;
+  --font-size-54: 54px;
+  --line-height-58_32: 58.32px;
+  --letter-spacing--1_8: -1.8px;
+  --color-deep-teal: #003534;
+  --color-persian-green: #00a7a5;
+  --color-rain-forest: #007a5e;
+  --color-rain-forest-light: #008967;
+  --color-aqua-squeeze: #f4faf8;
+  --color-powder-blue: #bdeae5;
+  --color-jet-stream: #b8d8d2;
+  --color-clear-day: #f7fffd;
+  --color-nevada: #5e7074;
+  --color-bottle-green: #082f2e;
+  --color-panel-bg: #eaf6f4;
+  --color-mystic: #dde8e7;
+  --color-timber-green: #1b3032;
+  --color-granny-smith: #8ea0a3;
+  --color-nebula: #ccdad8;
+  --color-river-bed: #4b5f62;
+  --color-tower-gray: #a8b5b8;
+  --color-limed-spruce: #3d4f52;
+  --color-splash-dark: #0d3d2e;
+  --color-splash-mid: #166534;
+  --color-emerald: #059669;
+  --color-emerald-bright: #10b981;
+  --color-brand-bg: #f0fbf6;
+  --color-brand-border: #e2f0eb;
+  --color-brand-mint: #d1fae5;
+  --app-header-border-width: 2px;
+  --app-header-border-color: #e6e9f1;
+  --font-family: "Poppins", "Segoe UI", sans-serif;
+
+  /* Semantic UI tokens (light) */
+  --ui-page-bg: #f5f7f9;
+  --ui-surface: #ffffff;
+  --ui-surface-muted: #f8fafc;
+  --ui-border: #e6e9f1;
+  --ui-border-subtle: #f1f5f9;
+  --ui-text-primary: #0f172a;
+  --ui-text-secondary: #64748b;
+  --ui-text-muted: #94a3b8;
+  --ui-input-bg: #ffffff;
+  --ui-input-border: #d7dee8;
+  --ui-hover-bg: #f8fafc;
+  --ui-table-header-bg: #f8fafc;
+  --ui-progress-track: #e8edf2;
+  --ui-accent: #008768;
+  --ui-accent-soft: #f0fdf4;
+  --ui-shadow: rgba(15, 23, 42, 0.04);
+
+  --console-header-body-gap: 20px;
+}

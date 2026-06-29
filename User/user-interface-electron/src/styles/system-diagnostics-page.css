@@ -1,0 +1,153 @@
+.system-diagnostics-page {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding: 24px 28px 32px;
+}
+
+.system-diagnostics-page__intro h2 {
+  margin: 0 0 8px;
+  font-size: 24px;
+  color: #0f172a;
+}
+
+.system-diagnostics-page__intro p {
+  margin: 0;
+  color: #64748b;
+  line-height: 1.6;
+}
+
+.system-diagnostics-page__device {
+  margin-top: 12px;
+  color: #334155;
+}
+
+.system-diagnostics-page__device--warning {
+  color: #b45309;
+}
+
+.system-diagnostics-page__checks,
+.system-diagnostics-page__summary {
+  background: #fff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 20px;
+}
+
+.system-diagnostics-page__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.system-diagnostics-page__item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: #f8fafc;
+}
+
+.system-diagnostics-page__item-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.system-diagnostics-page__item-copy strong {
+  color: #0f172a;
+}
+
+.system-diagnostics-page__item-copy span {
+  color: #64748b;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.system-diagnostics-page__status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.system-diagnostics-page__status--pending {
+  color: #64748b;
+}
+
+.system-diagnostics-page__status--running {
+  color: #2563eb;
+}
+
+.system-diagnostics-page__status--passed {
+  color: #15803d;
+}
+
+.system-diagnostics-page__status--failed {
+  color: #dc2626;
+}
+
+.system-diagnostics-page__spinner {
+  width: 18px;
+  height: 18px;
+  animation: system-diagnostics-spin 0.9s linear infinite;
+}
+
+.system-diagnostics-page__summary {
+  color: #334155;
+  line-height: 1.6;
+}
+
+.system-diagnostics-page__summary--ok {
+  border-color: #bbf7d0;
+  background: #f0fdf4;
+  color: #166534;
+}
+
+.system-diagnostics-page__summary--warn {
+  border-color: #fed7aa;
+  background: #fff7ed;
+  color: #9a3412;
+}
+
+.system-diagnostics-page__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}
+
+.system-diagnostics-page__btn {
+  border: none;
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.system-diagnostics-page__btn--secondary {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+.system-diagnostics-page__btn--primary {
+  background: #2563eb;
+  color: #fff;
+}
+
+.system-diagnostics-page__btn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+@keyframes system-diagnostics-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

@@ -1,0 +1,281 @@
+@import "./tokens.css";
+
+.email-confirmation-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 50% 50%, #1b6955 0%, #0f5549 38%, #06423d 64%, #003534 100%),
+    #003534;
+  padding: 24px;
+}
+
+.email-confirmation {
+  display: flex;
+  width: min(540px, 100%);
+  min-height: 540px;
+  padding: 56px 52px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 26px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(6, 70, 68, 0.78);
+  box-shadow: 0 30px 90px 0 rgba(0, 0, 0, 0.36), 0 1px 0 1px rgba(255, 255, 255, 0.08) inset;
+  backdrop-filter: blur(9px);
+  text-align: center;
+}
+
+.email-confirmation--pin {
+  width: min(540px, 100%);
+  min-height: 650px;
+  padding: 42px 48px;
+}
+
+.email-confirmation__content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.email-confirmation__icon-frame--pin {
+  width: 88px;
+  height: 88px;
+  margin-bottom: 28px;
+  background: linear-gradient(135deg, #2dd4bf 0%, #15803d 100%);
+}
+
+.email-confirmation__icon-frame--pin img {
+  width: 42px;
+  height: 42px;
+  object-fit: contain;
+}
+
+.email-confirmation__icon-frame {
+  display: flex;
+  width: 72px;
+  height: 72px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 32px;
+  border-radius: 18px;
+  background: linear-gradient(135deg, #2dd4bf 0%, #15803d 100%);
+  box-shadow: 0 18px 35px 0 rgba(0, 122, 94, 0.35);
+}
+
+.email-confirmation__icon-frame img {
+  width: 34px;
+  height: 34px;
+  object-fit: contain;
+  filter: brightness(0) invert(1);
+}
+
+.email-confirmation__title {
+  color: #f4faf8;
+  font-size: 28px;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.email-confirmation__subtitle {
+  max-width: 320px;
+  margin-top: 20px;
+  color: rgba(235, 241, 255, 0.88);
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+.email-confirmation__subtitle--compact {
+  margin-top: 8px;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.email-confirmation__pin-form {
+  width: 100%;
+}
+
+.email-confirmation__field-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+}
+
+.email-confirmation__eye-button {
+  position: relative;
+  width: 34px;
+  height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  border-radius: 8px;
+  background: rgba(0, 43, 42, 0.34);
+  cursor: pointer;
+  transition: background 160ms ease, box-shadow 160ms ease;
+}
+
+.email-confirmation__eye-button::before {
+  content: "";
+  position: absolute;
+  left: 9px;
+  top: 9px;
+  width: 14px;
+  height: 9px;
+  border: 2px solid rgba(235, 241, 255, 0.88);
+  border-radius: 50%;
+}
+
+.email-confirmation__eye-button::after {
+  content: "";
+  position: absolute;
+  left: 14px;
+  top: 12px;
+  width: 4px;
+  height: 4px;
+  border-radius: 999px;
+  background: rgba(235, 241, 255, 0.88);
+}
+
+.email-confirmation__eye-button:hover,
+.email-confirmation__eye-button:focus-visible {
+  background: rgba(0, 137, 103, 0.34);
+  box-shadow: 0 0 0 3px rgba(0, 137, 103, 0.22);
+}
+
+.email-confirmation__pin-group {
+  margin-bottom: 22px;
+}
+
+.email-confirmation__field-label {
+  display: block;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.email-confirmation__pin-group > .email-confirmation__field-label {
+  margin-bottom: 10px;
+}
+
+.email-confirmation__pin-boxes {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+}
+
+.email-confirmation__pin-box {
+  width: 57px;
+  height: 57px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(0, 43, 42, 0.44);
+  color: #ffffff;
+  font-size: 22px;
+  text-align: center;
+  outline: none;
+}
+
+.email-confirmation__pin-box:focus {
+  border-color: #008967;
+  box-shadow: 0 0 0 4px rgba(0, 137, 103, 0.38);
+}
+
+.email-confirmation__error {
+  margin: -8px 0 14px;
+  color: #ffb8b8;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.email-confirmation__button {
+  display: flex;
+  width: 100%;
+  height: 58px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #008967 0%, #008967 100%);
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.email-confirmation__text-button {
+  display: flex;
+  width: 100%;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 8px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.email-confirmation__text-button:hover,
+.email-confirmation__text-button:focus-visible {
+  background: linear-gradient(135deg, #008967 0%, #008967 100%);
+  box-shadow: 0 16px 34px rgba(0, 137, 103, 0.32);
+  transform: translateY(-2px);
+}
+
+.email-confirmation__text-button:active {
+  transform: translateY(0);
+}
+
+.email-confirmation__button:hover,
+.email-confirmation__button:focus-visible {
+  background: linear-gradient(135deg, #00a77f 0%, #008967 100%);
+  box-shadow: 0 16px 34px rgba(0, 137, 103, 0.32);
+  transform: translateY(-2px);
+}
+
+.email-confirmation__button:active {
+  transform: translateY(0);
+}
+
+.email-confirmation__footer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: center;
+  gap: 24px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  color: rgba(235, 241, 255, 0.88);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.email-confirmation__footer span {
+  white-space: nowrap;
+}
+
+@media (max-width: 640px) {
+  .email-confirmation-page {
+    padding: 16px;
+  }
+
+  .email-confirmation {
+    min-height: calc(100vh - 32px);
+    padding: 40px 24px;
+  }
+
+  .email-confirmation__footer {
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+}

@@ -1,0 +1,44 @@
+{
+  "name": "admin-interface-react",
+  "private": true,
+  "version": "1.0.0",
+  "type": "module",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "dev": "node ./scripts/free-dev-ports.cjs && set ELECTRON=true&& node ../scripts/run-vite.cjs --port 5174",
+    "dev:web": "node ./scripts/free-dev-ports.cjs && node ../scripts/run-vite.cjs --port 5174",
+    "build": "tsc -b && node ../scripts/run-vite.cjs build",
+    "preview": "node ../scripts/run-vite.cjs preview --port 5174",
+    "install:desktop": "node ./scripts/install-desktop.cjs",
+    "electron:dev": "set ELECTRON=true&& node ../scripts/run-vite.cjs --port 5174",
+    "electron:build": "set ELECTRON=true&& tsc -b && set ELECTRON=true&& node ../scripts/run-vite.cjs build",
+    "electron:start": "electron ."
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^5.0.1",
+    "axios": "^1.8.4",
+    "lucide-react": "^0.511.0",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-easy-crop": "^6.0.2",
+    "react-hook-form": "^7.56.4",
+    "react-router-dom": "^7.6.2",
+    "recharts": "^2.15.3",
+    "zod": "^3.25.28",
+    "zustand": "^5.0.3"
+  },
+  "devDependencies": {
+    "@types/node": "^22.15.30",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.5.2",
+    "autoprefixer": "^10.4.21",
+    "electron": "^36.4.0",
+    "kill-port": "^2.0.1",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "vite-plugin-electron": "^0.29.0"
+  }
+}

@@ -1,0 +1,504 @@
+{
+  "archivedAt": "2026-06-24T16:00:00.053Z",
+  "count": 37,
+  "logs": [
+    {
+      "id": 37,
+      "action": "backup.manual",
+      "details": {
+        "backupId": 1
+      },
+      "timestamp": "2026-06-24T07:35:21.045Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 38,
+      "action": "superadmin.login",
+      "details": {},
+      "timestamp": "2026-06-24T08:16:01.740Z",
+      "userId": null,
+      "adminId": 1,
+      "username": "superadmin",
+      "firstName": "Super",
+      "lastName": "Admin",
+      "source": "superadmin"
+    },
+    {
+      "id": 39,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 11,
+        "department": "Medicine"
+      },
+      "timestamp": "2026-06-24T08:17:16.527Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 40,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 12,
+        "department": "Medicine"
+      },
+      "timestamp": "2026-06-24T08:17:16.530Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 41,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 13,
+        "department": "Medicine"
+      },
+      "timestamp": "2026-06-24T08:17:16.531Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 42,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 14,
+        "department": "Medicine"
+      },
+      "timestamp": "2026-06-24T08:17:16.532Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 43,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 15,
+        "department": "Medicine"
+      },
+      "timestamp": "2026-06-24T08:17:16.534Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 44,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 16,
+        "department": "Medicine"
+      },
+      "timestamp": "2026-06-24T08:17:16.535Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 45,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 17,
+        "department": "Medicine"
+      },
+      "timestamp": "2026-06-24T08:17:16.536Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 46,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 18,
+        "department": "Medicine"
+      },
+      "timestamp": "2026-06-24T08:17:16.538Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 47,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 19,
+        "department": "Medicine"
+      },
+      "timestamp": "2026-06-24T08:17:16.540Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 48,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 20,
+        "department": "Medicine"
+      },
+      "timestamp": "2026-06-24T08:17:16.543Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 49,
+      "action": "admin.login",
+      "details": {
+        "username": "Julius10"
+      },
+      "timestamp": "2026-06-24T08:20:25.312Z",
+      "userId": null,
+      "adminId": 3,
+      "username": "Julius10",
+      "firstName": "Julius",
+      "lastName": "Recamadas",
+      "email": "keithgabriel.bansag@bisu.edu.ph",
+      "source": "admin"
+    },
+    {
+      "id": 50,
+      "action": "key.assigned",
+      "details": {
+        "userId": 4,
+        "serialId": 20
+      },
+      "timestamp": "2026-06-24T08:21:42.405Z",
+      "userId": null,
+      "adminId": 3,
+      "username": "Julius10",
+      "firstName": "Julius",
+      "lastName": "Recamadas",
+      "email": "keithgabriel.bansag@bisu.edu.ph",
+      "source": "admin"
+    },
+    {
+      "id": 51,
+      "action": "superadmin.login",
+      "details": {},
+      "timestamp": "2026-06-24T08:22:21.871Z",
+      "userId": null,
+      "adminId": 1,
+      "username": "superadmin",
+      "firstName": "Super",
+      "lastName": "Admin",
+      "source": "superadmin"
+    },
+    {
+      "id": 52,
+      "action": "revocation.requested",
+      "details": {
+        "reason": "unauthorized-user",
+        "targetId": 20,
+        "requestId": 1,
+        "requestType": "key"
+      },
+      "timestamp": "2026-06-24T08:22:32.222Z",
+      "userId": null,
+      "adminId": 3,
+      "username": "Julius10",
+      "firstName": "Julius",
+      "lastName": "Recamadas",
+      "email": "keithgabriel.bansag@bisu.edu.ph",
+      "source": "admin"
+    },
+    {
+      "id": 53,
+      "action": "user.login",
+      "details": {
+        "username": "Gab13"
+      },
+      "timestamp": "2026-06-24T09:00:51.728Z",
+      "userId": 1,
+      "adminId": null,
+      "username": "Gab13",
+      "firstName": "Gabriel",
+      "lastName": "Bansag",
+      "source": "user"
+    },
+    {
+      "id": 54,
+      "action": "admin.login",
+      "details": {
+        "username": "Keith13"
+      },
+      "timestamp": "2026-06-24T09:23:34.951Z",
+      "userId": null,
+      "adminId": 2,
+      "username": "Keith13",
+      "firstName": "Keith",
+      "lastName": "Bansag",
+      "email": "keithbansag@gmail.com",
+      "source": "admin"
+    },
+    {
+      "id": 55,
+      "action": "superadmin.login",
+      "details": {},
+      "timestamp": "2026-06-24T09:24:11.595Z",
+      "userId": null,
+      "adminId": 1,
+      "username": "superadmin",
+      "firstName": "Super",
+      "lastName": "Admin",
+      "source": "superadmin"
+    },
+    {
+      "id": 56,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 21,
+        "department": "Engineering"
+      },
+      "timestamp": "2026-06-24T09:24:24.705Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 57,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 22,
+        "department": "Engineering"
+      },
+      "timestamp": "2026-06-24T09:24:24.710Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 58,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 23,
+        "department": "Engineering"
+      },
+      "timestamp": "2026-06-24T09:24:24.713Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 59,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 24,
+        "department": "Engineering"
+      },
+      "timestamp": "2026-06-24T09:24:24.715Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 60,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 25,
+        "department": "Engineering"
+      },
+      "timestamp": "2026-06-24T09:24:24.717Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 61,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 26,
+        "department": "Engineering"
+      },
+      "timestamp": "2026-06-24T09:24:24.720Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 62,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 27,
+        "department": "Engineering"
+      },
+      "timestamp": "2026-06-24T09:24:24.722Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 63,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 28,
+        "department": "Engineering"
+      },
+      "timestamp": "2026-06-24T09:24:24.725Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 64,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 29,
+        "department": "Engineering"
+      },
+      "timestamp": "2026-06-24T09:24:24.728Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 65,
+      "action": "key.generated",
+      "details": {
+        "company": "BISU",
+        "serialId": 30,
+        "department": "Engineering"
+      },
+      "timestamp": "2026-06-24T09:24:24.732Z",
+      "userId": null,
+      "adminId": null,
+      "source": "system"
+    },
+    {
+      "id": 66,
+      "action": "admin.login",
+      "details": {
+        "username": "Keith13"
+      },
+      "timestamp": "2026-06-24T11:03:52.842Z",
+      "userId": null,
+      "adminId": 2,
+      "username": "Keith13",
+      "firstName": "Keith",
+      "lastName": "Bansag",
+      "email": "keithbansag@gmail.com",
+      "source": "admin"
+    },
+    {
+      "id": 67,
+      "action": "superadmin.login",
+      "details": {},
+      "timestamp": "2026-06-24T11:06:20.349Z",
+      "userId": null,
+      "adminId": 1,
+      "username": "superadmin",
+      "firstName": "Super",
+      "lastName": "Admin",
+      "source": "superadmin"
+    },
+    {
+      "id": 68,
+      "action": "admin.login",
+      "details": {
+        "username": "Julius10"
+      },
+      "timestamp": "2026-06-24T11:07:55.988Z",
+      "userId": null,
+      "adminId": 3,
+      "username": "Julius10",
+      "firstName": "Julius",
+      "lastName": "Recamadas",
+      "email": "keithgabriel.bansag@bisu.edu.ph",
+      "source": "admin"
+    },
+    {
+      "id": 69,
+      "action": "user.login",
+      "details": {
+        "username": "Gab13"
+      },
+      "timestamp": "2026-06-24T12:31:15.367Z",
+      "userId": 1,
+      "adminId": null,
+      "username": "Gab13",
+      "firstName": "Gabriel",
+      "lastName": "Bansag",
+      "source": "user"
+    },
+    {
+      "id": 70,
+      "action": "admin.login",
+      "details": {
+        "username": "Keith13"
+      },
+      "timestamp": "2026-06-24T15:24:17.295Z",
+      "userId": null,
+      "adminId": 2,
+      "username": "Keith13",
+      "firstName": "Keith",
+      "lastName": "Bansag",
+      "email": "keithbansag@gmail.com",
+      "source": "admin"
+    },
+    {
+      "id": 71,
+      "action": "superadmin.login",
+      "details": {},
+      "timestamp": "2026-06-24T15:45:53.509Z",
+      "userId": null,
+      "adminId": 1,
+      "username": "superadmin",
+      "firstName": "Super",
+      "lastName": "Admin",
+      "source": "superadmin"
+    },
+    {
+      "id": 72,
+      "action": "admin.login",
+      "details": {
+        "username": "Keith13"
+      },
+      "timestamp": "2026-06-24T15:48:45.301Z",
+      "userId": null,
+      "adminId": 2,
+      "username": "Keith13",
+      "firstName": "Keith",
+      "lastName": "Bansag",
+      "email": "keithbansag@gmail.com",
+      "source": "admin"
+    },
+    {
+      "id": 73,
+      "action": "admin.login",
+      "details": {
+        "username": "Julius10"
+      },
+      "timestamp": "2026-06-24T15:50:36.948Z",
+      "userId": null,
+      "adminId": 3,
+      "username": "Julius10",
+      "firstName": "Julius",
+      "lastName": "Recamadas",
+      "email": "keithgabriel.bansag@bisu.edu.ph",
+      "source": "admin"
+    }
+  ]
+}

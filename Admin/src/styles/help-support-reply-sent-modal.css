@@ -1,0 +1,86 @@
+@import "./figma-tokens.css";
+
+.portal-backdrop--reply-sent {
+  z-index: 1200;
+  background: rgba(0, 35, 34, 0.42);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+
+.figma-modal--reply-sent {
+  width: min(420px, 100%);
+  border-radius: 16px;
+  border: 1px solid #e6eef5;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.1);
+  background: var(--color-white);
+}
+
+.figma-modal--reply-sent .figma-modal__body {
+  padding: 36px 32px 32px;
+}
+
+.reply-sent {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.reply-sent__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 84px;
+  height: 84px;
+  margin-bottom: 22px;
+  border-radius: 999px;
+  background: #28c76f;
+  color: var(--color-white);
+  box-shadow: 0 12px 28px rgba(40, 199, 111, 0.32);
+}
+
+.reply-sent__title {
+  margin: 0 0 12px;
+  font-size: 1.65rem;
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+  color: #0f172a;
+}
+
+.reply-sent__message {
+  margin: 0 0 28px;
+  max-width: 320px;
+  font-size: var(--text-body);
+  line-height: 1.55;
+  color: #5e6c84;
+}
+
+.reply-sent__back-btn {
+  width: 100%;
+  min-height: 46px;
+  padding: 0 20px;
+  border: 1px solid #003366;
+  border-radius: 8px;
+  background: #b8dcee;
+  color: #003366;
+  font: inherit;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: filter 0.15s ease;
+}
+
+.reply-sent__back-btn:hover {
+  filter: brightness(1.03);
+}
+
+@media (max-width: 560px) {
+  .figma-modal--reply-sent .figma-modal__body {
+    padding: 30px 22px 26px;
+  }
+
+  .reply-sent__title {
+    font-size: 1.5rem;
+  }
+}

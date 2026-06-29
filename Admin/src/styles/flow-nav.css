@@ -1,0 +1,57 @@
+@import "./figma-tokens.css";
+
+.flow-nav {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1000;
+  padding: 12px 20px;
+  background: rgba(0, 53, 52, 0.96);
+  border-top: 1px solid rgba(0, 167, 165, 0.35);
+  color: var(--color-aqua-squeeze);
+  font-family: var(--font-family, "Poppins", "Segoe UI", sans-serif);
+}
+
+.flow-nav__title {
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: var(--color-persian-green);
+  margin-bottom: 4px;
+}
+
+.flow-nav__step {
+  font-size: var(--text-body);
+  margin-bottom: 10px;
+}
+
+.flow-nav__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.flow-nav__btn {
+  border: 0;
+  border-radius: 8px;
+  padding: 8px 14px;
+  font: inherit;
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  background: linear-gradient(135deg, var(--color-rain-forest) 0%, var(--color-rain-forest-light) 100%);
+  color: var(--color-white);
+}
+
+.flow-nav__btn--secondary {
+  background: rgba(244, 250, 248, 0.12);
+  border: 1px solid rgba(244, 250, 248, 0.2);
+}
+
+body.has-flow-nav:not(:has(.admin-shell)) {
+  padding-bottom: 110px;
+}
+
+.flow-nav__prompt { font-size: var(--text-caption); margin-right: 8px; }

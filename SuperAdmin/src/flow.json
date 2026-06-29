@@ -1,0 +1,307 @@
+{
+  "name": "Super Admin Application Flow",
+  "entry": "splash-screen",
+  "dashboard": "super-admin-dashboadr-section",
+  "nodes": {
+    "splash-screen": {
+      "title": "System Start",
+      "next": "administrator-pin"
+    },
+    "administrator-pin": {
+      "title": "Enter PIN / Secure Credentials",
+      "decision": {
+        "prompt": "Credentials Valid?",
+        "options": [
+          {
+            "label": "YES",
+            "next": "super-admin-dashboadr-section"
+          },
+          {
+            "label": "NO",
+            "next": "administrator-pin"
+          },
+          {
+            "label": "Recover PIN",
+            "next": "recover-administrator-pin"
+          }
+        ]
+      }
+    },
+    "recover-administrator-pin": {
+      "title": "Recover Administrator PIN",
+      "next": "email-recovery-confirmation"
+    },
+    "email-recovery-confirmation": {
+      "title": "Email Recovery Confirmation",
+      "next": "administrator-pin"
+    },
+    "super-admin-dashboadr-section": {
+      "title": "Super Admin Dashboard",
+      "decision": {
+        "prompt": "Choose Module",
+        "options": [
+          {
+            "label": "Registration",
+            "next": "super-admin-registration-1"
+          },
+          {
+            "label": "Keys",
+            "next": "super-admin-key"
+          },
+          {
+            "label": "Logs",
+            "next": "super-admin-logs"
+          },
+          {
+            "label": "Cloud",
+            "next": "super-admin-cloud"
+          },
+          {
+            "label": "Device Manager",
+            "next": "super-admin-device-management"
+          },
+          {
+            "label": "Help",
+            "next": "super-admin-help"
+          },
+          {
+            "label": "Settings",
+            "next": "super-admin-settings"
+          }
+        ]
+      }
+    },
+    "super-admin-registration-1": {
+      "title": "Registration — Super Admin Key",
+      "decision": {
+        "prompt": "Registration type",
+        "options": [
+          {
+            "label": "Register Admin",
+            "next": "register-admin"
+          },
+          {
+            "label": "Register User",
+            "next": "register-user"
+          },
+          {
+            "label": "Back to Dashboard",
+            "next": "super-admin-dashboadr-section"
+          }
+        ]
+      }
+    },
+    "register-admin": {
+      "title": "Create Admin Account",
+      "next": "administrators-registration-2"
+    },
+    "administrators-registration-2": {
+      "title": "Admin Registration Complete",
+      "next": "registered-successfully"
+    },
+    "register-user": {
+      "title": "Create User Account",
+      "next": "registered-successfully"
+    },
+    "registered-successfully": {
+      "title": "Registered Successfully",
+      "next": "super-admin-dashboadr-section"
+    },
+    "super-admin-key": {
+      "title": "Generate Keys",
+      "decision": {
+        "prompt": "Key action",
+        "options": [
+          {
+            "label": "Generate Keys",
+            "next": "super-admin-key"
+          },
+          {
+            "label": "Auto Assign Key",
+            "next": "super-admin-key"
+          },
+          {
+            "label": "Deactivate Key",
+            "next": "deactivate-key-modal"
+          },
+          {
+            "label": "Revoke Key?",
+            "next": "revoke-key"
+          },
+          {
+            "label": "Back to Dashboard",
+            "next": "super-admin-dashboadr-section"
+          }
+        ]
+      }
+    },
+    "revoke-key": {
+      "title": "Revoke Key",
+      "next": "revoked-successfully"
+    },
+    "revoked-successfully": {
+      "title": "Key Revoked",
+      "next": "super-admin-key"
+    },
+    "super-admin-logs": {
+      "title": "Admin Activity Logs",
+      "next": "super-admin-dashboadr-section"
+    },
+    "super-admin-cloud": {
+      "title": "Cloud Dashboard",
+      "decision": {
+        "prompt": "Is Storage Full?",
+        "options": [
+          {
+            "label": "View Cloud Storage",
+            "next": "super-admin-cloud"
+          },
+          {
+            "label": "User Verification List",
+            "next": "user-verification"
+          },
+          {
+            "label": "Notify User Upgrade",
+            "next": "notify-user"
+          },
+          {
+            "label": "Back to Dashboard",
+            "next": "super-admin-dashboadr-section"
+          }
+        ]
+      }
+    },
+    "user-verification": {
+      "title": "User Cloud Verification List",
+      "decision": {
+        "prompt": "Accept User Verification?",
+        "options": [
+          {
+            "label": "YES — Accept",
+            "next": "super-admin-cloud"
+          },
+          {
+            "label": "NO",
+            "next": "reject-cloud"
+          }
+        ]
+      }
+    },
+    "reject-cloud": {
+      "title": "Reject Cloud Request",
+      "next": "user-verification"
+    },
+    "notify-user": {
+      "title": "Notify User — Upgrade / Clean Space",
+      "next": "super-admin-cloud"
+    },
+    "super-admin-device-management": {
+      "title": "Device Manager — List of Devices",
+      "decision": {
+        "prompt": "Device action",
+        "options": [
+          {
+            "label": "Check Device Status",
+            "next": "super-admin-device-management"
+          },
+          {
+            "label": "Inactive / Unauthorized?",
+            "next": "delete-device"
+          },
+          {
+            "label": "Edit User Profile",
+            "next": "edit-user"
+          },
+          {
+            "label": "Back to Dashboard",
+            "next": "super-admin-dashboadr-section"
+          }
+        ]
+      }
+    },
+    "delete-device": {
+      "title": "Delete Device",
+      "decision": {
+        "prompt": "Are you sure?",
+        "options": [
+          {
+            "label": "YES",
+            "next": "sucessfully-deleted"
+          },
+          {
+            "label": "NO",
+            "next": "super-admin-device-management"
+          }
+        ]
+      }
+    },
+    "sucessfully-deleted": {
+      "title": "Successfully Deleted",
+      "next": "super-admin-device-management"
+    },
+    "edit-user": {
+      "title": "Edit User Profile",
+      "next": "super-admin-device-management"
+    },
+    "super-admin-help": {
+      "title": "Monitor User Concerns / Help",
+      "next": "super-admin-dashboadr-section"
+    },
+    "super-admin-settings": {
+      "title": "Super Admin Account Settings",
+      "decision": {
+        "prompt": "Settings action",
+        "options": [
+          {
+            "label": "Save Changes",
+            "next": "changes-saved-successfully"
+          },
+          {
+            "label": "Backup Management",
+            "next": "backup-management"
+          },
+          {
+            "label": "Change PIN / Credentials",
+            "next": "password-verification"
+          },
+          {
+            "label": "Back to Dashboard",
+            "next": "super-admin-dashboadr-section"
+          }
+        ]
+      }
+    },
+    "changes-saved-successfully": {
+      "title": "Changes Saved",
+      "next": "super-admin-settings"
+    },
+    "backup-management": {
+      "title": "Back Up",
+      "decision": {
+        "prompt": "Backup type",
+        "options": [
+          {
+            "label": "Manual Backup",
+            "next": "backup-management"
+          },
+          {
+            "label": "Automatic (Weekly)",
+            "next": "backup-management"
+          },
+          {
+            "label": "Restore from Backup",
+            "next": "backup-management"
+          },
+          {
+            "label": "Back to Settings",
+            "next": "super-admin-settings"
+          }
+        ]
+      }
+    },
+    "password-verification": {
+      "title": "Change PIN / Credentials",
+      "next": "super-admin-settings"
+    }
+  }
+}

@@ -1,0 +1,310 @@
+@import "./figma-tokens.css";
+
+body.admin-officer-login-page {
+  margin: 0;
+  background: var(--color-sidebar-deep);
+  overflow-x: hidden;
+}
+
+.admin-officer-login {
+  position: relative;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 24px;
+  font-family: var(--font-family);
+  color: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+  background:
+    radial-gradient(circle at 50% 42%, rgba(0, 122, 94, 0.22) 0%, transparent 46%),
+    radial-gradient(circle at 18% 24%, rgba(255, 255, 255, 0.05) 0%, transparent 28%),
+    radial-gradient(circle at 82% 20%, rgba(255, 255, 255, 0.04) 0%, transparent 24%),
+    linear-gradient(180deg, var(--color-splash-gradient-top) 0%, var(--color-sidebar-mid) 48%, var(--color-sidebar-deep) 100%);
+}
+
+.admin-officer-login::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image:
+    radial-gradient(circle at 14% 72%, rgba(255, 255, 255, 0.04) 0 1px, transparent 1px),
+    radial-gradient(circle at 76% 58%, rgba(255, 255, 255, 0.035) 0 1px, transparent 1px),
+    radial-gradient(circle at 48% 82%, rgba(255, 255, 255, 0.03) 0 1px, transparent 1px),
+    radial-gradient(circle at 62% 28%, rgba(255, 255, 255, 0.025) 0 2px, transparent 2px);
+  background-size: 180px 180px, 220px 220px, 260px 260px, 320px 320px;
+}
+
+.admin-officer-login__card {
+  position: relative;
+  z-index: 1;
+  width: min(392px, 100%);
+  padding: 28px 28px 26px;
+  border-radius: 18px;
+  border: 1px solid rgba(190, 236, 227, 0.22);
+  background: linear-gradient(180deg, rgba(0, 40, 38, 0.78) 0%, rgba(0, 31, 30, 0.86) 100%);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
+.admin-officer-login__header {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  margin-bottom: 22px;
+}
+
+.admin-officer-login__badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  flex-shrink: 0;
+  border-radius: 14px;
+  background: var(--color-white);
+  box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+}
+
+.admin-officer-login__badge-icon {
+  width: 24px;
+  height: 24px;
+  display: block;
+}
+
+.admin-officer-login__heading {
+  min-width: 0;
+  padding-top: 2px;
+}
+
+.admin-officer-login__title {
+  margin: 0 0 4px;
+  font-size: var(--text-title);
+  font-weight: var(--font-weight-semibold);
+  line-height: 1.25;
+  letter-spacing: -0.2px;
+  color: var(--color-white);
+}
+
+.admin-officer-login__subtitle {
+  margin: 0;
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.45;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.admin-officer-login__form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.admin-officer-login__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.admin-officer-login__label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.admin-officer-login__label {
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-medium);
+  color: rgba(255, 255, 255, 0.95);
+  line-height: 1.3;
+}
+
+.admin-officer-login__access-link {
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-medium);
+  color: rgba(255, 255, 255, 0.95);
+  text-decoration: none;
+  white-space: nowrap;
+  line-height: 1.3;
+}
+
+.admin-officer-login__access-link:hover {
+  color: var(--color-white);
+}
+
+.admin-officer-login__input-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 46px;
+  padding: 0 14px;
+  border-radius: 10px;
+  background: var(--color-white);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  transition: box-shadow 0.15s ease;
+}
+
+.admin-officer-login__input-wrap:focus-within {
+  box-shadow: 0 0 0 3px rgba(0, 167, 165, 0.18);
+}
+
+.admin-officer-login__input-icon {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  min-height: 22px;
+  flex: 0 0 22px;
+  flex-shrink: 0;
+  display: block;
+}
+
+.admin-officer-login__input-icon--lock {
+  width: 22px;
+  height: 22px;
+  min-width: 22px;
+  min-height: 22px;
+  flex: 0 0 22px;
+}
+
+.admin-officer-login__input {
+  flex: 1;
+  border: 0;
+  outline: none;
+  font: inherit;
+  font-size: var(--text-input);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-deep-teal);
+  min-width: 0;
+  background: transparent;
+}
+
+.admin-officer-login__input::placeholder {
+  color: var(--color-muted-teal);
+}
+
+.admin-officer-login__eye-btn {
+  border: 0;
+  background: transparent;
+  padding: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.admin-officer-login__eye-icon {
+  width: 18px;
+  height: 13px;
+  display: block;
+  filter: brightness(0) saturate(100%) invert(52%) sepia(12%) saturate(698%) hue-rotate(131deg)
+    brightness(92%) contrast(88%);
+}
+
+.admin-officer-login__remember {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: -2px;
+  font-size: var(--text-label);
+  font-weight: var(--font-weight-regular);
+  color: rgba(255, 255, 255, 0.92);
+  cursor: pointer;
+  user-select: none;
+  line-height: 1.3;
+}
+
+.admin-officer-login__remember input {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  margin: 0;
+  border: 1.5px solid rgba(255, 255, 255, 0.9);
+  border-radius: 3px;
+  background: transparent;
+  cursor: pointer;
+  display: grid;
+  place-content: center;
+  flex-shrink: 0;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.admin-officer-login__remember input::before {
+  content: "";
+  width: 8px;
+  height: 5px;
+  border-left: 2px solid var(--color-white);
+  border-bottom: 2px solid var(--color-white);
+  transform: rotate(-45deg) scale(0);
+  transition: transform 0.12s ease;
+  margin-top: -2px;
+}
+
+.admin-officer-login__remember input:checked {
+  background: var(--color-rain-forest);
+  border-color: var(--color-rain-forest);
+}
+
+.admin-officer-login__remember input:checked::before {
+  transform: rotate(-45deg) scale(1);
+}
+
+.admin-officer-login__submit {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  width: 100%;
+  height: 46px;
+  margin-top: 4px;
+  border: 0;
+  border-radius: 10px;
+  background: var(--color-rain-forest);
+  color: var(--color-white);
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  box-shadow: 0 8px 20px rgba(0, 122, 94, 0.28);
+  transition: filter 0.15s ease, transform 0.15s ease;
+  letter-spacing: 0.1px;
+}
+
+.admin-officer-login__submit:hover {
+  filter: brightness(1.05);
+}
+
+.admin-officer-login__submit:active {
+  transform: translateY(1px);
+}
+
+.admin-officer-login__submit-icon {
+  width: 18px;
+  height: 18px;
+  display: block;
+  filter: brightness(0) invert(1);
+}
+
+.admin-officer-login__error {
+  color: var(--color-error-text-light);
+  font-size: var(--text-label);
+  padding: 10px 12px;
+  background: rgba(231, 76, 60, 0.14);
+  border: 1px solid rgba(231, 76, 60, 0.28);
+  border-radius: 10px;
+  margin: 0;
+  line-height: 1.4;
+}
+
+@media (max-width: 480px) {
+  .admin-officer-login {
+    padding: 24px 16px;
+  }
+
+  .admin-officer-login__card {
+    padding: 24px 22px 22px;
+  }
+}

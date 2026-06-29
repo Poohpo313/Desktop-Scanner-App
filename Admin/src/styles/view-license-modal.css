@@ -1,0 +1,276 @@
+@import "./figma-tokens.css";
+
+.figma-modal--view-license {
+  width: min(520px, 100%);
+  border-radius: 14px;
+}
+
+.figma-modal--view-license .figma-modal__header {
+  align-items: flex-start;
+  padding: 20px 24px 0;
+  gap: 20px;
+}
+
+.figma-modal--view-license .figma-modal__eyebrow {
+  margin: 0 0 6px;
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-nevada);
+}
+
+.figma-modal--view-license .figma-modal__title {
+  font-size: var(--text-h2);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-deep-teal);
+  letter-spacing: -0.2px;
+}
+
+.figma-modal--view-license .figma-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 0;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.figma-modal--view-license .figma-modal__close img {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.figma-modal--view-license .figma-modal__body {
+  padding: 18px 24px 8px;
+}
+
+.view-license__status-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: var(--color-aqua-squeeze);
+  border: 1px solid var(--color-mystic);
+  margin-bottom: 20px;
+}
+
+.view-license__status-badge {
+  display: inline-flex;
+  align-items: center;
+  min-height: 28px;
+  padding: 0 12px;
+  border-radius: 999px;
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+}
+
+.view-license__status-badge--assigned,
+.view-license__status-badge--active {
+  background: var(--color-success-bg);
+  color: var(--color-rain-forest);
+}
+
+.view-license__status-badge--revoked {
+  background: var(--color-danger-surface);
+  color: var(--color-danger-dark);
+}
+
+.view-license__status-badge--available {
+  background: var(--color-surface-cool-gray);
+  color: var(--color-river-bed);
+}
+
+.view-license__identifier {
+  text-align: right;
+}
+
+.view-license__identifier-label {
+  display: block;
+  margin-bottom: 2px;
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-nevada);
+}
+
+.view-license__identifier-value {
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-deep-teal);
+}
+
+.view-license__field {
+  margin-bottom: 18px;
+}
+
+.view-license__field-label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-nevada);
+}
+
+.view-license__key-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid var(--color-mystic);
+  background: var(--color-white);
+}
+
+.view-license__key-value {
+  flex: 1;
+  min-width: 0;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-medium);
+  font-family: var(--font-family-mono);
+  color: var(--color-rain-forest);
+  letter-spacing: 0.02em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.view-license__copy-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  border: 0;
+  border-radius: 6px;
+  background: transparent;
+  cursor: pointer;
+}
+
+.view-license__copy-btn:hover {
+  background: var(--color-aqua-squeeze);
+}
+
+.view-license__copy-btn img {
+  display: block;
+  width: 16px;
+  height: 16px;
+}
+
+.view-license__user-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  min-height: 64px;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 1px solid var(--color-mystic);
+  background: var(--color-white);
+  text-align: left;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.view-license__user-card:hover {
+  border-color: var(--color-jet-stream);
+  background: var(--color-surface-subtle);
+}
+
+.view-license__user-card--static {
+  cursor: default;
+}
+
+.view-license__user-card--static:hover {
+  border-color: var(--color-mystic);
+  background: var(--color-white);
+}
+
+.view-license__avatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  object-fit: cover;
+  flex-shrink: 0;
+}
+
+.view-license__user-meta {
+  flex: 1;
+  min-width: 0;
+}
+
+.view-license__user-name {
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-deep-teal);
+  line-height: 1.3;
+}
+
+.view-license__user-title {
+  margin-top: 2px;
+  font-size: var(--text-caption);
+  color: var(--color-nevada);
+  line-height: 1.35;
+}
+
+.view-license__user-chevron {
+  flex-shrink: 0;
+  color: var(--color-granny-smith);
+}
+
+.view-license__dates {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 4px;
+}
+
+.view-license__date-label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-nevada);
+}
+
+.view-license__date-value {
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-deep-teal);
+}
+
+.view-license__footer-wrap {
+  display: block;
+  border-top: 1px solid var(--color-mystic);
+  padding: 14px 24px 20px;
+}
+
+.figma-modal--view-license .figma-modal__footer.view-license__footer-wrap {
+  justify-content: stretch;
+}
+
+.view-license__footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.view-license__footer-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}

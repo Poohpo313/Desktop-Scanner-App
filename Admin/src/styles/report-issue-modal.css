@@ -1,0 +1,167 @@
+@import "./figma-tokens.css";
+
+.figma-modal--report-issue {
+  width: min(480px, 100%);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.figma-modal--report-issue .figma-modal__header {
+  align-items: flex-start;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--color-mystic);
+}
+
+.figma-modal--report-issue .figma-modal__title {
+  font-size: var(--text-h2);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  letter-spacing: -0.2px;
+}
+
+.figma-modal--report-issue .figma-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 0;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.figma-modal--report-issue .figma-modal__close img {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.figma-modal--report-issue .figma-modal__body {
+  padding: 24px 24px 20px;
+  text-align: center;
+}
+
+.report-issue__icon-wrap {
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--color-recovery-info-bg);
+  color: var(--color-rain-forest);
+}
+
+.report-issue__heading {
+  margin: 0 auto 10px;
+  max-width: 380px;
+  font-size: var(--text-h2);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  letter-spacing: -0.2px;
+  line-height: var(--line-height-tight);
+}
+
+.report-issue__heading strong {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+}
+
+.report-issue__subtext {
+  margin: 0 auto 20px;
+  max-width: 360px;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-nevada);
+  line-height: var(--line-height-relaxed);
+}
+
+.report-issue__field {
+  display: block;
+  text-align: left;
+}
+
+.report-issue__label {
+  display: block;
+  margin-bottom: 8px;
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-brand-slate);
+}
+
+.report-issue__textarea {
+  width: 100%;
+  min-height: 112px;
+  padding: 12px 14px;
+  border: 1px solid var(--color-border-sky);
+  border-radius: 8px;
+  background: var(--color-surface-cool);
+  font: inherit;
+  font-size: var(--text-body);
+  color: var(--color-brand-slate);
+  line-height: var(--line-height-relaxed);
+  resize: vertical;
+  box-sizing: border-box;
+  outline: none;
+}
+
+.report-issue__textarea::placeholder {
+  color: var(--color-granny-smith);
+}
+
+.report-issue__textarea:focus {
+  border-color: var(--color-persian-green);
+  background: var(--color-white);
+}
+
+.report-issue__footer-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 12px;
+  padding: 14px 24px 18px;
+  background: var(--color-surface-neutral);
+  border-top: 1px solid var(--color-mystic);
+}
+
+.report-issue__cancel-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 96px;
+  padding: 10px 18px;
+  border: 1px solid var(--color-mystic);
+  border-radius: 8px;
+  background: var(--color-white);
+  font: inherit;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-river-bed);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.report-issue__send-btn {
+  min-width: 180px;
+  background: var(--color-rain-forest);
+  border-color: var(--color-rain-forest);
+  box-shadow: 0 6px 16px rgba(0, 109, 78, 0.2);
+}
+
+.report-issue__send-btn svg {
+  flex-shrink: 0;
+}
+
+@media (max-width: 480px) {
+  .report-issue__footer-wrap {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .report-issue__cancel-btn,
+  .report-issue__send-btn {
+    width: 100%;
+  }
+}

@@ -1,0 +1,161 @@
+.restore-doc-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(6px);
+}
+
+.restore-doc-modal {
+  box-sizing: border-box;
+  width: min(460px, 100%);
+  padding: 32px 36px 28px;
+  border-radius: 20px;
+  border: 1px solid #dbe3ee;
+  background: #fff;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.18);
+  text-align: center;
+}
+
+.restore-doc-modal__icon-wrap {
+  display: grid;
+  place-items: center;
+  width: 56px;
+  height: 56px;
+  margin: 0 auto 18px;
+  border-radius: 999px;
+  background: #d1fae5;
+  color: #008768;
+}
+
+.restore-doc-modal__icon {
+  width: 26px;
+  height: 26px;
+}
+
+.restore-doc-modal__title {
+  margin: 0;
+  font-size: 22px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.restore-doc-modal__subtitle {
+  margin: 8px 0 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #64748b;
+}
+
+.restore-doc-modal__card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  margin: 22px 0 18px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  border: 1px solid #e2e8f0;
+  background: #fff;
+  text-align: left;
+}
+
+.restore-doc-modal__file-badge {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 44px;
+  height: 52px;
+  border-radius: 8px;
+  border: 1px solid #e2e8f0;
+  background: #f8fafc;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: #64748b;
+}
+
+.restore-doc-modal__file-badge--pdf {
+  color: #b91c1c;
+}
+
+.restore-doc-modal__file-badge--png,
+.restore-doc-modal__file-badge--jpg {
+  color: #1d4ed8;
+}
+
+.restore-doc-modal__card-body {
+  min-width: 0;
+}
+
+.restore-doc-modal__file-name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+  word-break: break-word;
+}
+
+.restore-doc-modal__folder-label {
+  margin: 6px 0 2px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+
+.restore-doc-modal__folder-path {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.restore-doc-modal__note {
+  margin: 0 0 22px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.restore-doc-modal__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+}
+
+.restore-doc-modal__btn {
+  height: 44px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.restore-doc-modal__btn--cancel {
+  border-color: #d7dee8;
+  background: #fff;
+  color: #0f172a;
+}
+
+.restore-doc-modal__btn--confirm {
+  background: #008768;
+  color: #fff;
+}
+
+.restore-doc-modal__btn--confirm:hover {
+  background: #006d56;
+}
+
+@media (max-width: 480px) {
+  .restore-doc-modal {
+    padding: 28px 22px 24px;
+  }
+
+  .restore-doc-modal__actions {
+    grid-template-columns: 1fr;
+  }
+}

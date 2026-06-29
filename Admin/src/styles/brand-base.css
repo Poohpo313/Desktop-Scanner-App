@@ -1,0 +1,60 @@
+@import "./figma-tokens.css";
+
+/* Global Bukolabs typography & surface defaults */
+#root {
+  font-family: var(--font-family);
+  color: var(--color-timber-green);
+  font-size: var(--text-body);
+  line-height: var(--line-height-normal);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-family);
+  font-size: var(--text-body);
+  line-height: var(--line-height-normal);
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: inherit;
+  color: var(--color-timber-green);
+  font-weight: var(--font-weight-semibold);
+}
+
+button,
+input,
+textarea,
+select {
+  font-family: inherit;
+}
+
+a {
+  color: var(--color-rain-forest);
+}
+
+/* Shared portal table patterns */
+.portal-table-empty {
+  text-align: center;
+  color: var(--color-granny-smith);
+  padding: 24px;
+  font-size: var(--text-body);
+}
+
+.portal-action--view {
+  color: var(--color-persian-green);
+}
+
+.portal-action--edit,
+.portal-action--success {
+  color: var(--color-rain-forest);
+}
+
+.portal-action--danger {
+  color: var(--color-danger);
+}

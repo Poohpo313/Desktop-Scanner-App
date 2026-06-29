@@ -1,0 +1,61 @@
+@import "./tokens.css";
+
+.offline-screen {
+  box-sizing: border-box;
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
+  position: relative;
+  font-family: var(--font-family);
+  background:
+    radial-gradient(
+      118.39% 69.32% at 50% 18%,
+      rgba(0, 167, 165, 0.16) 0%,
+      rgba(0, 167, 165, 0) 34%
+    ),
+    linear-gradient(120deg, #003534 0%, #004847 48%, #003534 100%);
+}
+
+.offline-screen__shape {
+  position: absolute;
+  pointer-events: none;
+  box-sizing: border-box;
+  border-radius: 50%;
+  border: 56px solid rgba(0, 167, 165, 0.35);
+  opacity: 0.08;
+}
+
+.offline-screen__shape--left {
+  left: -120px;
+  top: 80px;
+  width: 300px;
+  height: 300px;
+  transform: rotate(-24deg);
+}
+
+.offline-screen__shape--right {
+  right: -100px;
+  bottom: 60px;
+  width: 340px;
+  height: 340px;
+  transform: rotate(18deg);
+}
+
+.offline-warning-icon--pulse {
+  animation: offline-soft-pulse 2.5s infinite ease-in-out;
+}
+
+@keyframes offline-soft-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 0.92;
+  }
+}

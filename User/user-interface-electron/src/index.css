@@ -1,0 +1,78 @@
+@import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap");
+@import "./styles/tokens.css";
+@import "./styles/theme.css";
+@import "./styles/brand.css";
+@import "./styles/app-layout.css";
+@import "./styles/app-error-state.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+
+  body {
+    @apply font-sans text-brand-deep antialiased;
+    margin: 0;
+    background-color: var(--ui-page-bg);
+    color: var(--ui-text-primary);
+  }
+
+  h1,
+  h2,
+  h3 {
+    color: var(--color-deep-teal);
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply rounded-[10px] text-white font-medium px-6 py-3 transition disabled:opacity-50 disabled:cursor-not-allowed;
+    background: linear-gradient(135deg, var(--color-emerald) 0%, var(--color-emerald-bright) 100%);
+    box-shadow: 0 10px 15px rgba(5, 150, 105, 0.2);
+  }
+
+  .btn-primary:hover:not(:disabled) {
+    opacity: 0.92;
+  }
+
+  .btn-outline {
+    @apply rounded-[10px] border border-brand-border bg-white text-brand-deep font-medium px-6 py-3 transition hover:border-brand-emerald hover:text-brand-emerald;
+  }
+
+  .btn-outline-emerald {
+    @apply rounded-[10px] border border-brand-emerald text-brand-emerald font-medium px-6 py-3 transition hover:bg-brand-mint/40;
+  }
+
+  .input-field {
+    @apply w-full rounded-[10px] border border-brand-border bg-white px-4 py-2.5 text-sm text-brand-deep placeholder:text-brand-tower-gray focus:border-brand-emerald focus:outline-none focus:ring-1 focus:ring-brand-emerald/30;
+  }
+
+  .card-surface {
+    @apply rounded-xl border border-brand-border bg-brand-surface;
+    box-shadow: 0 4px 24px rgba(0, 53, 52, 0.06);
+  }
+
+  .auth-shell {
+    @apply min-h-screen flex items-center justify-center p-6;
+    background: var(--color-brand-bg);
+  }
+
+  .auth-card {
+    @apply w-full max-w-md rounded-2xl border border-brand-border bg-white p-8;
+    box-shadow: 0 20px 50px rgba(0, 53, 52, 0.1);
+  }
+
+  .badge-synced {
+    @apply inline-flex items-center gap-1.5 rounded-full bg-brand-mint px-3 py-1 text-xs font-medium text-brand-primary;
+  }
+
+  .badge-offline {
+    @apply inline-flex items-center gap-1.5 rounded-full bg-brand-panel px-3 py-1 text-xs font-medium text-brand-inactive;
+  }
+}

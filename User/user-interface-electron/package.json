@@ -1,0 +1,102 @@
+{
+  "name": "user-interface-electron",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Desktop Scanner and File Management System by Bukolabs.io",
+  "author": "Bukolabs.io",
+  "main": "dist-electron/main.js",
+  "scripts": {
+    "predev": "node ../scripts/kill-port.js 5173",
+    "dev": "npm run build:electron && concurrently -k \"node ../../node_modules/vite/bin/vite.js\" \"wait-on tcp:5173 && cross-env VITE_DEV_SERVER_URL=http://localhost:5173 node ../../node_modules/electron/cli.js .\"",
+    "dev:web": "node ../../node_modules/vite/bin/vite.js --port 5173",
+    "build": "npm run build:renderer && npm run build:electron",
+    "build:renderer": "node ../../node_modules/vite/bin/vite.js build",
+    "build:electron": "node ../../node_modules/typescript/bin/tsc -p electron/tsconfig.json",
+    "start": "electron .",
+    "pack": "npm run build && electron-builder --win",
+    "pack:dir": "npm run build && electron-builder --win --dir"
+  },
+  "dependencies": {
+    "argon2": "^0.41.1",
+    "lucide-react": "^1.17.0",
+    "pdf-lib": "^1.17.1",
+    "pg": "^8.14.1",
+    "react": "^19.1.0",
+    "react-dom": "^19.1.0",
+    "react-easy-crop": "^6.0.2",
+    "react-router-dom": "^7.6.2",
+    "uuid": "^11.1.0"
+  },
+  "devDependencies": {
+    "@types/pg": "^8.11.11",
+    "@types/react": "^19.1.8",
+    "@types/react-dom": "^19.1.6",
+    "@vitejs/plugin-react": "^4.5.2",
+    "autoprefixer": "^10.4.21",
+    "concurrently": "^9.1.2",
+    "cross-env": "^7.0.3",
+    "electron": "42.3.0",
+    "electron-builder": "^26.0.12",
+    "electron-updater": "^6.6.2",
+    "postcss": "^8.5.3",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.8.3",
+    "vite": "^6.3.5",
+    "wait-on": "^8.0.3"
+  },
+  "build": {
+    "electronVersion": "42.3.0",
+    "appId": "io.bukolabs.desktop-scanner",
+    "productName": "Desktop Scanner App",
+    "copyright": "Copyright © Bukolabs.io",
+    "directories": {
+      "output": "release",
+      "buildResources": "build"
+    },
+    "files": [
+      "dist/**",
+      "dist-electron/**",
+      "db/**",
+      "package.json",
+      ".env"
+    ],
+    "extraResources": [
+      {
+        "from": ".env",
+        "to": "app-env/.env"
+      },
+      {
+        "from": "gateway-bundle",
+        "to": "gateway",
+        "filter": ["**/*"]
+      }
+    ],
+    "asarUnpack": [
+      "db/**",
+      "node_modules/argon2/**",
+      "node_modules/pg/**"
+    ],
+    "win": {
+      "target": [
+        {
+          "target": "nsis",
+          "arch": [
+            "x64"
+          ]
+        }
+      ],
+      "artifactName": "${productName}-Setup-${version}.${ext}",
+      "signAndEditExecutable": false
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "Desktop Scanner App",
+      "include": "build/installer.nsh",
+      "perMachine": true,
+      "allowElevation": true
+    }
+  }
+}

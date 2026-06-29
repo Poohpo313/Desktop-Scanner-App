@@ -1,0 +1,40 @@
+.page-transition {
+  transition:
+    opacity 0.22s ease,
+    transform 0.22s ease;
+}
+
+.page-transition--enter {
+  opacity: 0;
+  transform: translateY(8px);
+}
+
+.page-transition--route {
+  min-height: 0;
+}
+
+.key-mgmt-table-panel.page-transition--enter,
+.user-mgmt-table-panel.page-transition--enter {
+  transform: translateY(6px);
+}
+
+.key-mgmt-pagination__ellipsis--interactive,
+.user-mgmt-pagination__ellipsis--interactive {
+  border: 0;
+  background: transparent;
+  padding: 0 4px;
+  font: inherit;
+  font-size: var(--text-caption);
+  color: var(--color-nevada);
+  cursor: pointer;
+}
+
+.key-mgmt-pagination__ellipsis--interactive:hover,
+.user-mgmt-pagination__ellipsis--interactive:hover {
+  color: var(--color-rain-forest);
+}
+
+.page-transition--loading {
+  opacity: 0.55;
+  pointer-events: none;
+}

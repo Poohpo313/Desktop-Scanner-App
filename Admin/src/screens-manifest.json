@@ -1,0 +1,194 @@
+[
+  {
+    "id": "2212:2598",
+    "name": "ADMIN LOGIN",
+    "slug": "admin-login",
+    "fileSlug": "admin-login"
+  },
+  {
+    "id": "2212:2851",
+    "name": "ADMIN DASHBOARD",
+    "slug": "admin-dashboard",
+    "fileSlug": "admin-dashboard"
+  },
+  {
+    "id": "2212:3129",
+    "name": "ADMIN DASHBOARD GENERATE KEYS",
+    "slug": "admin-dashboard-generate-keys",
+    "fileSlug": "admin-dashboard-generate-keys"
+  },
+  {
+    "id": "2212:3308",
+    "name": "ADMIN DASHBOARD USER REGISTER MODAL",
+    "slug": "admin-dashboard-user-register-modal",
+    "fileSlug": "admin-dashboard-user-register-modal"
+  },
+  {
+    "id": "2212:3582",
+    "name": "ADMIN DASHBOARD VIEW DEVICES",
+    "slug": "admin-dashboard-view-devices",
+    "fileSlug": "admin-dashboard-view-devices"
+  },
+  {
+    "id": "2212:3898",
+    "name": "Success Modal Canvas",
+    "slug": "success-modal-canvas",
+    "fileSlug": "success-modal-canvas"
+  },
+  {
+    "id": "2212:4691",
+    "name": "CONTACT CUSTOMER MODAL",
+    "slug": "contact-customer-modal",
+    "fileSlug": "contact-customer-modal"
+  },
+  {
+    "id": "2212:5073",
+    "name": "HELP AND SUPPORT CENTER",
+    "slug": "help-and-support-center",
+    "fileSlug": "help-and-support-center"
+  },
+  {
+    "id": "2212:5437",
+    "name": "HELP AND SUPPORT CENTER",
+    "slug": "help-and-support-center",
+    "fileSlug": "help-and-support-center-2212-5437"
+  },
+  {
+    "id": "2212:5871",
+    "name": "ESCALATE TO SUPER ADMIN MODAL",
+    "slug": "escalate-to-super-admin-modal",
+    "fileSlug": "escalate-to-super-admin-modal"
+  },
+  {
+    "id": "2212:6246",
+    "name": "MARK AS RESOLVED MODAL",
+    "slug": "mark-as-resolved-modal",
+    "fileSlug": "mark-as-resolved-modal"
+  },
+  {
+    "id": "2212:6605",
+    "name": "PROVIDE ASSISTANCE MODAL",
+    "slug": "provide-assistance-modal",
+    "fileSlug": "provide-assistance-modal"
+  },
+  {
+    "id": "2212:6979",
+    "name": "CHECK DEVICE STATUS MODAL",
+    "slug": "check-device-status-modal",
+    "fileSlug": "check-device-status-modal"
+  },
+  {
+    "id": "2212:7266",
+    "name": "NOTIFY SUPER ADMIN MODAL",
+    "slug": "notify-super-admin-modal",
+    "fileSlug": "notify-super-admin-modal"
+  },
+  {
+    "id": "2212:7520",
+    "name": "MONITOR DEVICE MODAL",
+    "slug": "monitor-device-modal",
+    "fileSlug": "monitor-device-modal"
+  },
+  {
+    "id": "2212:7810",
+    "name": "RETRY CONNECTION MODAL",
+    "slug": "retry-connection-modal",
+    "fileSlug": "retry-connection-modal"
+  },
+  {
+    "id": "2212:8094",
+    "name": "REPORT ISSUE MODAL",
+    "slug": "report-issue-modal",
+    "fileSlug": "report-issue-modal"
+  },
+  {
+    "id": "2212:8620",
+    "name": "SERIAL KEY MANAGEMENT",
+    "slug": "license-key-management",
+    "fileSlug": "license-key-management"
+  },
+  {
+    "id": "2212:8961",
+    "name": "REVOKE KEY MODAL",
+    "slug": "revoke-key-modal",
+    "fileSlug": "revoke-key-modal"
+  },
+  {
+    "id": "2212:9256",
+    "name": "DEACTIVATE KEY MODAL",
+    "slug": "deactivate-key-modal",
+    "fileSlug": "deactivate-key-modal"
+  },
+  {
+    "id": "2212:9548",
+    "name": "VIEW LICENSE MODAL",
+    "slug": "view-license-modal",
+    "fileSlug": "view-license-modal"
+  },
+  {
+    "id": "2212:9882",
+    "name": "GENERATE KEYS MODAL",
+    "slug": "generate-keys-modal",
+    "fileSlug": "generate-keys-modal"
+  },
+  {
+    "id": "2212:10217",
+    "name": "USER MANAGEMENT",
+    "slug": "user-management",
+    "fileSlug": "user-management"
+  },
+  {
+    "id": "2212:10573",
+    "name": "USER MANAGEMENT",
+    "slug": "user-management",
+    "fileSlug": "user-management-2212-10573"
+  },
+  {
+    "id": "2212:10846",
+    "name": "Provision Device",
+    "slug": "provision-device",
+    "fileSlug": "provision-device"
+  },
+  {
+    "id": "2226:1193",
+    "name": "ADMIN DASHBOARD",
+    "slug": "admin-dashboard",
+    "fileSlug": "admin-dashboard-2226-1193"
+  },
+  {
+    "id": "2226:1460",
+    "name": "DEVICE MANAGEMENT",
+    "slug": "device-management",
+    "fileSlug": "device-management"
+  },
+  {
+    "id": "2226:1705",
+    "name": "SETTINGS",
+    "slug": "settings",
+    "fileSlug": "settings"
+  },
+  {
+    "id": "2226:1953",
+    "name": "USER MANAGEMENT",
+    "slug": "user-management",
+    "fileSlug": "user-management-2226-1953"
+  },
+  {
+    "id": "2226:2276",
+    "name": "HELP AND SUPPORT CENTER",
+    "slug": "help-and-support-center",
+    "fileSlug": "help-and-support-center-2226-2276"
+  },
+  {
+    "id": "2226:2536",
+    "name": "SERIAL KEY MANAGEMENT",
+    "slug": "license-key-management",
+    "fileSlug": "license-key-management-2226-2536"
+  },
+  {
+    "id": "2226:2906",
+    "name": "USER MANAGEMENT USER REGISTER MODAL",
+    "slug": "user-management-user-register-modal",
+    "fileSlug": "user-management-user-register-modal"
+  }
+]

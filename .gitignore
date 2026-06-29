@@ -1,0 +1,25 @@
+# Node modules
+node_modules/
+**/node_modules/
+
+# Electron build output
+dist/
+build/
+release/
+release-build/
+out/
+
+# Temporary files
+*.log
+*.tmp
+
+# Environment files
+.env
+.env.*
+
+# VS Code
+.vscode/
+
+# OS files
+.DS_Store
+Thumbs.db

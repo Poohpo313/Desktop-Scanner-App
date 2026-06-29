@@ -1,0 +1,370 @@
+@import "./tokens.css";
+
+.devices-page.console-page,
+.documents-page.console-page,
+.settings-page.console-page,
+.save-pref-page.console-page,
+.help-assistant-page.console-page {
+  background: #f5f7f9;
+}
+
+.devices-page {
+  box-sizing: border-box;
+  display: flex;
+  min-height: 100%;
+  flex-direction: column;
+  background: #fff;
+  font-family: var(--font-family);
+}
+
+.offline-console-header__badges .devices-page__header-actions,
+.offline-console-header__badges .documents-page__header-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.devices-page__content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  min-height: 0;
+}
+
+.devices-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 40px;
+  padding: 0 16px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font: inherit;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.devices-btn--primary {
+  background: #008768;
+  color: #fff;
+}
+
+.devices-btn--primary:hover:not(:disabled) {
+  background: #006d56;
+}
+
+.devices-btn--primary:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.devices-btn--outline {
+  border-color: #d7dee8;
+  background: #fff;
+  color: #0f172a;
+}
+
+.devices-btn--block {
+  width: 100%;
+}
+
+.devices-page__layout {
+  display: grid;
+  flex: 1;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 0;
+  min-height: 0;
+  border-top: 1px solid #e6e9f1;
+}
+
+.devices-page__list-pane,
+.devices-page__details-pane {
+  min-height: 0;
+  padding: 18px 20px 24px;
+}
+
+.devices-page__details-pane {
+  border-left: 1px solid #e6e9f1;
+  background: #fafbfc;
+}
+
+.devices-page__pane-title {
+  margin: 0 0 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.devices-page__list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.devices-page__empty {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.devices-card {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
+  border-radius: 12px;
+  border: 1px solid #e6e9f1;
+  background: #fff;
+  overflow: hidden;
+}
+
+.devices-card--active {
+  border-color: #86efac;
+  box-shadow: 0 0 0 1px rgba(0, 135, 104, 0.12);
+}
+
+.devices-card__main {
+  display: flex;
+  flex: 1;
+  align-items: center;
+  gap: 12px;
+  min-width: 0;
+  padding: 14px 16px;
+  border: 0;
+  background: transparent;
+  text-align: left;
+  cursor: pointer;
+}
+
+.devices-card__icon-wrap {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  border-radius: 10px;
+}
+
+.devices-card__icon-wrap--scanner,
+.devices-card__icon-wrap--multifunction {
+  background: #ecfdf5;
+  color: #008768;
+}
+
+.devices-card__icon-wrap--printer {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.devices-card__icon {
+  width: 20px;
+  height: 20px;
+}
+
+.devices-card__body {
+  min-width: 0;
+  flex: 1;
+}
+
+.devices-card__name {
+  margin: 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.devices-card__meta {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.devices-status-badge {
+  flex-shrink: 0;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 11px;
+  font-weight: 600;
+}
+
+.devices-status-badge--connected {
+  background: #dcfce7;
+  color: #15803d;
+}
+
+.devices-status-badge--offline {
+  background: #ffedd5;
+  color: #c2410c;
+}
+
+.devices-card__action {
+  flex-shrink: 0;
+  align-self: center;
+  margin-right: 12px;
+  height: 34px;
+  padding: 0 14px;
+  border-radius: 8px;
+  border: 1px solid #d7dee8;
+  background: #fff;
+  font: inherit;
+  font-size: 12px;
+  font-weight: 600;
+  color: #0f172a;
+  cursor: pointer;
+}
+
+.devices-card__action:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.devices-details__hero {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+}
+
+.devices-details__icon-wrap {
+  display: grid;
+  flex-shrink: 0;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+}
+
+.devices-details__icon-wrap--scanner,
+.devices-details__icon-wrap--multifunction {
+  background: #ecfdf5;
+  color: #008768;
+}
+
+.devices-details__icon-wrap--printer {
+  background: #eff6ff;
+  color: #1d4ed8;
+}
+
+.devices-details__icon {
+  width: 22px;
+  height: 22px;
+}
+
+.devices-details__hero-body {
+  min-width: 0;
+  flex: 1;
+}
+
+.devices-details__name {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.devices-details__meta {
+  margin: 4px 0 0;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.devices-details__meta-list {
+  margin: 0 0 20px;
+}
+
+.devices-details__meta-list > div {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 0;
+  border-bottom: 1px solid #f1f5f9;
+  font-size: 13px;
+}
+
+.devices-details__meta-list dt {
+  color: #64748b;
+  font-weight: 500;
+}
+
+.devices-details__meta-list dd {
+  margin: 0;
+  font-weight: 600;
+  color: #0f172a;
+  text-align: right;
+}
+
+.devices-details__diagnostics {
+  padding-top: 4px;
+}
+
+.devices-details__diagnostics-title {
+  margin: 0 0 8px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.devices-details__diagnostics-status {
+  margin: 0 0 12px;
+  font-size: 13px;
+  line-height: 1.5;
+  color: #64748b;
+}
+
+.devices-details__diagnostics-status--ok {
+  color: #15803d;
+  font-weight: 600;
+}
+
+.devices-status-bar {
+  display: flex;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 28px;
+  border-top: 1px solid #e6e9f1;
+  background: #fff;
+  font-size: 12px;
+  color: #64748b;
+}
+
+.devices-status-bar__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.devices-status-bar__icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  color: #008768;
+}
+
+@media (max-width: 960px) {
+  .devices-page__layout {
+    grid-template-columns: 1fr;
+  }
+
+  .devices-page__details-pane {
+    border-left: 0;
+    border-top: 1px solid #e6e9f1;
+  }
+}
+
+@media (max-width: 640px) {
+  .devices-card {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .devices-card__action {
+    align-self: stretch;
+    margin: 0 12px 12px;
+  }
+}

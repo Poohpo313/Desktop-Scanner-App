@@ -1,0 +1,18 @@
+{
+  "name": "@bukolabs/admin-backend",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Admin portal online API (subset of @bukolabs/gateway)",
+  "scripts": {
+    "build": "npm run build --prefix ../../../gateway",
+    "start": "cross-env BACKEND_ROLE=admin PORT=3001 node ../../../gateway/dist/main.js",
+    "start:dev": "cross-env BACKEND_ROLE=admin PORT=3001 npm run start:dev --prefix ../../../gateway",
+    "start:prod": "cross-env BACKEND_ROLE=admin PORT=3001 node ../../../gateway/dist/main.js"
+  },
+  "dependencies": {
+    "@bukolabs/gateway": "file:../../../gateway"
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}

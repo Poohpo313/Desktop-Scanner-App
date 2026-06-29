@@ -1,0 +1,174 @@
+/* Bukolabs brand row — shared across welcome, auth, sidebar, splash */
+
+.bukolabs-brand {
+  display: flex;
+  align-items: center;
+  gap: var(--bukolabs-brand-gap);
+  min-width: 0;
+}
+
+/* Portrait ribbon logo (`bukolabs-logo 1-1.png`) — preserve aspect ratio */
+.bukolabs-brand__mark {
+  flex-shrink: 0;
+  display: block;
+  width: auto;
+  object-fit: contain;
+  object-position: left center;
+}
+
+.bukolabs-brand__text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.bukolabs-brand__name {
+  font-family: var(--font-family);
+  font-weight: 500;
+  color: var(--color-deep-teal, #003534);
+  line-height: 1;
+  letter-spacing: -0.02em;
+}
+
+.bukolabs-brand__tag {
+  font-family: var(--font-family);
+  font-weight: 500;
+  color: var(--color-deep-teal, #003534);
+  line-height: 1.2;
+}
+
+/* Welcome screen — compact brand */
+.bukolabs-brand--welcome {
+  gap: 2px;
+}
+
+/* Match `bukolabs-logo 1-1.png` (33×50) — avoid a wider box that adds dead space beside the mark */
+.bukolabs-brand--welcome .bukolabs-brand__mark {
+  width: auto;
+  height: 52px;
+}
+
+.bukolabs-brand--welcome .bukolabs-brand__name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #073b3a;
+  letter-spacing: -0.01em;
+}
+
+.bukolabs-brand--welcome .bukolabs-brand__tag {
+  font-size: 10px;
+  color: #0f766e;
+  letter-spacing: 0.02em;
+}
+
+/* Login + Activate — Figma auth left panel brand */
+.bukolabs-brand--auth .bukolabs-brand__mark {
+  width: 40px;
+  height: 60px;
+}
+
+.bukolabs-brand--auth .bukolabs-brand__name {
+  font-size: 38px;
+  font-weight: 500;
+  letter-spacing: -1px;
+}
+
+.bukolabs-brand--auth .bukolabs-brand__tag {
+  font-size: 17px;
+  margin-top: 2px;
+}
+
+/* Sidebar — dark gradient nav */
+.bukolabs-brand--sidebar .bukolabs-brand__mark {
+  width: 28px;
+  height: 40px;
+}
+
+.bukolabs-brand--sidebar .bukolabs-brand__name {
+  font-size: 17px;
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  color: #fff;
+}
+
+.bukolabs-brand--sidebar .bukolabs-brand__tag {
+  font-size: 11px;
+  font-weight: 400;
+  line-height: 1.2;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+/* Splash screen */
+.bukolabs-brand--splash .bukolabs-brand__mark {
+  width: 40px;
+  height: 60px;
+}
+
+.bukolabs-brand--splash .bukolabs-brand__name {
+  color: var(--color-clear-day);
+  font-size: 28px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+.bukolabs-brand--splash .bukolabs-brand__tag {
+  color: var(--color-powder-blue);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.2px;
+}
+
+/* Compact row — gallery / figma */
+.bukolabs-brand--compact .bukolabs-brand__mark {
+  width: 32px;
+  height: 40px;
+}
+
+.bukolabs-brand--compact .bukolabs-brand__name {
+  font-size: 14px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--color-deep-teal);
+}
+
+.bukolabs-brand--compact .bukolabs-brand__tag {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
+  color: #0f766e;
+}
+
+.bukolabs-brand--compact.bukolabs-brand--light .bukolabs-brand__name {
+  color: #fff;
+}
+
+.bukolabs-brand--compact.bukolabs-brand--light .bukolabs-brand__tag {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+@media (max-width: 960px) {
+  .bukolabs-brand--auth .bukolabs-brand__name {
+    font-size: 28px;
+  }
+
+  .bukolabs-brand--auth .bukolabs-brand__tag {
+    font-size: 14px;
+  }
+
+  .bukolabs-brand--auth .bukolabs-brand__mark {
+    width: 36px;
+    height: 54px;
+  }
+}
+
+@media (max-width: 520px) {
+  .bukolabs-brand--auth .bukolabs-brand__name {
+    font-size: 22px;
+  }
+
+  .bukolabs-brand--auth .bukolabs-brand__tag {
+    font-size: 12px;
+  }
+}

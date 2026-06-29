@@ -1,0 +1,557 @@
+/**
+ * Dark mode overrides — imported last in main.tsx so they win over page CSS.
+ */
+
+[data-theme="dark"] {
+  color-scheme: dark;
+
+  --color-deep-teal: #e2e8f0;
+  --app-header-border-color: #334155;
+  --color-brand-bg: #0f172a;
+  --color-brand-border: #334155;
+  --color-brand-surface: #1e293b;
+  --color-brand-mint: rgba(52, 211, 153, 0.15);
+  --color-panel-bg: #273449;
+  --color-mystic: #334155;
+  --color-granny-smith: #94a3b8;
+  --color-nevada: #94a3b8;
+  --color-river-bed: #cbd5e1;
+  --color-tower-gray: #64748b;
+
+  --ui-page-bg: #0f172a;
+  --ui-surface: #1e293b;
+  --ui-surface-muted: #273449;
+  --ui-border: #334155;
+  --ui-border-subtle: #334155;
+  --ui-text-primary: #e2e8f0;
+  --ui-text-secondary: #94a3b8;
+  --ui-text-muted: #64748b;
+  --ui-input-bg: #0f172a;
+  --ui-input-border: #475569;
+  --ui-hover-bg: #273449;
+  --ui-table-header-bg: #273449;
+  --ui-progress-track: #334155;
+  --ui-accent: #34d399;
+  --ui-accent-soft: rgba(52, 211, 153, 0.12);
+  --ui-shadow: rgba(0, 0, 0, 0.2);
+}
+
+[data-theme="dark"] body {
+  background-color: var(--ui-page-bg);
+  color: var(--ui-text-primary);
+}
+
+[data-theme="dark"] h1,
+[data-theme="dark"] h2,
+[data-theme="dark"] h3 {
+  color: #f8fafc;
+}
+
+/* ── App shell & page backgrounds ──────────────────────────── */
+[data-theme="dark"] .app-shell,
+[data-theme="dark"] .app-shell__main,
+[data-theme="dark"] .app-shell__main--flush,
+[data-theme="dark"] .console-page,
+[data-theme="dark"] .dashboard,
+[data-theme="dark"] .dashboard.console-page,
+[data-theme="dark"] .settings-page,
+[data-theme="dark"] .settings-page.console-page,
+[data-theme="dark"] .save-pref-page,
+[data-theme="dark"] .save-pref-page.console-page,
+[data-theme="dark"] .search-page,
+[data-theme="dark"] .search-page.console-page,
+[data-theme="dark"] .documents-page,
+[data-theme="dark"] .documents-page.console-page,
+[data-theme="dark"] .devices-page,
+[data-theme="dark"] .devices-page.console-page,
+[data-theme="dark"] .help-assistant-page,
+[data-theme="dark"] .help-assistant-page.console-page,
+[data-theme="dark"] .about-page,
+[data-theme="dark"] .scan-offline-page,
+[data-theme="dark"] .dashboard--offline {
+  background: var(--ui-page-bg);
+}
+
+/* ── Headers, top bar, breadcrumb, footer ───────────────────── */
+[data-theme="dark"] .offline-console-header,
+[data-theme="dark"] .scan-offline-header,
+[data-theme="dark"] .dash-topbar,
+[data-theme="dark"] .app-topbar {
+  background: var(--ui-surface);
+  border-color: var(--ui-border);
+  color: var(--ui-text-secondary);
+}
+
+[data-theme="dark"] .offline-console-header__title,
+[data-theme="dark"] .scan-offline-header__title,
+[data-theme="dark"] .settings-page__title,
+[data-theme="dark"] .dash-topbar__title,
+[data-theme="dark"] .app-topbar__title,
+[data-theme="dark"] .app-topbar__username {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .offline-console-header__subtitle,
+[data-theme="dark"] .scan-offline-header__subtitle,
+[data-theme="dark"] .settings-page__subtitle,
+[data-theme="dark"] .dash-header__subtitle {
+  color: var(--ui-text-secondary);
+}
+
+[data-theme="dark"] .app-breadcrumb,
+[data-theme="dark"] .app-footer {
+  background: var(--ui-surface);
+  border-color: var(--ui-border);
+  color: var(--ui-text-secondary);
+}
+
+[data-theme="dark"] .app-breadcrumb__brand {
+  color: var(--ui-accent);
+}
+
+[data-theme="dark"] .app-topbar__user {
+  border-left-color: var(--ui-border);
+}
+
+[data-theme="dark"] .dash-badge {
+  background: var(--ui-surface-muted);
+  border-color: var(--ui-border);
+  color: var(--ui-text-primary);
+}
+
+[data-theme="dark"] .dash-badge--success {
+  background: var(--ui-accent-soft);
+  border-color: rgba(52, 211, 153, 0.35);
+  color: #6ee7b7;
+}
+
+/* ── Status bars ───────────────────────────────────────────── */
+[data-theme="dark"] .settings-status-bar,
+[data-theme="dark"] .search-status-bar,
+[data-theme="dark"] .devices-status-bar,
+[data-theme="dark"] .help-assistant-status-bar,
+[data-theme="dark"] .save-pref-status-bar,
+[data-theme="dark"] .offline-status-bar,
+[data-theme="dark"] .documents-status-bar,
+[data-theme="dark"] .about-status-bar {
+  background: var(--ui-surface);
+  border-color: var(--ui-border);
+  color: var(--ui-text-secondary);
+}
+
+/* ── Shared cards & panels ─────────────────────────────────── */
+[data-theme="dark"] .dash-stat,
+[data-theme="dark"] .dash-panel,
+[data-theme="dark"] .dash-settings,
+[data-theme="dark"] .dash-feature,
+[data-theme="dark"] .settings-card,
+[data-theme="dark"] .settings-scan-card,
+[data-theme="dark"] .save-pref-card,
+[data-theme="dark"] .save-pref-mode-card,
+[data-theme="dark"] .save-pref-preview,
+[data-theme="dark"] .help-assistant-card,
+[data-theme="dark"] .help-assistant-sidebar__item,
+[data-theme="dark"] .search-results,
+[data-theme="dark"] .search-result-card,
+[data-theme="dark"] .search-folder-card,
+[data-theme="dark"] .search-empty-state,
+[data-theme="dark"] .documents-page__folders,
+[data-theme="dark"] .documents-page__list,
+[data-theme="dark"] .documents-page__details,
+[data-theme="dark"] .documents-page__empty,
+[data-theme="dark"] .devices-page__list-pane,
+[data-theme="dark"] .devices-page__detail-pane,
+[data-theme="dark"] .devices-page__empty,
+[data-theme="dark"] .about-card,
+[data-theme="dark"] .about-info-card,
+[data-theme="dark"] .scan-panel,
+[data-theme="dark"] .scan-offline-stepper,
+[data-theme="dark"] .scan-config-card,
+[data-theme="dark"] .scan-preview-frame,
+[data-theme="dark"] .scan-save-summary,
+[data-theme="dark"] .offline-section-panel,
+[data-theme="dark"] .stat-card {
+  background: var(--ui-surface);
+  border-color: var(--ui-border);
+  color: var(--ui-text-primary);
+}
+
+[data-theme="dark"] .save-pref-mode-card--selected {
+  background: var(--ui-accent-soft);
+  border-color: var(--ui-accent);
+}
+
+[data-theme="dark"] .save-pref-preview {
+  background: var(--ui-accent-soft);
+  border-color: rgba(52, 211, 153, 0.35);
+}
+
+[data-theme="dark"] .settings-card__title,
+[data-theme="dark"] .save-pref-card__title,
+[data-theme="dark"] .save-pref-section__title,
+[data-theme="dark"] .save-pref-preview__title,
+[data-theme="dark"] .dash-panel__title,
+[data-theme="dark"] .dash-settings__title,
+[data-theme="dark"] .dash-feature__title,
+[data-theme="dark"] .scan-panel__title,
+[data-theme="dark"] .help-assistant-card__title,
+[data-theme="dark"] .documents-page__panel-title,
+[data-theme="dark"] .devices-page__section-title,
+[data-theme="dark"] .about-card__title {
+  color: #f8fafc;
+  border-bottom-color: var(--ui-border);
+}
+
+[data-theme="dark"] .dash-stat__label,
+[data-theme="dark"] .dash-stat__value-detail,
+[data-theme="dark"] .dash-settings__row dt,
+[data-theme="dark"] .settings-row__label,
+[data-theme="dark"] .save-pref-card .settings-row__label,
+[data-theme="dark"] .scan-panel__hint,
+[data-theme="dark"] .dash-table__muted,
+[data-theme="dark"] .dash-table__empty {
+  color: var(--ui-text-secondary);
+}
+
+[data-theme="dark"] .dash-stat__value,
+[data-theme="dark"] .dash-settings__row dd,
+[data-theme="dark"] .settings-row__value,
+[data-theme="dark"] .save-pref-card .settings-row__value,
+[data-theme="dark"] .dash-table__name,
+[data-theme="dark"] .dash-table td {
+  color: var(--ui-text-primary);
+}
+
+[data-theme="dark"] .dash-stat__progress {
+  background: var(--ui-progress-track);
+}
+
+[data-theme="dark"] .dash-stat__progress-fill {
+  background: var(--ui-accent);
+}
+
+/* ── Settings tabs ─────────────────────────────────────────── */
+[data-theme="dark"] .settings-page__tab {
+  background: var(--ui-surface);
+  border-color: var(--ui-border);
+  color: var(--ui-text-secondary);
+}
+
+[data-theme="dark"] .settings-page__tab:hover:not(.settings-page__tab--active) {
+  border-color: #475569;
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .settings-page__tab--active {
+  background: var(--ui-accent-soft);
+  border-color: var(--ui-accent);
+  color: #6ee7b7;
+}
+
+[data-theme="dark"] .settings-row,
+[data-theme="dark"] .settings-row--link,
+[data-theme="dark"] .save-pref-card .settings-row,
+[data-theme="dark"] .save-pref-card .settings-row--link {
+  border-bottom-color: var(--ui-border);
+}
+
+[data-theme="dark"] .settings-row--link:hover,
+[data-theme="dark"] .save-pref-card .settings-row--link:hover {
+  background: var(--ui-hover-bg);
+}
+
+/* ── Forms & inputs ────────────────────────────────────────── */
+[data-theme="dark"] .settings-storage-path__input,
+[data-theme="dark"] .settings-storage-path__browse,
+[data-theme="dark"] .settings-scan-field__select,
+[data-theme="dark"] .dash-panel__search,
+[data-theme="dark"] .dash-panel__select,
+[data-theme="dark"] .dash-panel__select-btn,
+[data-theme="dark"] .dash-panel__filter-icon,
+[data-theme="dark"] .search-toolbar__input,
+[data-theme="dark"] .search-toolbar__select,
+[data-theme="dark"] .search-filter-chip,
+[data-theme="dark"] .documents-page__search,
+[data-theme="dark"] .documents-page__sort-btn,
+[data-theme="dark"] .scan-modal-search__input,
+[data-theme="dark"] .scan-department-modal__search,
+[data-theme="dark"] .scan-department-modal__specify-input,
+[data-theme="dark"] .scan-folder-current__path,
+[data-theme="dark"] .scan-config-field__select,
+[data-theme="dark"] .scan-config-field__input,
+[data-theme="dark"] .input-field {
+  background: var(--ui-input-bg);
+  border-color: var(--ui-input-border);
+  color: var(--ui-text-primary);
+}
+
+[data-theme="dark"] .search-toolbar__input::placeholder,
+[data-theme="dark"] .dash-panel__search::placeholder,
+[data-theme="dark"] .scan-department-modal__search::placeholder {
+  color: var(--ui-text-muted);
+}
+
+/* ── Tables ────────────────────────────────────────────────── */
+[data-theme="dark"] .dash-table th {
+  background: var(--ui-table-header-bg);
+  border-color: var(--ui-border);
+  color: var(--ui-text-secondary);
+}
+
+[data-theme="dark"] .dash-table td {
+  border-bottom-color: var(--ui-border-subtle);
+}
+
+[data-theme="dark"] .dash-table tbody tr:hover {
+  background: var(--ui-hover-bg);
+}
+
+[data-theme="dark"] .search-results__header,
+[data-theme="dark"] .documents-page__table-head {
+  background: var(--ui-table-header-bg);
+  border-color: var(--ui-border);
+}
+
+/* ── Buttons (outline / ghost) ─────────────────────────────── */
+[data-theme="dark"] .save-pref-btn--outline,
+[data-theme="dark"] .save-pref-folder-row__edit,
+[data-theme="dark"] .search-btn--outline,
+[data-theme="dark"] .scan-btn--ghost,
+[data-theme="dark"] .scan-btn--secondary,
+[data-theme="dark"] .settings-page__reset-btn,
+[data-theme="dark"] .devices-page__action-btn--outline,
+[data-theme="dark"] .documents-page__action-btn--outline,
+[data-theme="dark"] .dash-settings__btn,
+[data-theme="dark"] .btn-outline {
+  background: var(--ui-surface-muted);
+  border-color: var(--ui-border);
+  color: var(--ui-text-primary);
+}
+
+[data-theme="dark"] .dash-settings__btn,
+[data-theme="dark"] .save-pref-tag--add {
+  color: var(--ui-accent);
+}
+
+[data-theme="dark"] .save-pref-tag {
+  background: var(--ui-accent-soft);
+  border-color: rgba(52, 211, 153, 0.35);
+  color: #6ee7b7;
+}
+
+[data-theme="dark"] .save-pref-badge {
+  background: var(--ui-surface-muted);
+  border-color: var(--ui-border);
+  color: var(--ui-text-secondary);
+}
+
+[data-theme="dark"] .save-pref-badge--success {
+  background: var(--ui-accent-soft);
+  border-color: rgba(52, 211, 153, 0.35);
+  color: #6ee7b7;
+}
+
+[data-theme="dark"] .dash-status-badge {
+  background: var(--ui-accent-soft);
+  border-color: rgba(52, 211, 153, 0.35);
+  color: #6ee7b7;
+}
+
+[data-theme="dark"] .dash-status-badge--muted {
+  background: var(--ui-surface-muted);
+  border-color: var(--ui-border);
+  color: var(--ui-text-secondary);
+}
+
+[data-theme="dark"] .dash-status-badge--clickable:hover {
+  border-color: rgba(52, 211, 153, 0.55);
+  background: rgba(52, 211, 153, 0.12);
+}
+
+/* ── Modals ────────────────────────────────────────────────── */
+[data-theme="dark"] .scan-modal,
+[data-theme="dark"] .add-device-modal,
+[data-theme="dark"] .detect-devices-modal,
+[data-theme="dark"] .available-devices-modal,
+[data-theme="dark"] .create-folder-modal,
+[data-theme="dark"] .restore-document-modal,
+[data-theme="dark"] .open-file-location-modal,
+[data-theme="dark"] .install-driver-modal,
+[data-theme="dark"] .run-diagnostics-modal,
+[data-theme="dark"] .reset-settings-modal,
+[data-theme="dark"] .dashboard-filters-modal,
+[data-theme="dark"] .report-issue-modal,
+[data-theme="dark"] .send-feedback-modal,
+[data-theme="dark"] .feedback-submitted-modal,
+[data-theme="dark"] .report-submitted-modal {
+  background: var(--ui-surface);
+  border-color: var(--ui-border);
+  color: var(--ui-text-primary);
+}
+
+[data-theme="dark"] .scan-modal__header,
+[data-theme="dark"] .scan-modal__footer,
+[data-theme="dark"] .add-device-modal__footer,
+[data-theme="dark"] .detect-devices-modal__footer {
+  border-color: var(--ui-border);
+}
+
+[data-theme="dark"] .scan-modal__title,
+[data-theme="dark"] .add-device-modal__title,
+[data-theme="dark"] .detect-devices-modal__title {
+  color: #f8fafc;
+}
+
+[data-theme="dark"] .scan-modal__subtitle,
+[data-theme="dark"] .scan-department-modal__desc {
+  color: var(--ui-text-secondary);
+}
+
+[data-theme="dark"] .scan-department-modal__item:hover:not(.scan-department-modal__item--active) {
+  background: var(--ui-hover-bg);
+}
+
+[data-theme="dark"] .scan-department-modal__item--active {
+  background: var(--ui-accent-soft);
+}
+
+[data-theme="dark"] .scan-modal-backdrop {
+  background: rgba(2, 6, 23, 0.72);
+}
+
+/* ── Scan stepper & config ─────────────────────────────────── */
+[data-theme="dark"] .scan-offline-stepper__item--pending {
+  color: var(--ui-text-muted);
+}
+
+[data-theme="dark"] .scan-offline-stepper {
+  background: var(--ui-surface);
+  border-color: var(--ui-border);
+}
+
+[data-theme="dark"] .scan-offline-stepper__num {
+  background: var(--ui-input-bg);
+  border-color: var(--ui-input-border);
+  color: var(--ui-text-secondary);
+}
+
+[data-theme="dark"] .scan-offline-stepper__label {
+  color: var(--ui-text-primary);
+}
+
+[data-theme="dark"] .scan-offline-stepper__item--active .scan-offline-stepper__num {
+  border-color: var(--ui-accent);
+  background: var(--ui-accent);
+  color: #0f172a;
+}
+
+[data-theme="dark"] .scan-offline-stepper__item--active {
+  color: var(--ui-accent);
+}
+
+[data-theme="dark"] .scan-config-row,
+[data-theme="dark"] .scan-save-row {
+  border-color: var(--ui-border);
+}
+
+[data-theme="dark"] .scan-offline-badge--neutral {
+  background: var(--ui-surface-muted);
+  border-color: var(--ui-border);
+  color: var(--ui-text-secondary);
+}
+
+/* ── Documents tree & list ───────────────────────────────────── */
+[data-theme="dark"] .documents-page__folder-item:hover,
+[data-theme="dark"] .documents-page__folder-item--active {
+  background: var(--ui-hover-bg);
+}
+
+[data-theme="dark"] .documents-page__folder-item--active {
+  color: var(--ui-accent);
+}
+
+[data-theme="dark"] .documents-page__row:hover {
+  background: var(--ui-hover-bg);
+}
+
+[data-theme="dark"] .documents-page__row--selected {
+  background: var(--ui-accent-soft);
+}
+
+/* ── Devices ───────────────────────────────────────────────── */
+[data-theme="dark"] .devices-page__device-item:hover,
+[data-theme="dark"] .devices-page__device-item--active {
+  background: var(--ui-hover-bg);
+}
+
+[data-theme="dark"] .devices-page__device-item--active {
+  border-color: var(--ui-accent);
+}
+
+[data-theme="dark"] .devices-page__detail-row {
+  border-color: var(--ui-border);
+}
+
+/* ── Help assistant ────────────────────────────────────────── */
+[data-theme="dark"] .help-assistant-sidebar__item--active,
+[data-theme="dark"] .help-assistant-sidebar__item:hover {
+  background: var(--ui-hover-bg);
+}
+
+[data-theme="dark"] .help-assistant-sidebar__item--active {
+  color: var(--ui-accent);
+}
+
+[data-theme="dark"] .help-assistant-article__steps {
+  color: #cbd5e1;
+}
+
+[data-theme="dark"] .help-assistant-article__steps li::marker {
+  color: var(--ui-accent);
+}
+
+/* ── Search results ────────────────────────────────────────── */
+[data-theme="dark"] .search-result-card:hover,
+[data-theme="dark"] .search-folder-card:hover {
+  background: var(--ui-hover-bg);
+}
+
+[data-theme="dark"] .search-result-card--highlight {
+  background: var(--ui-accent-soft);
+  border-color: var(--ui-accent);
+}
+
+/* ── Storage meters ────────────────────────────────────────── */
+[data-theme="dark"] .settings-storage-usage__track {
+  background: var(--ui-progress-track);
+}
+
+[data-theme="dark"] .settings-storage-usage__fill {
+  background: var(--ui-accent);
+}
+
+/* ── Tailwind surfaces inside app shell ────────────────────── */
+[data-theme="dark"] .app-shell .bg-white {
+  background-color: var(--ui-surface) !important;
+}
+
+[data-theme="dark"] .app-shell .border-\[\#E6E9F1\] {
+  border-color: var(--ui-border) !important;
+}
+
+[data-theme="dark"] .app-shell .text-\[\#0f172a\],
+[data-theme="dark"] .app-shell .text-\[\#334155\],
+[data-theme="dark"] .app-shell .text-brand-deep {
+  color: var(--ui-text-primary) !important;
+}
+
+[data-theme="dark"] .app-shell .text-\[\#64748b\],
+[data-theme="dark"] .app-shell .text-gray-600 {
+  color: var(--ui-text-secondary) !important;
+}
+
+/* ── Demo badge ────────────────────────────────────────────── */
+[data-theme="dark"] .demo-mode-badge {
+  background: #422006;
+  color: #fcd34d;
+}

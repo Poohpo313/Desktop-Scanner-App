@@ -1,0 +1,139 @@
+@import "./figma-tokens.css";
+
+.figma-modal--settings-registration-approval-details {
+  width: min(560px, calc(100vw - 32px));
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.figma-modal--settings-registration-approval-details .figma-modal__header {
+  align-items: flex-start;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid #e6eef5;
+}
+
+.figma-modal--settings-registration-approval-details .figma-modal__title {
+  font-size: var(--text-h2);
+  font-weight: var(--font-weight-semibold);
+  color: #1a3347;
+  letter-spacing: -0.2px;
+  line-height: 1.25;
+}
+
+.figma-modal--settings-registration-approval-details .figma-modal__subtitle {
+  margin-top: 6px;
+  font-size: var(--text-caption);
+  color: #8ea0a3;
+  line-height: 1.45;
+}
+
+.figma-modal--settings-registration-approval-details .figma-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 0;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.figma-modal--settings-registration-approval-details .figma-modal__close img {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.figma-modal--settings-registration-approval-details .figma-modal__body {
+  padding: 18px 24px 20px;
+}
+
+.settings-registration-approval-details__section + .settings-registration-approval-details__section {
+  margin-top: 22px;
+}
+
+.settings-registration-approval-details__section-label {
+  margin: 0 0 14px;
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #007a5e;
+}
+
+.settings-registration-approval-details__grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px 24px;
+}
+
+.settings-registration-approval-details__item {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.settings-registration-approval-details__field-label {
+  font-size: var(--text-small);
+  color: #8ea0a3;
+  line-height: 1.3;
+}
+
+.settings-registration-approval-details__field-value {
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  color: #1a3347;
+  line-height: 1.35;
+}
+
+.settings-registration-approval-details__status-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  min-height: 28px;
+  padding: 0 12px;
+  border: 1px solid #9fd9c3;
+  border-radius: 999px;
+  background: #edf8f4;
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  color: #007a5e;
+}
+
+.settings-registration-approval-details__footer-wrap {
+  display: flex;
+  justify-content: flex-end;
+  padding: 14px 24px 18px;
+  border-top: 1px solid #e6eef5;
+  background: var(--color-white);
+}
+
+.settings-registration-approval-details__close-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 108px;
+  min-height: 40px;
+  padding: 0 22px;
+  border: 0;
+  border-radius: 8px;
+  background: #007a5e;
+  color: var(--color-white);
+  font: inherit;
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+}
+
+.settings-registration-approval-details__close-btn:hover {
+  filter: brightness(1.04);
+}
+
+@media (max-width: 560px) {
+  .settings-registration-approval-details__grid {
+    grid-template-columns: 1fr;
+  }
+}

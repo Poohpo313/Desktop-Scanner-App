@@ -1,0 +1,404 @@
+[
+  {
+    "id": "822:2767",
+    "name": "SUPER ADMIN DEVICE MANAGEMENT",
+    "slug": "super-admin-device-management",
+    "fileSlug": "super-admin-device-management"
+  },
+  {
+    "id": "822:2818",
+    "name": "SUPER ADMIN KEY",
+    "slug": "super-admin-key",
+    "fileSlug": "super-admin-key"
+  },
+  {
+    "id": "859:991",
+    "name": "SUPER ADMIN LOGS",
+    "slug": "super-admin-logs",
+    "fileSlug": "super-admin-logs"
+  },
+  {
+    "id": "859:1039",
+    "name": "SUPER ADMIN CLOUD",
+    "slug": "super-admin-cloud",
+    "fileSlug": "super-admin-cloud"
+  },
+  {
+    "id": "1622:1568",
+    "name": "USER VERIFICATION",
+    "slug": "user-verification",
+    "fileSlug": "user-verification"
+  },
+  {
+    "id": "896:942",
+    "name": "SUPER ADMIN HELP",
+    "slug": "super-admin-help",
+    "fileSlug": "super-admin-help"
+  },
+  {
+    "id": "896:991",
+    "name": "SUPER ADMIN SETTINGS",
+    "slug": "super-admin-settings",
+    "fileSlug": "super-admin-settings"
+  },
+  {
+    "id": "1364:2741",
+    "name": "SUPER ADMIN SETTINGS",
+    "slug": "super-admin-settings",
+    "fileSlug": "super-admin-settings-1364-2741"
+  },
+  {
+    "id": "1438:3780",
+    "name": "SUPER ADMIN SETTINGS",
+    "slug": "super-admin-settings",
+    "fileSlug": "super-admin-settings-1438-3780"
+  },
+  {
+    "id": "894:1780",
+    "name": "REGISTERED SUCCESSFULLY",
+    "slug": "registered-successfully",
+    "fileSlug": "registered-successfully"
+  },
+  {
+    "id": "1307:1781",
+    "name": "DELETE DEVICE",
+    "slug": "delete-device",
+    "fileSlug": "delete-device"
+  },
+  {
+    "id": "1307:1805",
+    "name": "SUCESSFULLY DELETED",
+    "slug": "sucessfully-deleted",
+    "fileSlug": "sucessfully-deleted"
+  },
+  {
+    "id": "1709:945",
+    "name": "SUCESSFULLY DELETED",
+    "slug": "sucessfully-deleted",
+    "fileSlug": "sucessfully-deleted-1709-945"
+  },
+  {
+    "id": "1335:973",
+    "name": "CHANGES SAVED SUCCESSFULLY",
+    "slug": "changes-saved-successfully",
+    "fileSlug": "changes-saved-successfully"
+  },
+  {
+    "id": "1341:1224",
+    "name": "EMAIL RECOVERY CONFIRMATION",
+    "slug": "email-recovery-confirmation",
+    "fileSlug": "email-recovery-confirmation"
+  },
+  {
+    "id": "1341:1136",
+    "name": "RECOVER ADMINISTRATOR PIN",
+    "slug": "recover-administrator-pin",
+    "fileSlug": "recover-administrator-pin"
+  },
+  {
+    "id": "1341:1083",
+    "name": "ADMINISTRATOR PIN",
+    "slug": "administrator-pin",
+    "fileSlug": "administrator-pin"
+  },
+  {
+    "id": "1341:1051",
+    "name": "SPLASH SCREEN",
+    "slug": "splash-screen",
+    "fileSlug": "splash-screen"
+  },
+  {
+    "id": "1364:2522",
+    "name": "Super Admin Account Setting",
+    "slug": "super-admin-account-setting",
+    "fileSlug": "super-admin-account-setting"
+  },
+  {
+    "id": "1397:835",
+    "name": "SUPER ADMIN DASHBOADR SECTION",
+    "slug": "super-admin-dashboadr-section",
+    "fileSlug": "super-admin-dashboadr-section"
+  },
+  {
+    "id": "1426:888",
+    "name": "User profile delete",
+    "slug": "user-profile-delete",
+    "fileSlug": "user-profile-delete"
+  },
+  {
+    "id": "1752:969",
+    "name": "Admin profile delete",
+    "slug": "admin-profile-delete",
+    "fileSlug": "admin-profile-delete"
+  },
+  {
+    "id": "1426:904",
+    "name": "SUCESSFULLY DELETED",
+    "slug": "sucessfully-deleted",
+    "fileSlug": "sucessfully-deleted-1426-904"
+  },
+  {
+    "id": "1752:985",
+    "name": "SUCESSFULLY DELETED",
+    "slug": "sucessfully-deleted",
+    "fileSlug": "sucessfully-deleted-1752-985"
+  },
+  {
+    "id": "822:2817",
+    "name": "SUPER ADMIN REGISTRATION 1",
+    "slug": "super-admin-registration-1",
+    "fileSlug": "super-admin-registration-1"
+  },
+  {
+    "id": "1468:1156",
+    "name": "ADMINISTRATORS REGISTRATION 2",
+    "slug": "administrators-registration-2",
+    "fileSlug": "administrators-registration-2"
+  },
+  {
+    "id": "1490:866",
+    "name": "DELETE DEVICE",
+    "slug": "delete-device",
+    "fileSlug": "delete-device-1490-866"
+  },
+  {
+    "id": "1752:889",
+    "name": "DELETE DEVICE",
+    "slug": "delete-device",
+    "fileSlug": "delete-device-1752-889"
+  },
+  {
+    "id": "1490:882",
+    "name": "SUCESSFULLY DELETED",
+    "slug": "sucessfully-deleted",
+    "fileSlug": "sucessfully-deleted-1490-882"
+  },
+  {
+    "id": "1752:905",
+    "name": "SUCESSFULLY DELETED",
+    "slug": "sucessfully-deleted",
+    "fileSlug": "sucessfully-deleted-1752-905"
+  },
+  {
+    "id": "1539:884",
+    "name": "Restore Admin",
+    "slug": "restore-admin",
+    "fileSlug": "restore-admin"
+  },
+  {
+    "id": "1752:1013",
+    "name": "Successfully Saved",
+    "slug": "successfully-saved",
+    "fileSlug": "successfully-saved"
+  },
+  {
+    "id": "1539:871",
+    "name": "RESTORE User",
+    "slug": "restore-user",
+    "fileSlug": "restore-user"
+  },
+  {
+    "id": "1578:864",
+    "name": "REVOKE KEY?",
+    "slug": "revoke-key",
+    "fileSlug": "revoke-key"
+  },
+  {
+    "id": "1578:887",
+    "name": "REVOKED SUCCESSFULLY",
+    "slug": "revoked-successfully",
+    "fileSlug": "revoked-successfully"
+  },
+  {
+    "id": "1622:1099",
+    "name": "Cloud Update",
+    "slug": "cloud-update",
+    "fileSlug": "cloud-update"
+  },
+  {
+    "id": "1654:1294",
+    "name": "REPORTS FILTER",
+    "slug": "reports-filter",
+    "fileSlug": "reports-filter"
+  },
+  {
+    "id": "1654:1318",
+    "name": "TROUBLESHOOTING FILTER",
+    "slug": "troubleshooting-filter",
+    "fileSlug": "troubleshooting-filter"
+  },
+  {
+    "id": "1654:1365",
+    "name": "EXPORT SUCCESSFULLY",
+    "slug": "export-successfully",
+    "fileSlug": "export-successfully"
+  },
+  {
+    "id": "1698:2043",
+    "name": "Reject Cloud",
+    "slug": "reject-cloud",
+    "fileSlug": "reject-cloud"
+  },
+  {
+    "id": "1709:961",
+    "name": "Reject Cloud",
+    "slug": "reject-cloud",
+    "fileSlug": "reject-cloud-1709-961"
+  },
+  {
+    "id": "1709:1009",
+    "name": "Reject Cloud",
+    "slug": "reject-cloud",
+    "fileSlug": "reject-cloud-1709-1009"
+  },
+  {
+    "id": "1709:993",
+    "name": "Reject Cloud",
+    "slug": "reject-cloud",
+    "fileSlug": "reject-cloud-1709-993"
+  },
+  {
+    "id": "1709:977",
+    "name": "Reject Cloud",
+    "slug": "reject-cloud",
+    "fileSlug": "reject-cloud-1709-977"
+  },
+  {
+    "id": "1698:2119",
+    "name": "Reject Cloud",
+    "slug": "reject-cloud",
+    "fileSlug": "reject-cloud-1698-2119"
+  },
+  {
+    "id": "1709:1036",
+    "name": "Reject Cloud",
+    "slug": "reject-cloud",
+    "fileSlug": "reject-cloud-1709-1036"
+  },
+  {
+    "id": "1709:1069",
+    "name": "Reject Cloud",
+    "slug": "reject-cloud",
+    "fileSlug": "reject-cloud-1709-1069"
+  },
+  {
+    "id": "1709:1058",
+    "name": "Reject Cloud",
+    "slug": "reject-cloud",
+    "fileSlug": "reject-cloud-1709-1058"
+  },
+  {
+    "id": "1709:1047",
+    "name": "Reject Cloud",
+    "slug": "reject-cloud",
+    "fileSlug": "reject-cloud-1709-1047"
+  },
+  {
+    "id": "1752:4341",
+    "name": "Select an Option",
+    "slug": "select-an-option",
+    "fileSlug": "select-an-option"
+  },
+  {
+    "id": "1752:4500",
+    "name": "Sort",
+    "slug": "sort",
+    "fileSlug": "sort"
+  },
+  {
+    "id": "1803:1302",
+    "name": "SELECT DEPARTMENT",
+    "slug": "select-department",
+    "fileSlug": "select-department"
+  },
+  {
+    "id": "1803:1357",
+    "name": "NOTIFY USER",
+    "slug": "notify-user",
+    "fileSlug": "notify-user"
+  },
+  {
+    "id": "1803:1540",
+    "name": "NOTIFY USER",
+    "slug": "notify-user",
+    "fileSlug": "notify-user-1803-1540"
+  },
+  {
+    "id": "1822:1189",
+    "name": "PASSWORD VERIFICATION",
+    "slug": "password-verification",
+    "fileSlug": "password-verification"
+  },
+  {
+    "id": "1833:1192",
+    "name": "SELECT SORT",
+    "slug": "select-sort",
+    "fileSlug": "select-sort"
+  },
+  {
+    "id": "1841:1637",
+    "name": "SELECT LANGUAGE",
+    "slug": "select-language",
+    "fileSlug": "select-language"
+  },
+  {
+    "id": "1860:1221",
+    "name": "Super Admin Account Setting",
+    "slug": "super-admin-account-setting",
+    "fileSlug": "super-admin-account-setting-1860-1221"
+  },
+  {
+    "id": "1860:1668",
+    "name": "SUPER ADMIN SETTINGS",
+    "slug": "super-admin-settings",
+    "fileSlug": "super-admin-settings-1860-1668"
+  },
+  {
+    "id": "1972:1295",
+    "name": "EDIT USER",
+    "slug": "edit-user",
+    "fileSlug": "edit-user"
+  },
+  {
+    "id": "1972:1411",
+    "name": "REGISTER USER",
+    "slug": "register-user",
+    "fileSlug": "register-user"
+  },
+  {
+    "id": "2041:1192",
+    "name": "Update",
+    "slug": "update",
+    "fileSlug": "update"
+  },
+  {
+    "id": "2076:1193",
+    "name": "REGISTER ADMIN",
+    "slug": "register-admin",
+    "fileSlug": "register-admin"
+  },
+  {
+    "id": "2081:1477",
+    "name": "EDIT ADMIN",
+    "slug": "edit-admin",
+    "fileSlug": "edit-admin"
+  },
+  {
+    "id": "2167:1192",
+    "name": "EXPORT SUCCESSFULLY",
+    "slug": "export-successfully",
+    "fileSlug": "export-successfully-2167-1192"
+  },
+  {
+    "id": "2168:1225",
+    "name": "FILTER",
+    "slug": "filter",
+    "fileSlug": "filter"
+  },
+  {
+    "id": "2189:1660",
+    "name": "BACKUP MANAGEMENT",
+    "slug": "backup-management",
+    "fileSlug": "backup-management"
+  }
+]

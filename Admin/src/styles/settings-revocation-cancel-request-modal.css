@@ -1,0 +1,99 @@
+@import "./figma-tokens.css";
+
+.figma-modal--settings-revocation-cancel {
+  width: min(420px, calc(100vw - 32px));
+  border-radius: 16px;
+  border: 1px solid #e6eef5;
+  box-shadow: 0 18px 42px rgba(15, 23, 42, 0.12);
+  overflow: hidden;
+}
+
+.figma-modal--settings-revocation-cancel .figma-modal__body {
+  padding: 34px 32px 28px;
+}
+
+.settings-revocation-cancel {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.settings-revocation-cancel__icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  margin-bottom: 18px;
+  border-radius: 999px;
+  background: #fde8e8;
+  color: #dc2626;
+}
+
+.settings-revocation-cancel__title {
+  margin: 0 0 12px;
+  font-size: 1.35rem;
+  font-weight: var(--font-weight-semibold);
+  color: #1f3d56;
+  letter-spacing: -0.3px;
+  line-height: 1.25;
+}
+
+.settings-revocation-cancel__message {
+  margin: 0;
+  max-width: 320px;
+  font-size: var(--text-caption);
+  line-height: 1.55;
+  color: #6b7f86;
+}
+
+.settings-revocation-cancel__footer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 16px 20px 20px;
+  border-top: 0;
+  background: #f3f7fa;
+}
+
+.settings-revocation-cancel__keep-btn,
+.settings-revocation-cancel__confirm-btn {
+  min-height: 44px;
+  padding: 0 14px;
+  border-radius: 10px;
+  font: inherit;
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+}
+
+.settings-revocation-cancel__keep-btn {
+  border: 1px solid #d5e0ea;
+  background: var(--color-white);
+  color: #4b5f62;
+}
+
+.settings-revocation-cancel__keep-btn:hover {
+  border-color: #c5d3df;
+}
+
+.settings-revocation-cancel__confirm-btn {
+  border: 0;
+  background: #dc2626;
+  color: var(--color-white);
+}
+
+.settings-revocation-cancel__confirm-btn:hover {
+  filter: brightness(1.04);
+}
+
+@media (max-width: 520px) {
+  .figma-modal--settings-revocation-cancel .figma-modal__body {
+    padding: 28px 20px 22px;
+  }
+
+  .settings-revocation-cancel__footer {
+    grid-template-columns: 1fr;
+  }
+}

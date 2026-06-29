@@ -1,0 +1,503 @@
+@import "./tokens.css";
+
+.registration-edit-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 45;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 40px 28px 28px;
+  overflow-y: auto;
+  background: rgba(11, 18, 32, 0.34);
+  backdrop-filter: blur(1px);
+}
+
+.registration-edit-modal {
+  width: min(100%, 620px);
+  overflow: hidden;
+  border: 1px solid #d7e0ea;
+  border-radius: 20px;
+  background: #ffffff;
+  box-shadow: 0 24px 60px 0 rgba(16, 24, 40, 0.22);
+  font-family: Poppins, var(--font-family);
+}
+
+.registration-edit-modal--administrator {
+  width: min(100%, 586px);
+  border-color: rgba(255, 255, 255, 0.22);
+  background: #008967;
+}
+
+.registration-edit-modal__header {
+  display: flex;
+  min-height: 70px;
+  align-items: center;
+  justify-content: space-between;
+  gap: 18px;
+  padding: 0 34px;
+  border-bottom: 1px solid #d7e0ea;
+}
+
+.registration-edit-modal__header div {
+  display: flex;
+  align-items: center;
+  gap: 11px;
+}
+
+.registration-edit-modal__header img {
+  width: 18px;
+  height: 18px;
+  object-fit: contain;
+}
+
+.registration-edit-modal__header h2 {
+  margin: 0;
+  color: #101828;
+  font-family: Poppins, var(--font-family);
+  font-size: 19px;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.registration-edit-modal__header button {
+  position: relative;
+  display: inline-flex;
+  width: 32px;
+  height: 32px;
+  align-items: center;
+  justify-content: center;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: transparent;
+  font-family: Poppins, var(--font-family);
+  font-size: 0;
+  cursor: pointer;
+}
+
+.registration-edit-modal__header button::before,
+.registration-edit-modal__header button::after {
+  position: absolute;
+  width: 14px;
+  height: 2px;
+  border-radius: 999px;
+  background: #667085;
+  content: "";
+}
+
+.registration-edit-modal__header button::before {
+  transform: rotate(45deg);
+}
+
+.registration-edit-modal__header button::after {
+  transform: rotate(-45deg);
+}
+
+.registration-edit-modal__header button:hover {
+  background: #f1f5f9;
+}
+
+.registration-edit-modal__body {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: 18px 34px 16px;
+}
+
+.registration-edit-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 0 0 14px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #b9c9c6;
+  color: #344054;
+  font-family: Poppins, var(--font-family);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 1px;
+  line-height: normal;
+  text-transform: uppercase;
+}
+
+.registration-edit-section h3 img {
+  width: 13px;
+  height: 13px;
+  object-fit: contain;
+}
+
+.registration-edit-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 22px;
+}
+
+.registration-edit-grid--password {
+  grid-template-columns: minmax(0, 220px);
+}
+
+.registration-edit-grid--admin-password {
+  grid-template-columns: minmax(0, 235px);
+}
+
+.registration-edit-name-grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 78px minmax(0, 1fr);
+  gap: 16px 16px;
+}
+
+.registration-edit-field + .registration-edit-grid,
+.registration-edit-grid + .registration-edit-field,
+.registration-edit-name-grid + .registration-edit-grid {
+  margin-top: 14px;
+}
+
+.registration-edit-field {
+  position: relative;
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  gap: 7px;
+}
+
+.registration-edit-field--wide {
+  width: 100%;
+}
+
+.registration-edit-field span {
+  color: #101828;
+  font-family: Poppins, var(--font-family);
+  font-size: 11.5px;
+  font-weight: 500;
+}
+
+.registration-edit-field input,
+.registration-edit-field select,
+.registration-edit-select-button {
+  width: 100%;
+  height: 36px;
+  border: 1px solid #98a2b3;
+  border-radius: 3px;
+  background: #eef4ff;
+  color: #101828;
+  font-family: Poppins, var(--font-family);
+  font-size: 12.5px;
+  font-weight: 500;
+  outline: 0;
+  padding: 0 12px;
+}
+
+.registration-edit-select-button {
+  overflow: hidden;
+  padding-right: 36px;
+  text-align: left;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+.registration-edit-field--select::before {
+  position: absolute;
+  right: 14px;
+  top: 39px;
+  width: 6px;
+  height: 6px;
+  border-right: 1.5px solid #475467;
+  border-bottom: 1.5px solid #475467;
+  content: "";
+  pointer-events: none;
+  transform: rotate(45deg);
+}
+
+.registration-edit-select-menu {
+  position: absolute;
+  z-index: 5;
+  top: 62px;
+  right: 0;
+  left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 8px;
+  border: 1px solid #d7e0ea;
+  border-radius: 8px;
+  background: #ffffff;
+  box-shadow: 0 12px 28px rgba(16, 24, 40, 0.14);
+}
+
+.registration-edit-select-menu button {
+  height: 34px;
+  border: 1px solid #e5eaf5;
+  border-radius: 6px;
+  background: #ffffff;
+  color: #101828;
+  font-family: Poppins, var(--font-family);
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+  padding: 0 10px;
+  cursor: pointer;
+}
+
+.registration-edit-select-menu button:hover {
+  border-color: #dff4e8;
+  background: #e6f8ee;
+  color: #006f54;
+}
+
+.registration-edit-select-menu--multi button {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  align-items: center;
+  gap: 8px;
+}
+
+.registration-edit-select-menu--multi button.is-selected {
+  border-color: #008967;
+  background: #e6f8ee;
+  color: #006f54;
+  font-weight: 600;
+}
+
+.registration-edit-select-menu--multi button span {
+  display: inline-flex;
+  width: 18px;
+  justify-content: center;
+}
+
+.registration-edit-field input:focus,
+.registration-edit-field select:focus {
+  border-color: #008967;
+  box-shadow: 0 0 0 3px rgba(0, 137, 103, 0.12);
+}
+
+.registration-edit-field input[readonly] {
+  background: #dce9ff;
+  color: #1f3e9a;
+}
+
+.registration-edit-password-help {
+  align-self: stretch;
+  margin: -2px 0 0;
+  color: #767676;
+  font-family: Poppins, var(--font-family);
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 14.4px;
+}
+
+.registration-edit-notice {
+  margin: 0 0 16px;
+  padding: 12px 14px;
+  border: 1px solid #b8e6d3;
+  border-radius: 8px;
+  background: #eefbf4;
+  color: #0f5132;
+  font-family: Poppins, var(--font-family);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.45;
+}
+
+.registration-edit-notice strong {
+  color: #008967;
+  font-weight: 600;
+}
+
+.registration-edit-section-note {
+  margin: 0 0 14px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: #64748b;
+}
+
+.registration-edit-field strong {
+  min-height: 13px;
+  color: #dc2626;
+  font-size: 10.5px;
+  font-weight: 500;
+  line-height: 1.2;
+}
+
+.registration-edit-field:not(:has(strong))::after {
+  display: block;
+  min-height: 13px;
+  content: "";
+}
+
+.registration-edit-license-row {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(180px, 230px);
+  align-items: start;
+  gap: 12px;
+}
+
+.registration-edit-license-row button {
+  margin-top: 24px;
+  height: 36px;
+  border: 1px solid #008967;
+  border-radius: 4px;
+  background: #eef4ff;
+  color: #008967;
+  font-family: Poppins, var(--font-family);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.registration-edit-status-row {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-top: 2px;
+  color: #101828;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.registration-edit-status-row strong {
+  display: inline-flex;
+  width: 156px;
+  height: 34px;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  background: #dff8e8;
+  color: #008967;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.registration-edit-modal__footer {
+  display: flex;
+  min-height: 80px;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 28px;
+  padding: 0 34px;
+  border-top: 1px solid #d7e0ea;
+}
+
+.registration-edit-modal__footer button {
+  height: 36px;
+  min-width: 118px;
+  border: 0;
+  border-radius: 4px;
+  background: transparent;
+  color: #101828;
+  font-family: Poppins, var(--font-family);
+  font-size: 12.5px;
+  font-weight: 500;
+  cursor: pointer;
+}
+
+.registration-edit-modal__footer button[type="submit"] {
+  min-width: 204px;
+  background: #006f54;
+  color: #ffffff;
+  box-shadow: 0 5px 12px rgba(0, 111, 84, 0.18);
+}
+
+.registration-edit-modal__footer button:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+}
+
+.registration-edit-modal--administrator .registration-edit-modal__header {
+  min-height: 70px;
+  border-bottom-color: rgba(255, 255, 255, 0.34);
+  background: #006f54;
+}
+
+.registration-edit-modal--administrator .registration-edit-modal__header img {
+  filter: brightness(0) invert(1);
+}
+
+.registration-edit-modal--administrator .registration-edit-modal__header h2 {
+  color: #ffffff;
+}
+
+.registration-edit-modal--administrator .registration-edit-modal__header button::before,
+.registration-edit-modal--administrator .registration-edit-modal__header button::after {
+  background: #ffffff;
+}
+
+.registration-edit-modal--administrator .registration-edit-modal__header button:hover {
+  background: rgba(255, 255, 255, 0.12);
+}
+
+.registration-edit-modal--administrator .registration-edit-modal__body {
+  gap: 18px;
+  padding: 18px 34px 36px;
+}
+
+.registration-edit-modal--administrator .registration-edit-section h3 {
+  border-bottom-color: rgba(255, 255, 255, 0.55);
+  color: #ffffff;
+}
+
+.registration-edit-modal--administrator .registration-edit-section h3 img {
+  filter: brightness(0) invert(1);
+}
+
+.registration-edit-modal--administrator .registration-edit-field span {
+  color: #ffffff;
+}
+
+.registration-edit-modal--administrator .registration-edit-field input,
+.registration-edit-modal--administrator .registration-edit-select-button {
+  height: 34px;
+  border-color: rgba(255, 255, 255, 0.88);
+  border-radius: 3px;
+  background: #ffffff;
+  color: #101828;
+}
+
+.registration-edit-modal--administrator .registration-edit-field--wide input {
+  height: 34px;
+}
+
+.registration-edit-modal--administrator .registration-edit-password-help {
+  color: #ffffff;
+}
+
+.registration-edit-modal--administrator .registration-edit-field strong {
+  color: #ffdfdf;
+}
+
+.registration-edit-modal--administrator .registration-edit-field--select::before {
+  border-color: #101828;
+}
+
+.registration-edit-modal--administrator .registration-edit-name-grid {
+  grid-template-columns: minmax(0, 1fr) 90px minmax(0, 1fr);
+}
+
+.registration-edit-modal--administrator .registration-edit-grid {
+  gap: 20px 28px;
+}
+
+.registration-edit-modal--administrator .registration-edit-modal__footer {
+  border-top-color: rgba(255, 255, 255, 0.34);
+  background: #008967;
+}
+
+.registration-edit-modal--administrator .registration-edit-modal__footer button {
+  color: #ffffff;
+}
+
+.registration-edit-modal--administrator .registration-edit-modal__footer button[type="submit"] {
+  background: #00694a;
+  box-shadow: 0 5px 12px rgba(0, 80, 60, 0.28);
+}
+
+@media (max-width: 1180px) {
+  .registration-edit-grid,
+  .registration-edit-grid--password,
+  .registration-edit-name-grid,
+  .registration-edit-license-row {
+    grid-template-columns: 1fr;
+  }
+}

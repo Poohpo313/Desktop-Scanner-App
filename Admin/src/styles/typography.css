@@ -1,0 +1,87 @@
+@import "./figma-tokens.css";
+
+/* Bukolabs typography utilities */
+.text-display {
+  font-size: var(--text-display);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+.text-display-sm {
+  font-size: var(--text-display-sm);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+.text-h1 {
+  font-size: var(--text-h1);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+.text-h2 {
+  font-size: var(--text-h2);
+  font-weight: var(--font-weight-semibold);
+  line-height: var(--line-height-tight);
+}
+
+.text-body {
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+}
+
+.text-caption {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+}
+
+.text-small {
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+}
+
+.text-micro {
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-regular);
+  line-height: var(--line-height-normal);
+}
+
+.text-muted {
+  color: var(--color-nevada);
+}
+
+.text-muted-light {
+  color: var(--color-granny-smith);
+}
+
+.text-error {
+  font-size: var(--text-micro);
+  color: var(--color-danger-dark);
+}
+
+.text-body-muted {
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-nevada);
+  line-height: var(--line-height-relaxed);
+}
+
+.text-caption-strong {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-timber-green);
+}
+
+.text-stat {
+  font-size: var(--text-h1);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-rain-forest);
+  text-align: center;
+}
+
+.text-mono {
+  font-family: var(--font-family-mono);
+}

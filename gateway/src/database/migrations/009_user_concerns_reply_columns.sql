@@ -1,0 +1,5 @@
+-- Reply workflow columns referenced by user-concerns service
+ALTER TABLE user_concerns
+  ADD COLUMN IF NOT EXISTS admin_reply TEXT,
+  ADD COLUMN IF NOT EXISTS replied_at TIMESTAMPTZ,
+  ADD COLUMN IF NOT EXISTS reply_read BOOLEAN DEFAULT true;

@@ -1,0 +1,246 @@
+:root {
+  /* Bukolabs brand palette */
+  --color-brand-slate: #323b42;
+  --color-deep-teal: #003534;
+  --color-rain-forest: #007a5e;
+  --color-rain-forest-light: #008967;
+  --color-brand-teal: #009ba5;
+  --color-persian-green: #00a7a5;
+
+  /* Derived / supporting (UI surfaces & neutrals) */
+  --color-aqua-squeeze: #f4faf8;
+  --color-powder-blue: #bdeae5;
+  --color-jet-stream: #b8d8d2;
+  --color-clear-day: #f7fffd;
+  --color-nevada: #5e7074;
+  --color-bottle-green: #082f2e;
+  --color-panel-bg: #eaf6f4;
+  --color-recovery-info-bg: #e6f4f1;
+  --color-mystic: #dde8e7;
+  --color-timber-green: #323b42;
+  --color-granny-smith: #8ea0a3;
+  --color-nebula: #ccdad8;
+  --color-river-bed: #4b5f62;
+  --color-tower-gray: #a8b5b8;
+  --color-login-panel: #f3f6f5;
+  --color-surface-muted: #f5f7f7;
+  --color-surface-subtle: #fafcfc;
+  --color-white: #ffffff;
+  --color-mint-border: #beece3;
+  --color-limed-spruce: #3d4f52;
+  --color-splash-mid: #005a58;
+  --color-sidebar-mid: #002826;
+  --color-sidebar-deep: #001f1e;
+  --color-shell-bg: #eef5f3;
+  --color-progress-track: #e8efed;
+  --color-activity-gray: #eef2f1;
+
+  /* Extended brand greens */
+  --color-rain-forest-dark: #006b44;
+  --color-forest-emerald: #005c4b;
+  --color-forest-emerald-alt: #005f4b;
+  --color-forest-dark: #005b44;
+  --color-deep-teal-mid: #004f4d;
+  --color-auth-gradient-mid: #004743;
+  --color-splash-gradient-top: #003f3d;
+  --color-teal-ink: #041f1e;
+  --color-persian-green-light: #00c9b7;
+  --color-muted-teal: #8ea8a6;
+  --color-sage: #3d5f57;
+  --color-mint-accent: #9fd4c8;
+  --color-mint-dashed: #b8ddd4;
+  --color-mint-border-light: #c4e1d9;
+  --color-mint-border-muted: #d4ebe3;
+
+  /* Surfaces */
+  --color-admin-header-bg: #f0f4f8;
+  --color-surface-neutral: #f4f7f8;
+  --color-surface-alt: #f4f8f8;
+  --color-surface-mint: #f0f7f5;
+  --color-surface-cool: #eef5f8;
+  --color-surface-blue-tint: #f4f7fc;
+  --color-surface-green-tint: #f3f8f6;
+  --color-surface-warm: #f7faf9;
+  --color-surface-sky: #eef4f7;
+  --color-surface-cool-gray: #eef3f5;
+  --color-form-bg: #f8fbfa;
+  --color-input-focus-bg: #f2faf7;
+  --color-upload-zone-bg: #ebf5f3;
+  --color-mint-panel: #edf8f5;
+  --color-mint-wash: #e9f7f5;
+  --color-success-zone-bg: #edf8f4;
+  --color-success-bg-light: #eef8f4;
+  --color-success-panel: #e8f5ef;
+  --color-success-highlight: #dff3ea;
+  --color-success-step: #dff3ec;
+  --color-success-border: #c9e8df;
+  --color-progress-complete: #c9ebe2;
+
+  /* Borders */
+  --color-border-sky: #d8e8ef;
+  --color-border-cool: #d8e4ea;
+  --color-form-border: #c5ddd7;
+  --color-blue-border: #e3ebf5;
+  --color-step-inactive: #d5e2df;
+  --color-stroke-muted: #e8edf0;
+  --color-track-muted: #dfe8e6;
+
+  /* Info */
+  --color-info-bg: #e7f3f8;
+  --color-info-text: #3d7f9b;
+  --color-info-blue: #2f6fad;
+  --color-info-navy: #2f4f8e;
+  --color-info-bg-light: #e8f0fb;
+  --color-info-bg-pale: #e8f0ff;
+  --color-info-bg-alt: #e8f1fb;
+  --color-info-panel: #e8f1f8;
+  --color-info-purple-bg: #eef2fb;
+  --color-info-badge-bg: #d6e4ff;
+  --color-link-blue: #4a7fd4;
+  --color-slate-blue: #4a6f8c;
+  --color-blue-gray: #607d8b;
+  --color-muted-slate: #6b7c84;
+
+  /* Warning / purple chips */
+  --color-warning-amber: #c27a1a;
+  --color-warning-surface: #fff4e5;
+  --color-warning-bg-light: #fff4df;
+  --color-purple: #6b4c9a;
+  --color-purple-bg: #efe8f7;
+
+  /* Danger extras */
+  --color-danger-badge-bg: #fee2e2;
+  --color-danger-red: #b91c1c;
+  --color-danger-tint: #fce8e6;
+  --color-error-text-light: #ffb4b4;
+  --color-danger-bg-pale: #fef2f2;
+
+  /* Success badges */
+  --color-success-badge-bg: #c6efde;
+
+  --color-success-tint: #e6f7f4;
+
+  /* Disabled */
+  --color-disabled-text: #d5dde0;
+  --color-disabled-track: #d5dde2;
+
+  /* Status & feedback */
+  --color-danger: #e74c3c;
+  --color-danger-dark: #c0392b;
+  --color-danger-bg: #fff8f8;
+  --color-danger-bg-hover: #fff5f5;
+  --color-warning: #f39c12;
+  --color-warning-dark: #d68910;
+  --color-warning-bg: #fffdf8;
+  --color-warning-bg-hover: #fffaf0;
+  --color-success-bg: #e7f6ef;
+  --color-danger-surface: #fdecea;
+  --color-border-subtle: #f0f4f3;
+
+  --gradient-brand: linear-gradient(135deg, var(--color-rain-forest) 0%, var(--color-rain-forest-light) 100%);
+  --gradient-brand-accent: linear-gradient(135deg, var(--color-rain-forest) 0%, var(--color-persian-green) 100%);
+  --gradient-sidebar: linear-gradient(
+    180deg,
+    var(--color-deep-teal) 0%,
+    var(--color-sidebar-mid) 55%,
+    var(--color-sidebar-deep) 100%
+  );
+  --gradient-progress: linear-gradient(90deg, var(--color-rain-forest) 0%, var(--color-persian-green) 100%);
+
+  /* Dashboard surfaces & accents */
+  --dash-radius: 14px;
+  --dash-radius-inner: 10px;
+  --dash-gap: 16px;
+  --dash-card-padding-y: 20px;
+  --dash-card-padding-x: 20px;
+  --dash-card-border: #d5e2df;
+  --dash-border-inner: #e8efed;
+  --dash-divider: #e3ebe9;
+  --dash-card-shadow: 0 1px 3px rgba(0, 53, 52, 0.06), 0 4px 14px rgba(0, 53, 52, 0.04);
+  --dash-stat-min-height: 124px;
+  --dash-table-head-bg: #f1f4f8;
+  --dash-stat-user-icon-bg: #efe8f7;
+  --dash-stat-user-icon-fg: #6b4c9a;
+  --dash-stat-device-icon-bg: #e8f0fc;
+  --dash-stat-device-icon-fg: #4a7fd4;
+  --dash-stat-key-icon-bg: #fef5e7;
+  --dash-stat-key-icon-fg: #d68910;
+  --dash-stat-available-icon-bg: #e6f4f0;
+  --dash-stat-available-icon-fg: #007a5e;
+  --dash-stat-hint-fg: #4a7fd4;
+  --dash-status-success-text: #007a5e;
+  --dash-status-success-bg: #e6f4f0;
+  --dash-status-pending-text: #d97706;
+  --dash-status-pending-bg: #fef3c7;
+  --dash-status-failed-text: #dc2626;
+  --dash-status-failed-bg: #fee2e2;
+  --dash-notify-blue-bg: #eef4fc;
+  --dash-notify-blue-icon-bg: #dce8f8;
+  --dash-notify-blue-fg: #4a7fd4;
+  --dash-notify-green-bg: #eef8f4;
+  --dash-notify-green-icon-bg: #dff3ea;
+  --dash-notify-green-fg: #007a5e;
+  --dash-notify-yellow-bg: #fff8eb;
+  --dash-notify-yellow-icon-bg: #fef0c7;
+  --dash-notify-yellow-fg: #d68910;
+  --dash-notify-gray-bg: #f3f6f8;
+  --dash-notify-gray-icon-bg: #e8edf0;
+  --dash-notify-gray-fg: #6b7c84;
+  --dash-notify-title-fg: #323b42;
+  --dash-notify-subtitle-fg: #8ea0a3;
+  --dash-notify-clear-fg: #007a5e;
+  --dash-notify-footer-fg: #8ea0a3;
+  --dash-progress-fill: #007a5e;
+  --dash-donut-active: #007a5e;
+  --dash-donut-inactive: #f39c12;
+  --dash-donut-attention: #e74c3c;
+
+  --shadow-brand-sm: 0 4px 14px rgba(0, 53, 52, 0.05);
+  --shadow-brand-md: 0 12px 40px rgba(0, 53, 52, 0.08);
+  --shadow-brand-primary: 0 6px 16px rgba(0, 122, 94, 0.22);
+  --focus-ring: 0 0 0 3px rgba(0, 167, 165, 0.14);
+
+  --font-family: "Poppins", "Segoe UI", sans-serif;
+  --font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+
+  /* Glass panels (Security Features, Recovery Process) */
+  --glass-panel-bg: rgba(255, 255, 255, 0.1);
+  --glass-panel-blur: 16px;
+  --radius-glass-panel: 24px;
+
+  /* Typography scale — Bukolabs brand */
+  --text-display: 52px;
+  --text-display-sm: 38px;
+  --text-h1: 26px;
+  --text-h2: 20px;
+  --text-body: 14px;
+  --text-caption: 13px;
+  --text-small: 12px;
+  --text-micro: 11px;
+  --text-title: 17px;
+  --text-input: 13.5px;
+  --text-label: 12.5px;
+  --text-modal-heading: 24px;
+  --text-stat-lg: 28px;
+  --text-hero-splash: 34px;
+  --text-step: 22px;
+  --text-profile-lg: 32px;
+  --text-badge: 10px;
+  --text-window-control: 18px;
+  --text-detail: 18px;
+
+  --font-weight-regular: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+
+  --line-height-tight: 1.2;
+  --line-height-snug: 1.35;
+  --line-height-normal: 1.5;
+  --line-height-relaxed: 1.55;
+}
+
+body.admin-login-page {
+  background: var(--color-login-panel);
+  margin: 0;
+}

@@ -1,0 +1,77 @@
+.connection-lost-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.45);
+  backdrop-filter: blur(6px);
+}
+
+.connection-lost-modal {
+  width: min(440px, 100%);
+  padding: 28px 28px 24px;
+  border: 1px solid #dbe4ec;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 20px 48px rgba(15, 23, 42, 0.18);
+  text-align: center;
+}
+
+.connection-lost-modal__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 72px;
+  height: 72px;
+  margin: 0 auto 16px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, #fff1f2 0%, #ffe4e6 100%);
+  color: #e11d48;
+}
+
+.connection-lost-modal__title {
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.connection-lost-modal__message {
+  margin: 0;
+  font-size: 0.92rem;
+  line-height: 1.6;
+  color: #64748b;
+}
+
+.connection-lost-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-top: 22px;
+}
+
+.connection-lost-modal__btn {
+  min-height: 42px;
+  padding: 0 18px;
+  border-radius: 10px;
+  font: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.connection-lost-modal__btn--primary {
+  border: 0;
+  background: linear-gradient(180deg, #008768 0%, #00755b 100%);
+  color: #fff;
+}
+
+.connection-lost-modal__btn--secondary {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  color: #334155;
+}

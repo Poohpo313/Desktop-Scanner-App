@@ -1,0 +1,18 @@
+@import "./styles/brand-fonts.css";
+@import "./styles/figma-tokens.css";
+@import "./styles/typography.css";
+@import "./styles/brand-base.css";
+@import "./styles/portal-error-state.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background: var(--color-surface-subtle);
+  color: var(--color-timber-green);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}

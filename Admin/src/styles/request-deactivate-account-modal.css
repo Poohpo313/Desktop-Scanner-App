@@ -1,0 +1,117 @@
+@import "./figma-tokens.css";
+
+.figma-modal--request-deactivate {
+  width: min(420px, 100%);
+  border-radius: 18px;
+  border: 1px solid #e8edf0;
+  box-shadow: 0 18px 40px rgba(15, 45, 65, 0.12);
+  background: var(--color-white);
+}
+
+.figma-modal--request-deactivate .figma-modal__body {
+  padding: 32px 32px 28px;
+}
+
+.request-deactivate {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.request-deactivate__icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 20px;
+  border-radius: 12px;
+  background: var(--color-danger-badge-bg);
+  color: #ef4444;
+}
+
+.request-deactivate__warning-icon {
+  display: block;
+}
+
+.request-deactivate__title {
+  margin: 0 0 18px;
+  font-size: 1.5rem;
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  letter-spacing: -0.35px;
+  line-height: var(--line-height-tight);
+}
+
+.request-deactivate__message {
+  width: 100%;
+  margin: 0;
+  padding: 16px 18px;
+  border-radius: 10px;
+  border: 1px solid #c9e8df;
+  background: #edf8f4;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-regular);
+  line-height: 1.5;
+  color: #5f7175;
+  box-sizing: border-box;
+}
+
+.request-deactivate__actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  width: 100%;
+  margin-top: 24px;
+}
+
+.request-deactivate__cancel-btn,
+.request-deactivate__submit-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 46px;
+  padding: 0 16px;
+  border-radius: 10px;
+  font: inherit;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  cursor: pointer;
+  transition: background 0.15s ease, filter 0.15s ease;
+}
+
+.request-deactivate__cancel-btn {
+  border: 0;
+  background: var(--color-login-panel);
+  color: var(--color-brand-slate);
+}
+
+.request-deactivate__cancel-btn:hover {
+  background: #e8eeec;
+}
+
+.request-deactivate__submit-btn {
+  border: 0;
+  background: var(--gradient-brand);
+  color: var(--color-white);
+  box-shadow: 0 8px 18px rgba(0, 122, 94, 0.24);
+}
+
+.request-deactivate__submit-btn:hover {
+  filter: brightness(1.04);
+}
+
+@media (max-width: 480px) {
+  .figma-modal--request-deactivate .figma-modal__body {
+    padding: 28px 20px 24px;
+  }
+
+  .request-deactivate__title {
+    font-size: 1.35rem;
+  }
+
+  .request-deactivate__actions {
+    grid-template-columns: 1fr;
+  }
+}

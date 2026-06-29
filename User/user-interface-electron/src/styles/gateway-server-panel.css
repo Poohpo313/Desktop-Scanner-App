@@ -1,0 +1,109 @@
+.gateway-server-panel {
+  width: min(100%, 520px);
+  margin-top: 1.5rem;
+  padding: 1.25rem 1.5rem;
+  border: 1px solid #dbe3ec;
+  border-radius: 14px;
+  background: #fff;
+  text-align: left;
+}
+
+.gateway-server-panel--compact {
+  margin-top: 0;
+}
+
+.gateway-server-panel__title {
+  margin: 0 0 0.5rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.gateway-server-panel__hint {
+  margin: 0 0 1rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #64748b;
+}
+
+.gateway-server-panel__hint code {
+  font-size: 0.82rem;
+  color: #334155;
+}
+
+.gateway-server-panel__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.gateway-server-panel__label {
+  font-size: 0.8125rem;
+  font-weight: 600;
+  color: #334155;
+}
+
+.gateway-server-panel__input {
+  width: 100%;
+  padding: 0.7rem 0.85rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 10px;
+  font-size: 0.9375rem;
+  color: #0f172a;
+  background: #f8fafc;
+}
+
+.gateway-server-panel__input:focus {
+  outline: 2px solid rgba(16, 185, 129, 0.35);
+  border-color: #10b981;
+  background: #fff;
+}
+
+.gateway-server-panel__status {
+  margin: 0.85rem 0 0;
+  font-size: 0.875rem;
+  color: #047857;
+}
+
+.gateway-server-panel__error {
+  margin: 0.85rem 0 0;
+  font-size: 0.875rem;
+  line-height: 1.45;
+  color: #b91c1c;
+}
+
+.gateway-server-panel__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.gateway-server-panel__actions .login__button {
+  min-width: 160px;
+}
+
+.checking-connection-setup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: min(100%, 640px);
+  padding: 0 1rem 1.5rem;
+}
+
+.checking-connection-setup__intro {
+  margin: 0 0 0.25rem;
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: #0f172a;
+  text-align: center;
+}
+
+.checking-connection-setup__sub {
+  margin: 0 0 1rem;
+  max-width: 520px;
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: #64748b;
+  text-align: center;
+}

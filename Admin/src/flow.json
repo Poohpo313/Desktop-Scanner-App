@@ -1,0 +1,199 @@
+{
+  "name": "Admin Application Flow",
+  "entry": "admin-login",
+  "dashboard": "admin-dashboard",
+  "nodes": {
+    "admin-login": {
+      "title": "Enter username, password",
+      "decision": {
+        "prompt": "Credentials Valid?",
+        "options": [
+          {
+            "label": "YES",
+            "next": "admin-dashboard"
+          },
+          {
+            "label": "NO",
+            "next": "admin-login"
+          }
+        ]
+      }
+    },
+    "admin-dashboard": {
+      "title": "Admin Dashboard",
+      "decision": {
+        "prompt": "Choose Module",
+        "options": [
+          {
+            "label": "User Registration",
+            "next": "user-management-user-register-modal"
+          },
+          {
+            "label": "Keys",
+            "next": "license-key-management"
+          },
+          {
+            "label": "Devices",
+            "next": "device-management"
+          },
+          {
+            "label": "Help",
+            "next": "help-and-support-center"
+          },
+          {
+            "label": "Settings",
+            "next": "settings"
+          }
+        ]
+      }
+    },
+    "user-management-user-register-modal": {
+      "title": "Create User Account",
+      "next": "user-management"
+    },
+    "user-management": {
+      "title": "User Management",
+      "next": "admin-dashboard"
+    },
+    "license-key-management": {
+      "title": "View Issued Keys & Status",
+      "decision": {
+        "prompt": "Key action",
+        "options": [
+          {
+            "label": "Generate Keys",
+            "next": "generate-keys-modal"
+          },
+          {
+            "label": "Deactivate Key",
+            "next": "deactivate-key-modal"
+          },
+          {
+            "label": "Revoke Key?",
+            "next": "revoke-key-modal"
+          },
+          {
+            "label": "View Serial",
+            "next": "view-license-modal"
+          },
+          {
+            "label": "Back to Dashboard",
+            "next": "admin-dashboard"
+          }
+        ]
+      }
+    },
+    "generate-keys-modal": {
+      "title": "Generate Number of Keys",
+      "next": "admin-dashboard-generate-keys"
+    },
+    "admin-dashboard-generate-keys": {
+      "title": "Keys Saved to List",
+      "next": "license-key-management"
+    },
+    "deactivate-key-modal": {
+      "title": "Deactivate Key",
+      "next": "license-key-management"
+    },
+    "revoke-key-modal": {
+      "title": "Revoke Key",
+      "next": "license-key-management"
+    },
+    "view-license-modal": {
+      "title": "View Serial",
+      "next": "license-key-management"
+    },
+    "device-management": {
+      "title": "List of Devices",
+      "decision": {
+        "prompt": "Device Status",
+        "options": [
+          {
+            "label": "Check Device Status",
+            "next": "check-device-status-modal"
+          },
+          {
+            "label": "Inactive Device — Notify Super Admin",
+            "next": "notify-super-admin-modal"
+          },
+          {
+            "label": "Monitor Device",
+            "next": "monitor-device-modal"
+          },
+          {
+            "label": "Provision Device",
+            "next": "provision-device"
+          },
+          {
+            "label": "Back to Dashboard",
+            "next": "admin-dashboard"
+          }
+        ]
+      }
+    },
+    "check-device-status-modal": {
+      "title": "Check Device Status",
+      "next": "device-management"
+    },
+    "notify-super-admin-modal": {
+      "title": "Notify Super Admin",
+      "next": "device-management"
+    },
+    "monitor-device-modal": {
+      "title": "Monitor Device",
+      "next": "device-management"
+    },
+    "provision-device": {
+      "title": "Provision Device",
+      "next": "device-management"
+    },
+    "help-and-support-center": {
+      "title": "Monitor User Concerns",
+      "decision": {
+        "prompt": "Support action",
+        "options": [
+          {
+            "label": "Provide Assistance",
+            "next": "provide-assistance-modal"
+          },
+          {
+            "label": "Contact Customer",
+            "next": "contact-customer-modal"
+          },
+          {
+            "label": "Escalate to Super Admin",
+            "next": "escalate-to-super-admin-modal"
+          },
+          {
+            "label": "Mark as Resolved",
+            "next": "mark-as-resolved-modal"
+          },
+          {
+            "label": "Back to Dashboard",
+            "next": "admin-dashboard"
+          }
+        ]
+      }
+    },
+    "provide-assistance-modal": {
+      "title": "Provide Assistance",
+      "next": "help-and-support-center"
+    },
+    "contact-customer-modal": {
+      "title": "Contact Customer",
+      "next": "help-and-support-center"
+    },
+    "escalate-to-super-admin-modal": {
+      "title": "Escalate to Super Admin",
+      "next": "help-and-support-center"
+    },
+    "mark-as-resolved-modal": {
+      "title": "Mark as Resolved",
+      "next": "help-and-support-center"
+    },
+    "settings": {
+      "title": "Profile / Settings",
+      "next": "admin-dashboard"
+    }
+  }
+}

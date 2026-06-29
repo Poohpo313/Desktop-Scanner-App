@@ -1,0 +1,288 @@
+{
+  "name": "User Application Flow",
+  "entry": "002-splash-screen",
+  "dashboard": "section-02-dashboard",
+  "offlineDashboard": "section-offline-dashboard",
+  "nodes": {
+    "002-splash-screen": {
+      "title": "Launch Application",
+      "next": "section-1-1-returning-user-login"
+    },
+    "section-1-1-returning-user-login": {
+      "title": "Login Screen",
+      "decision": {
+        "prompt": "New or Returning User?",
+        "options": [
+          {
+            "label": "Returning (Log in)",
+            "next": "checking-credentials"
+          },
+          {
+            "label": "Forgot Password?",
+            "next": "forgot-password"
+          },
+          {
+            "label": "New User (Activation)",
+            "next": "need-account-access"
+          }
+        ]
+      }
+    },
+    "forgot-password": {
+      "title": "Forgot Password",
+      "next": "request-through-email"
+    },
+    "request-through-email": {
+      "title": "Request Through Email",
+      "next": "request-sent-for-forgot-password-successfully"
+    },
+    "request-through-sms": {
+      "title": "Request Through SMS",
+      "next": "request-sent-for-forgot-password-successfully"
+    },
+    "request-sent-for-forgot-password-successfully": {
+      "title": "Recovery Request Sent",
+      "next": "section-1-1-returning-user-login"
+    },
+    "need-account-access": {
+      "title": "Acquire Account from Admin",
+      "next": "section-1-2-activate-account"
+    },
+    "section-1-2-activate-account": {
+      "title": "Acquire Serial Key / Activation",
+      "next": "validating-serial-key"
+    },
+    "validating-serial-key": {
+      "title": "Enter Serial Key",
+      "decision": {
+        "prompt": "Serial Key Valid?",
+        "options": [
+          {
+            "label": "YES",
+            "next": "account-activated"
+          },
+          {
+            "label": "NO",
+            "next": "section-1-2-activate-account"
+          }
+        ]
+      }
+    },
+    "account-activated": {
+      "title": "Account Activated",
+      "next": "checking-connection"
+    },
+    "checking-credentials": {
+      "title": "Enter Credentials",
+      "decision": {
+        "prompt": "Credentials Valid?",
+        "options": [
+          {
+            "label": "YES",
+            "next": "checking-connection"
+          },
+          {
+            "label": "NO",
+            "next": "section-1-1-returning-user-login"
+          }
+        ]
+      }
+    },
+    "checking-connection": {
+      "title": "Connected to the Internet?",
+      "decision": {
+        "prompt": "Connected to the Internet?",
+        "options": [
+          {
+            "label": "YES — Continue Online",
+            "next": "section-02-dashboard"
+          },
+          {
+            "label": "NO — Continue Offline",
+            "next": "no-internet-connection"
+          }
+        ]
+      }
+    },
+    "no-internet-connection": {
+      "title": "Continue Offline",
+      "next": "section-offline-dashboard"
+    },
+    "section-02-dashboard": {
+      "title": "App Dashboard",
+      "decision": {
+        "prompt": "Choose Module",
+        "options": [
+          {
+            "label": "Scan",
+            "next": "section-06-devices"
+          },
+          {
+            "label": "Manage Files",
+            "next": "section-04-documents"
+          },
+          {
+            "label": "Search Files",
+            "next": "section-05-search"
+          },
+          {
+            "label": "Settings",
+            "next": "section-07-settings"
+          },
+          {
+            "label": "Help / About",
+            "next": "section-08-about"
+          },
+          {
+            "label": "Support",
+            "next": "section-send-feedback"
+          },
+          {
+            "label": "Cloud Account",
+            "next": "account-activated"
+          }
+        ]
+      }
+    },
+    "section-offline-dashboard": {
+      "title": "Offline Dashboard",
+      "decision": {
+        "prompt": "Choose Module (Offline)",
+        "options": [
+          {
+            "label": "Scan Offline",
+            "next": "section-screen-1-select-scanner-offline"
+          },
+          {
+            "label": "Documents",
+            "next": "section-offline-documents"
+          },
+          {
+            "label": "Search",
+            "next": "section-offline-search"
+          },
+          {
+            "label": "Devices",
+            "next": "section-offline-devices"
+          },
+          {
+            "label": "Settings",
+            "next": "section-offline-settings"
+          },
+          {
+            "label": "About",
+            "next": "section-offline-about"
+          }
+        ]
+      }
+    },
+    "section-06-devices": {
+      "title": "Check Device Status",
+      "next": "section-03-scan"
+    },
+    "section-03-scan": {
+      "title": "Select Device (Scanner / Printer)",
+      "next": "section-03-configure"
+    },
+    "section-03-configure": {
+      "title": "Configure Scan Settings",
+      "next": "section-03-preview"
+    },
+    "section-03-preview": {
+      "title": "Preview Result",
+      "decision": {
+        "prompt": "Scan Result Ok?",
+        "options": [
+          {
+            "label": "YES",
+            "next": "section-03-save"
+          },
+          {
+            "label": "NO — Rescan",
+            "next": "section-03-scan"
+          }
+        ]
+      }
+    },
+    "section-03-save": {
+      "title": "Save Locally",
+      "next": "saved"
+    },
+    "saved": {
+      "title": "File Saved",
+      "next": "section-02-dashboard"
+    },
+    "section-screen-1-select-scanner-offline": {
+      "title": "Select Scanner (Offline)",
+      "next": "section-screen-2-configure-offline"
+    },
+    "section-screen-2-configure-offline": {
+      "title": "Configure (Offline)",
+      "next": "section-screen-3-preview-offline"
+    },
+    "section-screen-3-preview-offline": {
+      "title": "Preview (Offline)",
+      "decision": {
+        "prompt": "Scan Result Ok?",
+        "options": [
+          {
+            "label": "YES",
+            "next": "section-screen-4-save-offline"
+          },
+          {
+            "label": "NO — Rescan",
+            "next": "section-screen-1-select-scanner-offline"
+          }
+        ]
+      }
+    },
+    "section-screen-4-save-offline": {
+      "title": "Save Offline",
+      "next": "offline-local-save-folder"
+    },
+    "offline-local-save-folder": {
+      "title": "Choose Local Save Folder",
+      "next": "section-offline-dashboard"
+    },
+    "section-04-documents": {
+      "title": "Folders / Files List",
+      "next": "section-02-dashboard"
+    },
+    "section-05-search": {
+      "title": "Search Files",
+      "next": "section-02-dashboard"
+    },
+    "section-07-settings": {
+      "title": "Settings",
+      "next": "section-10-save-preferences"
+    },
+    "section-10-save-preferences": {
+      "title": "Save Preferences",
+      "next": "changes-saved"
+    },
+    "changes-saved": {
+      "title": "Changes Saved",
+      "next": "section-02-dashboard"
+    },
+    "section-08-about": {
+      "title": "Help / About",
+      "next": "section-02-dashboard"
+    },
+    "section-send-feedback": {
+      "title": "Support — Fill up forms",
+      "next": "feedback-submitted"
+    },
+    "feedback-submitted": {
+      "title": "Feedback Submitted",
+      "next": "section-02-dashboard"
+    },
+    "section-09-help-assistant": {
+      "title": "Help Assistant",
+      "next": "section-02-dashboard"
+    },
+    "log-out-for-offline-user-account": {
+      "title": "Log Out",
+      "next": "section-1-1-returning-user-login"
+    }
+  }
+}

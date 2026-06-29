@@ -1,0 +1,39 @@
+.super-toast {
+  animation: super-toast-lifecycle 3000ms ease forwards;
+  transform-origin: right center;
+}
+
+@keyframes super-toast-lifecycle {
+  0% {
+    opacity: 0;
+    transform: translateX(16px) scale(0.98);
+  }
+
+  10%,
+  82% {
+    opacity: 1;
+    transform: translateX(0) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translateX(12px) scale(0.98);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .super-toast {
+    animation: super-toast-fade 3000ms linear forwards;
+  }
+
+  @keyframes super-toast-fade {
+    0%,
+    82% {
+      opacity: 1;
+    }
+
+    100% {
+      opacity: 0;
+    }
+  }
+}

@@ -1,0 +1,28 @@
+.figma-screen {
+  min-height: 100vh;
+  background: #f4f7fb;
+  color: #172033;
+}
+
+.figma-screen__viewport {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  padding: 24px;
+}
+
+.figma-screen__img,
+.figma-screen__embed {
+  display: block;
+  width: min(100%, 1440px);
+  max-height: calc(100vh - 48px);
+  border: 0;
+  border-radius: 8px;
+  object-fit: contain;
+  box-shadow: 0 20px 60px rgb(15 23 42 / 16%);
+}
+
+.figma-screen__embed {
+  aspect-ratio: 16 / 9;
+  background: #ffffff;
+}

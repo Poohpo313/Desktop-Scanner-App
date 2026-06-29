@@ -1,0 +1,399 @@
+@import "./figma-tokens.css";
+
+.activity-logs-screen {
+  font-family: var(--font-family);
+}
+
+.activity-logs-screen__card {
+  border: 1px solid var(--dash-card-border);
+  border-radius: var(--dash-radius);
+  background: var(--color-white);
+  box-shadow: var(--dash-card-shadow);
+  overflow: visible;
+}
+
+.activity-logs-screen__toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 24px 24px 0;
+}
+
+.activity-logs-screen__intro {
+  min-width: 0;
+}
+
+.activity-logs-screen__title {
+  margin: 0 0 8px;
+  font-size: var(--text-h1);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: -0.35px;
+  color: #1f3d56;
+  line-height: var(--line-height-tight);
+}
+
+.activity-logs-screen__subtitle {
+  margin: 0;
+  font-size: var(--text-body);
+  color: var(--color-nevada);
+  line-height: var(--line-height-relaxed);
+}
+
+.activity-logs-screen__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 10px;
+}
+
+.activity-logs-screen__action-btn {
+  min-height: 38px;
+  padding: 0 18px;
+  border-radius: 999px;
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  box-shadow: none;
+}
+
+/* ── Filters ─────────────────────────────────────────────── */
+.activity-logs-view__filters {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 180px) minmax(0, 132px);
+  gap: 12px;
+  padding: 18px 24px 0;
+  position: relative;
+  z-index: 6;
+  overflow: visible;
+}
+
+.activity-logs-view__date-filter {
+  position: relative;
+  z-index: 5;
+  overflow: visible;
+}
+
+.activity-logs-view__search input,
+.activity-logs-view__status-trigger {
+  width: 100%;
+  min-height: 42px;
+  border: 1px solid var(--color-mystic);
+  border-radius: 10px;
+  background: var(--color-white);
+  color: var(--color-brand-slate);
+  font: inherit;
+  font-size: var(--text-caption);
+}
+
+.activity-logs-view__search input {
+  padding: 0 14px;
+}
+
+.activity-logs-view__search input::placeholder {
+  color: var(--color-granny-smith);
+}
+
+.activity-logs-view__search input:focus,
+.activity-logs-view__status-trigger:focus-visible {
+  outline: 2px solid rgba(0, 122, 94, 0.22);
+  border-color: var(--color-persian-green);
+}
+
+
+.activity-logs-view__status-filter {
+  position: relative;
+}
+
+.activity-logs-view__status-trigger {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  padding: 0 12px;
+  cursor: pointer;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.activity-logs-view__status-chevron {
+  color: var(--color-granny-smith);
+  flex-shrink: 0;
+}
+
+.activity-logs-view__status-menu {
+  position: absolute;
+  top: calc(100% + 6px);
+  right: 0;
+  left: 0;
+  z-index: 20;
+  padding: 6px;
+  border: 1px solid var(--color-mystic);
+  border-radius: 10px;
+  background: var(--color-white);
+  box-shadow: var(--shadow-brand-sm);
+}
+
+.activity-logs-view__status-option {
+  display: block;
+  width: 100%;
+  padding: 8px 10px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: var(--color-brand-slate);
+  font: inherit;
+  font-size: var(--text-caption);
+  text-align: left;
+  cursor: pointer;
+}
+
+.activity-logs-view__status-option:hover,
+.activity-logs-view__status-option--active {
+  background: var(--color-surface-alt);
+  color: var(--color-rain-forest);
+}
+
+/* ── Table ───────────────────────────────────────────────── */
+.activity-logs-view__table-wrap {
+  margin: 18px 24px 24px;
+  overflow: hidden;
+  border: 1px solid #d9e6f2;
+  border-radius: 12px;
+  background: var(--color-white);
+}
+
+.activity-logs-view__table {
+  width: 100%;
+  table-layout: fixed;
+  border-collapse: collapse;
+}
+
+.activity-logs-view__col-user {
+  width: 28%;
+}
+
+.activity-logs-view__col-action {
+  width: 36%;
+}
+
+.activity-logs-view__col-status {
+  width: 16%;
+}
+
+.activity-logs-view__col-time {
+  width: 20%;
+}
+
+.activity-logs-view__table thead th {
+  padding: 12px 16px;
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.45px;
+  color: var(--color-nevada);
+  text-align: left;
+  border-bottom: 1px solid var(--color-mystic);
+  background: var(--dash-table-head-bg, #f7f9fb);
+}
+
+.activity-logs-view__table tbody td {
+  padding: 14px 16px;
+  vertical-align: middle;
+  border-bottom: 1px solid var(--color-mystic);
+  background: var(--color-white);
+}
+
+.activity-logs-view__table tbody tr:last-child td {
+  border-bottom: 0;
+}
+
+.activity-logs-view__empty {
+  min-height: 160px;
+  padding: 28px 16px !important;
+  text-align: center;
+  color: var(--color-nevada);
+  font-size: var(--text-caption);
+}
+
+.activity-logs-view__user {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-width: 0;
+}
+
+.activity-logs-view__avatar {
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.activity-logs-view__avatar--photo {
+  object-fit: cover;
+}
+
+.activity-logs-view__avatar--initials {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #4a7fd4;
+  color: var(--color-white);
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-semibold);
+}
+
+.activity-logs-view__avatar--generic {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: #4a7fd4;
+  color: var(--color-white);
+}
+
+.activity-logs-view__user-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  min-width: 0;
+}
+
+.activity-logs-view__name {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-logs-view__email {
+  font-size: var(--text-small);
+  color: var(--color-granny-smith);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.activity-logs-view__action {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-width: 0;
+}
+
+.activity-logs-view__action-title {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+}
+
+.activity-logs-view__action-detail {
+  font-size: var(--text-small);
+  color: var(--color-granny-smith);
+}
+
+.activity-logs-view__status {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 72px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-semibold);
+  white-space: nowrap;
+}
+
+.activity-logs-view__status--success {
+  color: var(--dash-status-success-text);
+  background: var(--dash-status-success-bg);
+}
+
+.activity-logs-view__status--pending {
+  color: var(--dash-status-pending-text);
+  background: var(--dash-status-pending-bg);
+}
+
+.activity-logs-view__status--failed {
+  color: var(--dash-status-failed-text);
+  background: var(--dash-status-failed-bg);
+}
+
+.activity-logs-view__timestamp {
+  font-size: var(--text-caption);
+  color: var(--color-nevada);
+  white-space: nowrap;
+}
+
+/* ── Footer ──────────────────────────────────────────────── */
+.activity-logs-view__footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 16px;
+  border-top: 1px solid var(--color-mystic);
+  background: var(--color-white);
+}
+
+.activity-logs-view__summary {
+  font-size: var(--text-caption);
+  color: var(--color-nevada);
+}
+
+.activity-logs-view__pagination {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.activity-logs-view__page-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 34px;
+  height: 34px;
+  padding: 0 10px;
+  border: 1px solid var(--color-mystic);
+  border-radius: 8px;
+  background: var(--color-white);
+  color: var(--color-river-bed);
+  font: inherit;
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, color 0.15s ease;
+}
+
+.activity-logs-view__page-btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.activity-logs-view__page-btn--active {
+  background: var(--color-rain-forest);
+  border-color: var(--color-rain-forest);
+  color: var(--color-white);
+}
+
+@media (max-width: 900px) {
+  .activity-logs-view__filters {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .activity-logs-screen__toolbar,
+  .activity-logs-view__filters {
+    padding-left: 16px;
+    padding-right: 16px;
+  }
+
+  .activity-logs-view__table-wrap {
+    margin-left: 16px;
+    margin-right: 16px;
+  }
+}
+

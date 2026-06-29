@@ -1,0 +1,213 @@
+@import "./figma-tokens.css";
+
+.figma-modal--retry-connection {
+  width: min(520px, 100%);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.figma-modal--retry-connection .figma-modal__header {
+  align-items: flex-start;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--color-mystic);
+}
+
+.figma-modal--retry-connection .figma-modal__title {
+  font-size: var(--text-h2);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  letter-spacing: -0.2px;
+}
+
+.figma-modal--retry-connection .figma-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 0;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.figma-modal--retry-connection .figma-modal__close img {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.figma-modal--retry-connection .figma-modal__body {
+  padding: 24px 24px 20px;
+  text-align: center;
+}
+
+.retry-connection__diagram {
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 22px;
+}
+
+.retry-connection__endpoint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 72px;
+}
+
+.retry-connection__node {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 999px;
+}
+
+.retry-connection__node--terminal {
+  background: var(--color-rain-forest);
+  color: var(--color-white);
+}
+
+.retry-connection__node--device {
+  background: var(--color-surface-muted);
+  color: var(--color-river-bed);
+  border: 1px solid var(--color-border-cool);
+}
+
+.retry-connection__node-label {
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--color-nevada);
+}
+
+.retry-connection__bridge {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  min-width: 120px;
+  margin-top: 24px;
+}
+
+.retry-connection__line {
+  flex: 1;
+  height: 2px;
+  background: var(--color-disabled-track);
+}
+
+.retry-connection__fail {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  background: var(--color-danger-dark);
+  color: var(--color-white);
+  flex-shrink: 0;
+}
+
+.retry-connection__message {
+  margin: 0 auto 18px;
+  max-width: 380px;
+  font-size: var(--text-body);
+  color: var(--color-nevada);
+  line-height: var(--line-height-relaxed);
+}
+
+.retry-connection__message strong {
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-rain-forest);
+}
+
+.retry-connection__error {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin: 0 auto 14px;
+  max-width: 100%;
+  padding: 14px 16px;
+  border-radius: 10px;
+  background: var(--color-surface-cool);
+  border: 1px solid var(--color-border-sky);
+  text-align: left;
+}
+
+.retry-connection__error-title {
+  margin: 0 0 4px;
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-danger-dark);
+}
+
+.retry-connection__error-code {
+  margin: 0;
+  font-size: var(--text-caption);
+  color: var(--color-brand-slate);
+}
+
+.retry-connection__sync {
+  margin: 0;
+  font-size: var(--text-small);
+  color: var(--color-nevada);
+}
+
+.retry-connection__footer-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 14px 24px 18px;
+  background: var(--color-surface-neutral);
+  border-top: 1px solid var(--color-mystic);
+}
+
+.retry-connection__cancel-btn {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-river-bed);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.retry-connection__retry-btn {
+  min-width: 140px;
+  background: var(--color-rain-forest);
+  border-color: var(--color-rain-forest);
+  box-shadow: 0 6px 16px rgba(0, 109, 78, 0.2);
+}
+
+.retry-connection__retry-icon {
+  flex-shrink: 0;
+  color: var(--color-white);
+}
+
+@media (max-width: 480px) {
+  .retry-connection__diagram {
+    gap: 6px;
+  }
+
+  .retry-connection__bridge {
+    min-width: 72px;
+  }
+
+  .retry-connection__footer-wrap {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .retry-connection__retry-btn {
+    width: 100%;
+  }
+}

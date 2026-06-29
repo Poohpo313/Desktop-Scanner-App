@@ -1,0 +1,351 @@
+@import "./figma-tokens.css";
+
+.figma-modal--email-success {
+  width: min(920px, 100%);
+  text-align: center;
+}
+
+.figma-modal--email-success .figma-modal__body {
+  padding: 28px 32px 20px;
+}
+
+.email-success-hero {
+  margin: 0 auto;
+  max-width: 620px;
+}
+
+.email-success-icon {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 20px;
+  display: block;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.email-success-title {
+  margin: 0 0 14px;
+  font-size: var(--text-h1);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  letter-spacing: -0.3px;
+  line-height: var(--line-height-tight);
+}
+
+.email-success-copy {
+  margin: 0 auto 22px;
+  max-width: 560px;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-nevada);
+  line-height: var(--line-height-relaxed);
+}
+
+.email-success-badges {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.email-success-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 7px 14px;
+  border-radius: 999px;
+  font-size: var(--text-small);
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.email-success-badge--status {
+  background: var(--color-recovery-info-bg);
+  border: 1px solid var(--color-mint-border);
+  color: var(--color-rain-forest);
+  font-weight: var(--font-weight-semibold);
+}
+
+.email-success-badge--id {
+  background: var(--color-surface-muted);
+  border: 1px solid var(--color-mystic);
+  color: var(--color-nevada);
+  font-weight: var(--font-weight-regular);
+}
+
+.email-success-badge__icon {
+  width: 14px;
+  height: 14px;
+  flex-shrink: 0;
+  display: block;
+  object-fit: contain;
+}
+
+.email-success-track {
+  margin: 0 0 18px;
+  padding: 20px 18px 16px;
+  border-radius: 10px;
+  background: var(--color-surface-muted);
+  overflow-x: auto;
+}
+
+.email-success-track__row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 4px;
+  min-width: 720px;
+}
+
+.email-success-track__step {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+  padding: 0 2px;
+}
+
+.email-success-track__step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 14px;
+  left: calc(50% + 14px);
+  right: calc(-50% + 14px);
+  height: 2px;
+  background: var(--color-mystic);
+  z-index: 0;
+}
+
+.email-success-track__step--done:not(:last-child)::after {
+  background: var(--color-rain-forest);
+}
+
+.email-success-track__marker {
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 10px;
+  position: relative;
+  z-index: 1;
+}
+
+.email-success-track__step-icon {
+  width: 28px;
+  height: 28px;
+  display: block;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.email-success-track__inner-icon {
+  width: 17px;
+  height: 17px;
+  display: block;
+  flex-shrink: 0;
+  object-fit: contain;
+}
+
+.email-success-track__dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.email-success-track__step--done .email-success-track__dot {
+  background: var(--color-rain-forest);
+}
+
+.email-success-track__step--pending .email-success-track__dot {
+  background: var(--color-login-panel);
+  border: 1px solid var(--color-nebula);
+}
+
+.email-success-track__title {
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  line-height: var(--line-height-tight)5;
+  margin-bottom: 4px;
+}
+
+.email-success-track__step--current .email-success-track__title {
+  color: var(--color-rain-forest);
+}
+
+.email-success-track__step--pending .email-success-track__title {
+  color: var(--color-granny-smith);
+  font-weight: var(--font-weight-semibold);
+}
+
+.email-success-track__desc {
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-granny-smith);
+  line-height: var(--line-height-snug);
+}
+
+.email-success-track__step--current .email-success-track__desc {
+  color: var(--color-rain-forest);
+  font-weight: var(--font-weight-medium);
+}
+
+.email-success-next {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 18px;
+  padding: 18px 20px;
+  border-radius: 10px;
+  border: 1px solid var(--color-mystic);
+  background: var(--color-surface-muted);
+  text-align: left;
+}
+
+.email-success-next__icon {
+  width: 20px;
+  height: 20px;
+  flex-shrink: 0;
+  margin-top: 1px;
+  display: block;
+}
+
+.email-success-next__content {
+  flex: 1;
+  min-width: 0;
+}
+
+.email-success-next__title {
+  margin: 0 0 10px;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  line-height: var(--line-height-tight)5;
+}
+
+.email-success-next__list {
+  margin: 0 0 12px;
+  padding: 0;
+  list-style: none;
+}
+
+.email-success-next__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-nevada);
+  line-height: var(--line-height-relaxed);
+}
+
+.email-success-next__list li + li {
+  margin-top: 8px;
+}
+
+.email-success-next__bullet {
+  width: 6px;
+  height: 6px;
+  margin-top: 7px;
+  border-radius: 50%;
+  background: var(--color-rain-forest);
+  flex-shrink: 0;
+}
+
+.email-success-next__note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 0;
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-rain-forest);
+  line-height: 1.45;
+}
+
+.email-success-next__note-icon {
+  width: 14px;
+  height: 16px;
+  margin-top: 1px;
+  flex-shrink: 0;
+  display: block;
+  object-fit: contain;
+}
+
+.email-success-actions {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 0;
+}
+
+.email-success-actions__primary,
+.email-success-actions__secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 44px;
+  border-radius: 8px;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  text-decoration: none;
+}
+
+.email-success-actions__primary {
+  background: var(--gradient-brand);
+  color: var(--color-white);
+  box-shadow: 0 6px 16px rgba(0, 122, 94, 0.22);
+}
+
+.email-success-actions__secondary {
+  background: var(--color-login-panel);
+  color: var(--color-nevada);
+}
+
+.email-success-actions__icon {
+  width: 18px;
+  height: 18px;
+  flex-shrink: 0;
+}
+
+.email-success-actions__secondary .email-success-actions__icon {
+  height: 12px;
+}
+
+.email-success-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin: 16px -32px -20px;
+  padding: 10px 32px;
+  background: var(--color-surface-muted);
+  border-top: 1px solid var(--color-mystic);
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-regular);
+  color: var(--color-granny-smith);
+}
+
+.figma-modal--email-success .figma-modal__footer {
+  display: none;
+}
+
+.email-success-actions__primary--solo {
+  display: inline-flex;
+  margin-top: 8px;
+}
+
+@media (max-width: 720px) {
+  .email-success-actions {
+    grid-template-columns: 1fr;
+  }
+
+  .figma-modal--email-success .figma-modal__body {
+    padding: 24px 18px 16px;
+  }
+}

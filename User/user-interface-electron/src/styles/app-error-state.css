@@ -1,0 +1,111 @@
+.app-error-state {
+  display: flex;
+  align-items: flex-start;
+  gap: 14px;
+  padding: 18px 20px;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  background: #fff;
+}
+
+.app-error-state--compact {
+  padding: 14px 16px;
+  gap: 12px;
+}
+
+.app-error-state--error {
+  border-color: #fecaca;
+  background: #fef2f2;
+  color: #991b1b;
+}
+
+.app-error-state--warning {
+  border-color: #fde68a;
+  background: #fffbeb;
+  color: #92400e;
+}
+
+.app-error-state--empty {
+  border-color: #e2e8f0;
+  background: #f8fafc;
+  color: #475569;
+}
+
+.app-error-state--info {
+  border-color: #bfdbfe;
+  background: #eff6ff;
+  color: #1e40af;
+}
+
+.app-error-state__icon-wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  flex-shrink: 0;
+  background: rgba(255, 255, 255, 0.72);
+}
+
+.app-error-state--compact .app-error-state__icon-wrap {
+  width: 34px;
+  height: 34px;
+}
+
+.app-error-state__icon {
+  width: 20px;
+  height: 20px;
+}
+
+.app-error-state__body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  min-width: 0;
+}
+
+.app-error-state__title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  line-height: 1.35;
+  color: inherit;
+}
+
+.app-error-state--compact .app-error-state__title {
+  font-size: 14px;
+}
+
+.app-error-state__message {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.55;
+  color: inherit;
+  opacity: 0.92;
+}
+
+.app-error-state__action {
+  margin-top: 6px;
+}
+
+.app-error-state--centered {
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  min-height: 220px;
+}
+
+.app-error-state--centered .app-error-state__body {
+  align-items: center;
+}
+
+.scan-scanner-offline-notice {
+  margin-top: 14px;
+}
+
+.help-assistant-page__submit-error-wrap {
+  padding: 0 28px 12px;
+}
+

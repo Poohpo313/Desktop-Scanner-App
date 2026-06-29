@@ -1,0 +1,239 @@
+@import "./tokens.css";
+
+.recover-admin-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background:
+    radial-gradient(circle at 50% 50%, #1b6955 0%, #0f5549 38%, #06423d 64%, #003534 100%),
+    #003534;
+  padding: 24px;
+}
+
+.recover-admin {
+  width: min(430px, 100%);
+  min-height: 560px;
+  padding: 24px 40px;
+  border-radius: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: rgba(6, 70, 68, 0.78);
+  box-shadow: 0 30px 90px 0 rgba(0, 0, 0, 0.36), 0 1px 0 1px rgba(255, 255, 255, 0.08) inset;
+  backdrop-filter: blur(9px);
+  text-align: center;
+}
+
+.recover-admin__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.recover-admin__icon-frame {
+  display: flex;
+  width: 58px;
+  height: 58px;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 16px;
+  border-radius: 16px;
+  background: linear-gradient(135deg, #2dd4bf 0%, #15803d 100%);
+  box-shadow: 0 18px 35px 0 rgba(0, 122, 94, 0.35);
+}
+
+.recover-admin__icon-frame img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+}
+
+.recover-admin__title {
+  max-width: 300px;
+  color: #f4faf8;
+  font-size: 24px;
+  font-weight: 600;
+  line-height: 1.32;
+}
+
+.recover-admin__subtitle {
+  margin-top: 10px;
+  color: rgba(235, 241, 255, 0.82);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.5;
+}
+
+.recover-admin__form {
+  margin-top: 22px;
+}
+
+.recover-admin__label,
+.recover-admin__methods legend {
+  display: block;
+  margin-bottom: 10px;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.recover-admin__input-wrap {
+  display: flex;
+  height: 42px;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  border-radius: 10px;
+  background: rgba(0, 43, 42, 0.42);
+}
+
+.recover-admin__input-wrap img {
+  width: 19px;
+  height: 19px;
+  flex: 0 0 auto;
+  opacity: 0.9;
+}
+
+.recover-admin__input {
+  width: 100%;
+  border: 0;
+  background: transparent;
+  color: #ffffff;
+  font: inherit;
+  font-size: 12px;
+  outline: none;
+}
+
+.recover-admin__input::placeholder {
+  color: rgba(222, 231, 255, 0.72);
+}
+
+.recover-admin__input-wrap:focus-within {
+  box-shadow: 0 0 0 3px rgba(0, 137, 103, 0.34);
+}
+
+.recover-admin__error {
+  margin-top: 8px;
+  color: #ffb8b8;
+  font-size: 11px;
+  font-weight: 500;
+  text-align: left;
+}
+
+.recover-admin__methods {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin: 20px 0;
+  border: 0;
+  padding: 0;
+}
+
+.recover-admin__method {
+  display: flex;
+  height: 42px;
+  align-items: center;
+  gap: 12px;
+  padding: 0 16px;
+  border: 1px solid transparent;
+  border-radius: 12px;
+  background: rgba(0, 43, 42, 0.34);
+  color: #ffffff;
+  cursor: pointer;
+  transition: background 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.recover-admin__method:has(input:checked) {
+  border-color: rgba(0, 137, 103, 0.9);
+  background: rgba(0, 137, 103, 0.34);
+}
+
+.recover-admin__method input {
+  width: 14px;
+  height: 14px;
+  accent-color: #00a7a5;
+}
+
+.recover-admin__method span {
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.recover-admin__method strong {
+  margin-left: auto;
+  color: rgba(222, 231, 255, 0.68);
+  font-size: 11px;
+  font-weight: 500;
+}
+
+.recover-admin__submit {
+  width: 100%;
+  height: 48px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #ffffff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 1.6px;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.recover-admin__submit:hover,
+.recover-admin__submit:focus-visible {
+  background: linear-gradient(135deg, #008967 0%, #008967 100%);
+  box-shadow: 0 16px 34px rgba(0, 137, 103, 0.32);
+  transform: translateY(-2px);
+}
+
+.recover-admin__submit:active {
+  transform: translateY(0);
+}
+
+.recover-admin__return {
+  display: flex;
+  width: 100%;
+  height: 48px;
+  align-items: center;
+  justify-content: center;
+  margin-top: 10px;
+  border-radius: 10px;
+  background: transparent;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 600;
+  text-decoration: none;
+  transition: background 180ms ease, box-shadow 180ms ease, transform 180ms ease;
+}
+
+.recover-admin__return:hover,
+.recover-admin__return:focus-visible {
+  background: linear-gradient(135deg, #008967 0%, #008967 100%);
+  box-shadow: 0 16px 34px rgba(0, 137, 103, 0.32);
+  transform: translateY(-2px);
+}
+
+.recover-admin__return:active {
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  .recover-admin-page {
+    padding: 16px;
+  }
+
+  .recover-admin {
+    min-height: auto;
+    padding: 28px 22px;
+  }
+
+  .recover-admin__method {
+    padding: 0 12px;
+  }
+
+  .recover-admin__method strong {
+    font-size: 10px;
+  }
+}

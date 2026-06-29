@@ -1,0 +1,34 @@
+.figma-screen {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: #003534;
+}
+
+.figma-screen__viewport {
+  flex: 1;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 24px 24px 120px;
+  overflow: auto;
+}
+
+.figma-screen__img {
+  max-width: min(1440px, 100%);
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
+}
+
+.figma-screen__embed {
+  width: min(1440px, 100%);
+  height: min(900px, calc(100vh - 140px));
+  border: 0;
+  border-radius: 12px;
+  background: #fff;
+}
+
+body.has-flow-nav .figma-screen__viewport {
+  padding-bottom: 160px;
+}

@@ -1,0 +1,398 @@
+[
+  {
+    "id": "861:942",
+    "name": "FEEDBACK SUBMITTED",
+    "slug": "feedback-submitted",
+    "fileSlug": "feedback-submitted"
+  },
+  {
+    "id": "797:902",
+    "name": "REPORT SUCCESSFULLY",
+    "slug": "report-successfully",
+    "fileSlug": "report-successfully"
+  },
+  {
+    "id": "797:801",
+    "name": "EXPORT SUCCESSFULLY",
+    "slug": "export-successfully",
+    "fileSlug": "export-successfully"
+  },
+  {
+    "id": "771:546",
+    "name": "LOG OUT FOR OFFLINE USER ACCOUNT",
+    "slug": "log-out-for-offline-user-account",
+    "fileSlug": "log-out-for-offline-user-account"
+  },
+  {
+    "id": "740:1908",
+    "name": "OFFLINE LOCAL SAVE FOLDER",
+    "slug": "offline-local-save-folder",
+    "fileSlug": "offline-local-save-folder"
+  },
+  {
+    "id": "732:850",
+    "name": "Section - SCREEN 1: SELECT SCANNER OFFLINE",
+    "slug": "section-screen-1-select-scanner-offline",
+    "fileSlug": "section-screen-1-select-scanner-offline"
+  },
+  {
+    "id": "732:1058",
+    "name": "Section - SCREEN 2: CONFIGURE OFFLINE",
+    "slug": "section-screen-2-configure-offline",
+    "fileSlug": "section-screen-2-configure-offline"
+  },
+  {
+    "id": "732:1339",
+    "name": "Section - SCREEN 3: PREVIEW OFFLINE",
+    "slug": "section-screen-3-preview-offline",
+    "fileSlug": "section-screen-3-preview-offline"
+  },
+  {
+    "id": "732:1556",
+    "name": "Section - SCREEN 4: SAVE OFFLINE",
+    "slug": "section-screen-4-save-offline",
+    "fileSlug": "section-screen-4-save-offline"
+  },
+  {
+    "id": "696:1390",
+    "name": "Section - OFFLINE ABOUT",
+    "slug": "section-offline-about",
+    "fileSlug": "section-offline-about"
+  },
+  {
+    "id": "696:1171",
+    "name": "Section - OFFLINE DEVICES",
+    "slug": "section-offline-devices",
+    "fileSlug": "section-offline-devices"
+  },
+  {
+    "id": "696:1067",
+    "name": "Section - OFFLINE SEARCH",
+    "slug": "section-offline-search",
+    "fileSlug": "section-offline-search"
+  },
+  {
+    "id": "696:963",
+    "name": "Section - OFFLINE DOCUMENTS",
+    "slug": "section-offline-documents",
+    "fileSlug": "section-offline-documents"
+  },
+  {
+    "id": "696:859",
+    "name": "Section - OFFLINE DASHBOARD",
+    "slug": "section-offline-dashboard",
+    "fileSlug": "section-offline-dashboard"
+  },
+  {
+    "id": "696:1275",
+    "name": "Section - OFFLINE SETTINGS",
+    "slug": "section-offline-settings",
+    "fileSlug": "section-offline-settings"
+  },
+  {
+    "id": "619:843",
+    "name": "9. DOCUMENT PREVIEW OVERLAY",
+    "slug": "9-document-preview-overlay",
+    "fileSlug": "9-document-preview-overlay"
+  },
+  {
+    "id": "619:736",
+    "name": "7. MOVE TO FOLDER OVERLAY",
+    "slug": "7-move-to-folder-overlay",
+    "fileSlug": "7-move-to-folder-overlay"
+  },
+  {
+    "id": "619:705",
+    "name": "6. RENAME FILE OVERLAY",
+    "slug": "6-rename-file-overlay",
+    "fileSlug": "6-rename-file-overlay"
+  },
+  {
+    "id": "619:671",
+    "name": "5. SORT OPTIONS OVERLAY",
+    "slug": "5-sort-options-overlay",
+    "fileSlug": "5-sort-options-overlay"
+  },
+  {
+    "id": "619:638",
+    "name": "4. FILE TYPE FILTER OVERLAY",
+    "slug": "4-file-type-filter-overlay",
+    "fileSlug": "4-file-type-filter-overlay"
+  },
+  {
+    "id": "619:605",
+    "name": "3. DEPARTMENT FILTER OVERLAY",
+    "slug": "3-department-filter-overlay",
+    "fileSlug": "3-department-filter-overlay"
+  },
+  {
+    "id": "619:567",
+    "name": "2. EXPORT OPTIONS OVERLAY",
+    "slug": "2-export-options-overlay",
+    "fileSlug": "2-export-options-overlay"
+  },
+  {
+    "id": "619:788",
+    "name": "8. PRINT SETTINGS OVERLAY",
+    "slug": "8-print-settings-overlay",
+    "fileSlug": "8-print-settings-overlay"
+  },
+  {
+    "id": "619:533",
+    "name": "1. NEW FOLDER OVERLAY",
+    "slug": "1-new-folder-overlay",
+    "fileSlug": "1-new-folder-overlay"
+  },
+  {
+    "id": "606:1048",
+    "name": "2. PAPER ROUTING / FOLDER ROUTE WITH SUBFOLDERS OVERLAY",
+    "slug": "2-paper-routing-folder-route-with-subfolders-overlay",
+    "fileSlug": "2-paper-routing-folder-route-with-subfolders-overlay"
+  },
+  {
+    "id": "606:932",
+    "name": "5. RESOLUTION OVERLAY",
+    "slug": "5-resolution-overlay",
+    "fileSlug": "5-resolution-overlay"
+  },
+  {
+    "id": "606:963",
+    "name": "6. COLOR MODE OVERLAY",
+    "slug": "6-color-mode-overlay",
+    "fileSlug": "6-color-mode-overlay"
+  },
+  {
+    "id": "606:998",
+    "name": "3. BROWSE FOLDER OVERLAY",
+    "slug": "3-browse-folder-overlay",
+    "fileSlug": "3-browse-folder-overlay"
+  },
+  {
+    "id": "606:901",
+    "name": "4. BOND PAPER SIZE OVERLAY",
+    "slug": "4-bond-paper-size-overlay",
+    "fileSlug": "4-bond-paper-size-overlay"
+  },
+  {
+    "id": "606:831",
+    "name": "OVERLAY SELECT DEPARTMENT",
+    "slug": "overlay-select-department",
+    "fileSlug": "overlay-select-department"
+  },
+  {
+    "id": "601:526",
+    "name": "Section 03 - Configure",
+    "slug": "section-03-configure",
+    "fileSlug": "section-03-configure"
+  },
+  {
+    "id": "425:1253",
+    "name": "DOCUMENTS SAVE",
+    "slug": "documents-save",
+    "fileSlug": "documents-save"
+  },
+  {
+    "id": "398:956",
+    "name": "Section - 03 Preview",
+    "slug": "section-03-preview",
+    "fileSlug": "section-03-preview"
+  },
+  {
+    "id": "398:1102",
+    "name": "Section - 03 Save",
+    "slug": "section-03-save",
+    "fileSlug": "section-03-save"
+  },
+  {
+    "id": "370:586",
+    "name": "CHANGES SAVED",
+    "slug": "changes-saved",
+    "fileSlug": "changes-saved"
+  },
+  {
+    "id": "370:573",
+    "name": "SAVED",
+    "slug": "saved",
+    "fileSlug": "saved"
+  },
+  {
+    "id": "366:426",
+    "name": "Section - Send Feedback",
+    "slug": "section-send-feedback",
+    "fileSlug": "section-send-feedback"
+  },
+  {
+    "id": "271:668",
+    "name": "Section - Available Devices",
+    "slug": "section-available-devices",
+    "fileSlug": "section-available-devices"
+  },
+  {
+    "id": "38:1713",
+    "name": "Section - 10 Save Preferences",
+    "slug": "section-10-save-preferences",
+    "fileSlug": "section-10-save-preferences"
+  },
+  {
+    "id": "38:1565",
+    "name": "Section - 09 Help Assistant",
+    "slug": "section-09-help-assistant",
+    "fileSlug": "section-09-help-assistant"
+  },
+  {
+    "id": "366:487",
+    "name": "Section - Report an Issue",
+    "slug": "section-report-an-issue",
+    "fileSlug": "section-report-an-issue"
+  },
+  {
+    "id": "38:1430",
+    "name": "Section - 08 About",
+    "slug": "section-08-about",
+    "fileSlug": "section-08-about"
+  },
+  {
+    "id": "38:1255",
+    "name": "Section - 07 Settings",
+    "slug": "section-07-settings",
+    "fileSlug": "section-07-settings"
+  },
+  {
+    "id": "38:1081",
+    "name": "Section - 06 Devices",
+    "slug": "section-06-devices",
+    "fileSlug": "section-06-devices"
+  },
+  {
+    "id": "38:928",
+    "name": "Section - 05 Search",
+    "slug": "section-05-search",
+    "fileSlug": "section-05-search"
+  },
+  {
+    "id": "38:667",
+    "name": "Section - 04 Documents",
+    "slug": "section-04-documents",
+    "fileSlug": "section-04-documents"
+  },
+  {
+    "id": "38:404",
+    "name": "Section - 03 Scan",
+    "slug": "section-03-scan",
+    "fileSlug": "section-03-scan"
+  },
+  {
+    "id": "38:168",
+    "name": "Section - 02 Dashboard",
+    "slug": "section-02-dashboard",
+    "fileSlug": "section-02-dashboard"
+  },
+  {
+    "id": "212:367",
+    "name": "Section  - Account Menu",
+    "slug": "section-account-menu",
+    "fileSlug": "section-account-menu"
+  },
+  {
+    "id": "38:4",
+    "name": "002- Splash Screen",
+    "slug": "002-splash-screen",
+    "fileSlug": "002-splash-screen"
+  },
+  {
+    "id": "1192:826",
+    "name": "FORGOT PASSWORD",
+    "slug": "forgot-password",
+    "fileSlug": "forgot-password"
+  },
+  {
+    "id": "1192:850",
+    "name": "Section - 1.2 Activate Account",
+    "slug": "section-1-2-activate-account",
+    "fileSlug": "section-1-2-activate-account"
+  },
+  {
+    "id": "1189:1295",
+    "name": "Section - 1.1 Returning User Login",
+    "slug": "section-1-1-returning-user-login",
+    "fileSlug": "section-1-1-returning-user-login"
+  },
+  {
+    "id": "1193:1062",
+    "name": "NO INTERNET CONNECTION",
+    "slug": "no-internet-connection",
+    "fileSlug": "no-internet-connection"
+  },
+  {
+    "id": "1194:1078",
+    "name": "CHECKING CREDENTIALS",
+    "slug": "checking-credentials",
+    "fileSlug": "checking-credentials"
+  },
+  {
+    "id": "1194:1090",
+    "name": "VALIDATING SERIAL KEY",
+    "slug": "validating-serial-key",
+    "fileSlug": "validating-serial-key"
+  },
+  {
+    "id": "1194:1106",
+    "name": "ACCOUNT ACTIVATED",
+    "slug": "account-activated",
+    "fileSlug": "account-activated"
+  },
+  {
+    "id": "1194:1123",
+    "name": "CHECKING CONNECTION",
+    "slug": "checking-connection",
+    "fileSlug": "checking-connection"
+  },
+  {
+    "id": "1230:860",
+    "name": "REQUEST SENT SUCCESSFULLY",
+    "slug": "request-sent-successfully",
+    "fileSlug": "request-sent-successfully"
+  },
+  {
+    "id": "1230:872",
+    "name": "REQUEST THROUGH SMS",
+    "slug": "request-through-sms",
+    "fileSlug": "request-through-sms"
+  },
+  {
+    "id": "1230:887",
+    "name": "REQUEST THROUGH EMAIL",
+    "slug": "request-through-email",
+    "fileSlug": "request-through-email"
+  },
+  {
+    "id": "1230:902",
+    "name": "NEED ACCOUNT ACCESS?",
+    "slug": "need-account-access",
+    "fileSlug": "need-account-access"
+  },
+  {
+    "id": "1316:842",
+    "name": "PRINT SAVED DOCUMENT",
+    "slug": "print-saved-document",
+    "fileSlug": "print-saved-document"
+  },
+  {
+    "id": "1316:885",
+    "name": "Confirm Print Job",
+    "slug": "confirm-print-job",
+    "fileSlug": "confirm-print-job"
+  },
+  {
+    "id": "1316:971",
+    "name": "Print Completed",
+    "slug": "print-completed",
+    "fileSlug": "print-completed"
+  },
+  {
+    "id": "1817:1195",
+    "name": "REQUEST SENT FOR FORGOT PASSWORD SUCCESSFULLY",
+    "slug": "request-sent-for-forgot-password-successfully",
+    "fileSlug": "request-sent-for-forgot-password-successfully"
+  }
+]

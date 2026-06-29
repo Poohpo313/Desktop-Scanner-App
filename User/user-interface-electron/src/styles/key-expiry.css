@@ -1,0 +1,172 @@
+.dash-status-badge--expiry-green .dash-status-badge__dot { background: #16a34a; }
+.dash-status-badge--expiry-amber .dash-status-badge__dot { background: #d97706; }
+.dash-status-badge--expiry-red .dash-status-badge__dot {
+  background: #dc2626;
+  animation: key-expiry-pulse 1.4s ease-in-out infinite;
+}
+
+@keyframes key-expiry-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.35; }
+}
+
+.key-expiry-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(15, 23, 42, 0.45);
+  z-index: 1200;
+  display: flex;
+  justify-content: flex-end;
+}
+
+.key-expiry-backdrop--modal {
+  justify-content: center;
+  align-items: center;
+}
+
+.key-expiry-panel {
+  width: min(420px, 100%);
+  height: 100%;
+  background: #fff;
+  padding: 24px;
+  overflow: auto;
+  box-shadow: -8px 0 24px rgba(15, 23, 42, 0.12);
+}
+
+.key-expiry-panel--request {
+  height: auto;
+  max-width: 440px;
+  border-radius: 12px;
+  margin: 16px;
+}
+
+.key-expiry-panel__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 16px;
+}
+
+.key-expiry-panel__close {
+  border: none;
+  background: transparent;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.key-expiry-panel__section {
+  margin-bottom: 20px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid #e2e8f0;
+}
+
+.key-expiry-panel__section h3 {
+  margin: 0 0 12px;
+  font-size: 14px;
+}
+
+.key-expiry-panel__dl {
+  display: grid;
+  gap: 10px;
+  margin: 0;
+}
+
+.key-expiry-panel__dl div {
+  display: grid;
+  grid-template-columns: 120px 1fr;
+  gap: 8px;
+  font-size: 13px;
+}
+
+.key-expiry-panel__dl dt {
+  color: #64748b;
+  margin: 0;
+}
+
+.key-expiry-panel__dl dd {
+  margin: 0;
+  color: #0f172a;
+}
+
+.key-expiry-panel__cta {
+  width: 100%;
+  border: none;
+  border-radius: 8px;
+  background: #16a34a;
+  color: #fff;
+  padding: 12px 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.key-expiry-panel__cta:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.key-expiry-panel__hint {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #64748b;
+  text-align: center;
+}
+
+.key-expiry-panel__message {
+  font-size: 13px;
+  color: #166534;
+  background: #dcfce7;
+  padding: 8px 12px;
+  border-radius: 8px;
+}
+
+.key-expiry-shortcuts {
+  display: flex;
+  gap: 8px;
+  margin: 16px 0 12px;
+}
+
+.key-expiry-shortcuts button {
+  border: 1px solid #cbd5e1;
+  background: #fff;
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 12px;
+  cursor: pointer;
+}
+
+.key-expiry-shortcuts button.active {
+  border-color: #16a34a;
+  background: #dcfce7;
+  color: #166534;
+}
+
+.key-expiry-stepper {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+}
+
+.key-expiry-stepper input {
+  width: 72px;
+  text-align: center;
+}
+
+.key-expiry-preview {
+  font-size: 13px;
+  color: #475569;
+  margin-bottom: 12px;
+}
+
+.key-expiry-note {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.key-expiry-panel__actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+}

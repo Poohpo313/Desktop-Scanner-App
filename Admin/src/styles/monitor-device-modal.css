@@ -1,0 +1,262 @@
+@import "./figma-tokens.css";
+
+.figma-modal--monitor-device {
+  width: min(500px, 100%);
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.figma-modal--monitor-device .figma-modal__header {
+  align-items: flex-start;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--color-mystic);
+}
+
+.figma-modal--monitor-device .figma-modal__title {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: var(--text-h2);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  letter-spacing: -0.2px;
+}
+
+.figma-modal--monitor-device .figma-modal__header-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--color-rain-forest);
+}
+
+.figma-modal--monitor-device .figma-modal__close {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  padding: 0;
+  font-size: 0;
+  line-height: 1;
+  margin-top: 2px;
+}
+
+.figma-modal--monitor-device .figma-modal__close img {
+  display: block;
+  width: 14px;
+  height: 14px;
+}
+
+.figma-modal--monitor-device .figma-modal__body {
+  padding: 22px 24px 12px;
+  text-align: center;
+}
+
+.monitor-device__hero {
+  margin-bottom: 20px;
+}
+
+.monitor-device__ring-wrap {
+  position: relative;
+  width: 120px;
+  height: 120px;
+  margin: 0 auto 10px;
+}
+
+.monitor-device__ring {
+  width: 120px;
+  height: 120px;
+  transform: rotate(-90deg);
+}
+
+.monitor-device__ring-track,
+.monitor-device__ring-fill {
+  fill: none;
+  stroke-width: 6;
+}
+
+.monitor-device__ring-track {
+  stroke: var(--color-stroke-muted);
+}
+
+.monitor-device__ring-fill {
+  stroke: var(--color-rain-forest);
+  stroke-linecap: round;
+  stroke-dasharray: 327;
+  transition: stroke-dashoffset 0.9s ease;
+}
+
+.monitor-device__circle {
+  position: absolute;
+  inset: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  background: var(--color-rain-forest);
+  color: var(--color-white);
+}
+
+.monitor-device__percent {
+  margin: 0 0 4px;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+}
+
+.monitor-device__status {
+  margin: 0;
+  font-size: var(--text-caption);
+  color: var(--color-nevada);
+}
+
+.monitor-device__progress-block {
+  margin-bottom: 18px;
+  text-align: left;
+}
+
+.monitor-device__progress-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 10px;
+}
+
+.monitor-device__progress-label {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-river-bed);
+}
+
+.monitor-device__progress-value {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-rain-forest);
+}
+
+.monitor-device__progress-track {
+  height: 8px;
+  border-radius: 999px;
+  background: var(--color-stroke-muted);
+  overflow: hidden;
+}
+
+.monitor-device__progress-fill {
+  height: 100%;
+  border-radius: 999px;
+  background: var(--color-rain-forest);
+  transition: width 0.8s ease;
+}
+
+.monitor-device__metrics {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.monitor-device__metric-card {
+  padding: 14px 14px 12px;
+  border-radius: 10px;
+  background: var(--color-surface-sky);
+  text-align: left;
+}
+
+.monitor-device__metric-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.monitor-device__metric-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  background: var(--color-white);
+  flex-shrink: 0;
+}
+
+.monitor-device__metric-icon-wrap--green {
+  color: var(--color-rain-forest);
+}
+
+.monitor-device__metric-label {
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+}
+
+.monitor-device__metric-label--green {
+  color: var(--color-rain-forest);
+}
+
+.monitor-device__metric-value {
+  margin: 0 0 4px;
+  font-size: var(--text-step);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  letter-spacing: -0.3px;
+  line-height: 1.2;
+}
+
+.monitor-device__metric-sub {
+  margin: 0;
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.monitor-device__metric-sub--green {
+  color: var(--color-rain-forest);
+}
+
+.monitor-device__handle {
+  width: 40px;
+  height: 4px;
+  margin: 4px auto 0;
+  border-radius: 999px;
+  background: var(--color-disabled-track);
+}
+
+.monitor-device__footer-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  padding: 14px 24px 18px;
+  background: var(--color-surface-neutral);
+  border-top: 1px solid var(--color-mystic);
+}
+
+.monitor-device__cancel-btn {
+  width: 100%;
+  background: var(--color-info-panel);
+  border-color: var(--color-info-panel);
+  color: var(--color-brand-slate);
+}
+
+.monitor-device__refresh-btn {
+  width: 100%;
+  background: var(--color-rain-forest);
+  border-color: var(--color-rain-forest);
+  box-shadow: 0 6px 16px rgba(0, 109, 78, 0.2);
+}
+
+.monitor-device__refresh-icon {
+  flex-shrink: 0;
+  color: var(--color-white);
+}
+
+@media (max-width: 420px) {
+  .monitor-device__metrics {
+    grid-template-columns: 1fr;
+  }
+
+  .monitor-device__footer-wrap {
+    grid-template-columns: 1fr;
+  }
+}

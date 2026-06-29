@@ -1,0 +1,49 @@
+.import-progress-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 1200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(15, 23, 42, 0.45);
+}
+
+.import-progress-modal {
+  width: min(420px, 100%);
+  padding: 28px 24px;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 20px 50px rgba(15, 23, 42, 0.18);
+  text-align: center;
+}
+
+.import-progress-modal__spinner {
+  width: 42px;
+  height: 42px;
+  margin: 0 auto 18px;
+  border: 3px solid #d1fae5;
+  border-top-color: #008768;
+  border-radius: 999px;
+  animation: import-progress-spin 0.8s linear infinite;
+}
+
+.import-progress-modal__title {
+  margin: 0 0 8px;
+  font-size: 18px;
+  font-weight: 600;
+  color: #0f172a;
+}
+
+.import-progress-modal__text {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: #64748b;
+}
+
+@keyframes import-progress-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

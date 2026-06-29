@@ -1,0 +1,133 @@
+.admin-registration-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: rgba(11, 18, 32, 0.34);
+}
+
+.admin-registration-modal {
+  width: min(100%, 500px);
+  padding: 36px 32px 32px;
+  border: 1px solid #d7e0ea;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 16px 40px rgba(0, 53, 52, 0.12);
+  text-align: center;
+}
+
+.admin-registration-modal__icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 88px;
+  height: 88px;
+  margin-bottom: 22px;
+  border-radius: 999px;
+  background: #00a76a;
+  color: #fff;
+  box-shadow: 0 10px 28px rgba(0, 167, 106, 0.34);
+}
+
+.admin-registration-modal__icon--warning {
+  width: 72px;
+  height: 72px;
+  border-radius: 16px;
+  background: #fff1f2;
+  color: #dc2626;
+  box-shadow: none;
+}
+
+.admin-registration-modal__title {
+  margin: 0 0 20px;
+  font-size: 24px;
+  font-weight: 600;
+  color: #0f172a;
+  line-height: 1.25;
+}
+
+.admin-registration-modal__notice {
+  width: 100%;
+  margin: 0 auto 24px;
+  padding: 18px 22px;
+  border: 1px solid #c9e8df;
+  border-radius: 12px;
+  background: #edf8f4;
+  text-align: left;
+}
+
+.admin-registration-modal__notice p {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.55;
+  color: #334155;
+}
+
+.admin-registration-modal__notice p + p {
+  margin-top: 8px;
+}
+
+.admin-registration-modal__detail-row {
+  display: grid;
+  grid-template-columns: 92px minmax(0, 1fr);
+  gap: 12px;
+  align-items: baseline;
+  margin-top: 12px;
+}
+
+.admin-registration-modal__detail-label {
+  font-size: 14px;
+  font-weight: 500;
+  color: #64748b;
+}
+
+.admin-registration-modal__detail-value {
+  font-size: 14px;
+  font-weight: 600;
+  color: #0f172a;
+  word-break: break-word;
+}
+
+.admin-registration-modal__actions {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+}
+
+.admin-registration-modal__actions--split {
+  margin-top: 4px;
+}
+
+.admin-registration-modal__btn {
+  min-height: 46px;
+  padding: 0 24px;
+  border-radius: 10px;
+  border: 0;
+  font: inherit;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.admin-registration-modal__btn--primary {
+  min-width: 220px;
+  background: linear-gradient(135deg, #007a5e 0%, #00a76a 100%);
+  color: #fff;
+  box-shadow: 0 8px 18px rgba(0, 122, 94, 0.24);
+}
+
+.admin-registration-modal__btn--cancel {
+  flex: 1;
+  border: 1px solid #cbd5e1;
+  background: #f8fafc;
+  color: #475569;
+}
+
+.admin-registration-modal__btn--danger {
+  flex: 1;
+  background: linear-gradient(135deg, #007a5e 0%, #00a76a 100%);
+  color: #fff;
+}

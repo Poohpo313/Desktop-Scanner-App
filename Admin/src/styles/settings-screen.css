@@ -1,0 +1,387 @@
+@import "./figma-tokens.css";
+
+.settings-screen__toolbar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 18px;
+}
+
+.settings-screen__save-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  min-height: 40px;
+  padding: 0 18px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: var(--color-rain-forest);
+  color: var(--color-white);
+  font: inherit;
+  font-size: var(--text-body);
+  font-weight: var(--font-weight-medium);
+  cursor: pointer;
+  box-shadow: 0 6px 16px rgba(0, 109, 78, 0.2);
+}
+
+.settings-screen__save-btn:hover {
+  filter: brightness(1.04);
+}
+
+.settings-screen__save-btn svg {
+  flex-shrink: 0;
+}
+
+.settings-screen__layout {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) 320px;
+  gap: 20px;
+  align-items: start;
+}
+
+.settings-screen__main {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  min-width: 0;
+}
+
+.settings-screen__card {
+  background: var(--color-white);
+  border: 1px solid rgba(221, 232, 231, 0.95);
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 53, 52, 0.04);
+  padding: 22px 24px 24px;
+}
+
+.settings-screen__card-title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 20px;
+  font-size: var(--text-h2);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  letter-spacing: -0.2px;
+}
+
+.settings-screen__card-title svg {
+  flex-shrink: 0;
+  color: var(--color-rain-forest);
+}
+
+.settings-screen__fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px 18px;
+}
+
+.settings-screen__field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.settings-screen__field--full {
+  grid-column: 1 / -1;
+}
+
+.settings-screen__label {
+  font-size: var(--text-small);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-nevada);
+}
+
+.settings-screen__input,
+.settings-screen__select {
+  width: 100%;
+  min-height: 42px;
+  padding: 10px 14px;
+  border: 1px solid var(--color-border-cool);
+  border-radius: 8px;
+  background: var(--color-white);
+  font: inherit;
+  font-size: var(--text-body);
+  color: var(--color-brand-slate);
+  box-sizing: border-box;
+  outline: none;
+}
+
+.settings-screen__input::placeholder {
+  color: var(--color-granny-smith);
+}
+
+.settings-screen__input:focus,
+.settings-screen__select:focus {
+  border-color: var(--color-persian-green);
+}
+
+.settings-screen__select-wrap {
+  position: relative;
+}
+
+.settings-screen__select {
+  appearance: none;
+  padding-right: 36px;
+  cursor: pointer;
+}
+
+.settings-screen__select-wrap--timezone .settings-screen__select {
+  padding-right: 58px;
+}
+
+.settings-screen__select-chevron {
+  position: absolute;
+  top: 50%;
+  right: 12px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--color-nevada);
+}
+
+.settings-screen__select-icon {
+  position: absolute;
+  top: 50%;
+  right: 34px;
+  transform: translateY(-50%);
+  pointer-events: none;
+  color: var(--color-nevada);
+}
+
+.settings-screen__password-note {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-top: 18px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: var(--color-recovery-info-bg);
+  border: 1px solid var(--color-mint-border-muted);
+  color: var(--color-sage);
+  font-size: var(--text-small);
+  line-height: var(--line-height-relaxed);
+}
+
+.settings-screen__password-note svg {
+  flex-shrink: 0;
+  margin-top: 1px;
+  color: var(--color-rain-forest);
+}
+
+.settings-screen__aside {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.settings-screen__profile-card {
+  padding: 22px 20px 20px;
+  text-align: center;
+}
+
+.settings-screen__avatar-wrap {
+  position: relative;
+  width: 112px;
+  height: 112px;
+  margin: 0 auto 14px;
+}
+
+.settings-screen__avatar {
+  width: 100%;
+  height: 100%;
+  display: block;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+.settings-screen__avatar-edit {
+  position: absolute;
+  right: -4px;
+  bottom: -4px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border: 2px solid var(--color-white);
+  border-radius: 999px;
+  background: var(--color-rain-forest);
+  color: var(--color-white);
+  cursor: pointer;
+  padding: 0;
+}
+
+.settings-screen__username {
+  margin: 0 0 10px;
+  font-size: var(--text-h2);
+  font-weight: var(--font-weight-semibold);
+  color: var(--color-brand-slate);
+  letter-spacing: -0.2px;
+  word-break: break-word;
+}
+
+.settings-screen__role-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 18px;
+  padding: 5px 12px;
+  border-radius: 999px;
+  background: var(--color-info-panel);
+  color: var(--color-slate-blue);
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+}
+
+.settings-screen__role-badge svg {
+  flex-shrink: 0;
+}
+
+.settings-screen__meta-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  text-align: left;
+}
+
+.settings-screen__meta-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: var(--text-caption);
+}
+
+.settings-screen__meta-label {
+  color: var(--color-nevada);
+}
+
+.settings-screen__meta-value {
+  color: var(--color-brand-slate);
+  font-weight: var(--font-weight-medium);
+  text-align: right;
+}
+
+.settings-screen__secure-pill {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--color-recovery-info-bg);
+  color: var(--color-rain-forest);
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.settings-screen__section-label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 14px;
+  font-size: var(--text-micro);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-nevada);
+}
+
+.settings-screen__section-label svg {
+  flex-shrink: 0;
+  color: var(--color-rain-forest);
+}
+
+.settings-screen__tasks {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.settings-screen__task-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: var(--text-caption);
+  color: var(--color-brand-slate);
+}
+
+.settings-screen__task-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 4px 8px;
+  border-radius: 999px;
+  font-size: var(--text-badge);
+  font-weight: var(--font-weight-semibold);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.settings-screen__task-badge--pending {
+  background: var(--color-activity-gray);
+  color: var(--color-muted-slate);
+}
+
+.settings-screen__task-badge--in-progress {
+  background: var(--color-info-bg);
+  color: var(--color-info-text);
+}
+
+.settings-screen__task-badge--completed {
+  background: var(--color-recovery-info-bg);
+  color: var(--color-rain-forest);
+}
+
+.settings-screen__view-tasks {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 14px;
+  border: 0;
+  background: transparent;
+  padding: 0;
+  font: inherit;
+  font-size: var(--text-caption);
+  font-weight: var(--font-weight-medium);
+  color: var(--color-rain-forest);
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.settings-screen__view-tasks:hover {
+  text-decoration: underline;
+}
+
+.settings-screen__password-form {
+  display: contents;
+}
+
+.settings-screen__password-form .settings-screen__field {
+  display: flex;
+}
+
+.settings-screen__password-form .text-error {
+  font-size: var(--text-small);
+  color: var(--color-danger-dark);
+}
+
+@media (max-width: 1100px) {
+  .settings-screen__layout {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 720px) {
+  .settings-screen__fields {
+    grid-template-columns: 1fr;
+  }
+
+  .settings-screen__field--full {
+    grid-column: auto;
+  }
+}
