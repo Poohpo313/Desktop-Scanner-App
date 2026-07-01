@@ -7,7 +7,7 @@ import * as argon2 from "argon2";
 import { Repository } from "typeorm";
 import { AdminEntity } from "./entities/admin.entity";
 
-const MAX_FAILED_ATTEMPTS = 5;
+const MAX_FAILED_ATTEMPTS = 4;
 const LOCKOUT_MINUTES = 15;
 
 @Injectable()
@@ -36,13 +36,23 @@ export class AdminsService {
     return this.admins.findOne({ where: { adminId } });
   }
 
+  private resolveSuperAdminPinHash(admin: {
+    pinHash: string | null;
+    passwordHash: string | null;
+  }) {
+    if (admin.pinHash?.startsWith("$argon2")) return admin.pinHash;
+    if (admin.passwordHash?.startsWith("$argon2")) return admin.passwordHash;
+    return null;
+  }
+
   async findSuperAdminByPin(pin: string) {
     const rows = await this.findSuperAdminCandidates();
 
     for (const admin of rows) {
-      if (!admin.pinHash?.startsWith("$argon2")) continue;
+      const hash = this.resolveSuperAdminPinHash(admin);
+      if (!hash) continue;
       try {
-        const ok = await argon2.verify(admin.pinHash, pin);
+        const ok = await argon2.verify(hash, pin);
         if (ok) return admin;
       } catch {
         continue;
@@ -50,7 +60,12 @@ export class AdminsService {
     }
 
     if (rows.length) {
-      await this.recordFailedLogin(rows[0].adminId);
+      const target = rows[0];
+      const isLocked =
+        target.lockedUntil != null && new Date(target.lockedUntil) > new Date();
+      if (!isLocked) {
+        await this.recordFailedLogin(target.adminId);
+      }
     }
     return null;
   }
@@ -58,6 +73,7 @@ export class AdminsService {
   findSuperAdminCandidates() {
     return this.admins.query(`
       SELECT a.admin_id AS "adminId", a.username, a.pin_hash AS "pinHash",
+             a.password_hash AS "passwordHash",
              a.failed_login_attempts AS "failedLoginAttempts", a.locked_until AS "lockedUntil"
       FROM admins a
       INNER JOIN roles r ON r.role_id = a.role_id
@@ -67,6 +83,7 @@ export class AdminsService {
         adminId: number;
         username: string;
         pinHash: string | null;
+        passwordHash: string | null;
         failedLoginAttempts: number;
         lockedUntil: Date | null;
       }>

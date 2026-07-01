@@ -16,7 +16,9 @@ export type RecoverySubmitResponse = {
 
 export const authApi = {
   login: (body: { pin: string }) =>
-    api.post<SuperAdminLoginResponse>("/auth/superadmin/login", body).then((r) => r.data),
+    api
+      .post<SuperAdminLoginResponse>("/auth/superadmin/login", body, { timeout: 12_000 })
+      .then((r) => r.data),
 
   refresh: () => api.post<SuperAdminLoginResponse>("/auth/refresh").then((r) => r.data),
 

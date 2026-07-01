@@ -71,6 +71,10 @@ declare global {
           currentPassword: string;
           newPassword: string;
         }) => Promise<{ success: boolean; error?: string }>;
+        getKnownPassword: (p: { userId: number }) => Promise<{
+          success: boolean;
+          password: string | null;
+        }>;
         getSupportContact: (p: { token?: string; username?: string; serialKey?: string }) => Promise<{
           success: boolean;
           contact?: {

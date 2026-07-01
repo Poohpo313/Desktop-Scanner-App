@@ -44,13 +44,30 @@ async function refreshAccessToken(): Promise<string | null> {
   return refreshPromise;
 }
 
+const AUTH_LOGIN_PATHS = [
+  "/auth/superadmin/login",
+  "/auth/admin/login",
+  "/auth/user/login",
+  "/auth/user/activate",
+];
+
+function isAuthLoginRequest(url?: string) {
+  if (!url) return false;
+  return AUTH_LOGIN_PATHS.some((path) => url.includes(path));
+}
+
 api.interceptors.response.use(
   (response) => response,
   async (error: AxiosError) => {
     const original = error.config as InternalAxiosRequestConfig & { _retry?: boolean };
     const status = error.response?.status;
 
-    if (status === 401 && original && !original._retry) {
+    if (
+      status === 401 &&
+      original &&
+      !original._retry &&
+      !isAuthLoginRequest(original.url)
+    ) {
       original._retry = true;
       const token = await refreshAccessToken();
       if (token) {

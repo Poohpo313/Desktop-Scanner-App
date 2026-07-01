@@ -125,17 +125,25 @@ export async function ensureOnlineAuthenticated(userId?: number) {
 function parseApiErrorMessage(text: string, fallback: string): string {
   const trimmed = text.trim();
   if (!trimmed) return fallback;
+
   try {
-    const parsed = JSON.parse(trimmed) as { message?: string; statusCode?: number };
-    if (parsed.message) {
-      if (parsed.statusCode === 401) {
-        return "Your session expired. Sign out, connect to the internet, and sign in again to view tickets.";
-      }
-      return parsed.message;
+    const parsed = JSON.parse(trimmed) as {
+      message?: string | string[];
+      statusCode?: number;
+    };
+    if (parsed.statusCode === 401) {
+      return "Your session expired. Sign out, connect to the internet, and sign in again to view tickets.";
+    }
+    if (Array.isArray(parsed.message)) {
+      return parsed.message.join(" ");
+    }
+    if (typeof parsed.message === "string" && parsed.message.trim()) {
+      return parsed.message.trim();
     }
   } catch {
     /* use raw text */
   }
+
   return trimmed;
 }
 
@@ -197,7 +205,10 @@ export async function changeUserPasswordOnline(currentPassword: string, newPassw
 
     if (!res.ok) {
       const text = await res.text();
-      return { success: false as const, error: text || "Could not sync password" };
+      return {
+        success: false as const,
+        error: parseApiErrorMessage(text, "Could not sync password"),
+      };
     }
 
     return { success: true as const };

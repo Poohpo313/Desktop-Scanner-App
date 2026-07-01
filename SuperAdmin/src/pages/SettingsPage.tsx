@@ -20,6 +20,8 @@ import {
   markSuperAdminPinChanged,
   saveSuperAdminKnownPin,
 } from "../lib/knownPin";
+import { isValidSuperAdminPin } from "../lib/pinDigits";
+import SuperAdminPinDigitsField from "../components/SuperAdminPinDigitsField";
 import { useNotificationStore } from "../store/notificationStore";
 import type { AdminAccount, AdminUser, BackupRecord, Device, SerialKey, SystemConfig } from "../types";
 import "../styles/settings.css";
@@ -111,10 +113,38 @@ const formatDateButtonText = (value: string) => {
   return `${shortMonthNames[monthIndex]} ${day}, ${year}`;
 };
 
+function buildSuperAdminProfilePayload(profile: {
+  fullName: string;
+  email: string;
+  phoneNumber: string;
+}) {
+  const nameParts = profile.fullName.trim().split(/\s+/).filter(Boolean);
+  const firstName = nameParts[0]?.trim();
+  const lastName = nameParts.slice(1).join(" ").trim();
+  const payload: {
+    firstName?: string;
+    lastName?: string;
+    email?: string;
+    phoneNumber?: string;
+  } = {};
+
+  if (firstName) payload.firstName = firstName;
+  if (lastName) payload.lastName = lastName;
+
+  const email = profile.email.trim();
+  if (email) payload.email = email;
+
+  const phoneNumber = profile.phoneNumber.trim();
+  if (phoneNumber) payload.phoneNumber = phoneNumber;
+
+  return payload;
+}
+
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState<SettingsTab>("system");
   const [accountOpen, setAccountOpen] = useState(false);
+  const [accountSaveError, setAccountSaveError] = useState<string | null>(null);
   const [successOpen, setSuccessOpen] = useState(false);
   const [showCurrentPassword, setShowCurrentPassword] = useState(false);
   const [showNewPassword, setShowNewPassword] = useState(false);
@@ -161,7 +191,10 @@ export default function SettingsPage() {
   }, [successOpen]);
 
   useEffect(() => {
-    if (!accountOpen) return;
+    if (!accountOpen) {
+      setAccountSaveError(null);
+      return;
+    }
     const knownPin = loadSuperAdminKnownPin();
     setProfile((current) => ({
       ...current,
@@ -875,6 +908,11 @@ export default function SettingsPage() {
             </div>
 
             <div className="settings-account-form">
+              {accountSaveError ? (
+                <p className="settings-account-form__error" role="alert">
+                  {accountSaveError}
+                </p>
+              ) : null}
               <div className="settings-account-form__left">
                 <h3>Profile</h3>
                 <label>
@@ -917,41 +955,25 @@ export default function SettingsPage() {
 
               <div className="settings-account-form__right">
                 <h3>Change PIN</h3>
-                <label className="settings-account-password">
-                  <span>Current PIN</span>
-                  <input
-                    type={showCurrentPassword ? "text" : "password"}
-                    inputMode="numeric"
-                    autoComplete="off"
-                    placeholder="Enter current PIN"
-                    value={profile.currentPassword}
-                    onChange={(event) =>
-                      setProfile((current) => ({ ...current, currentPassword: event.target.value }))
-                    }
-                  />
-                  <button
-                    type="button"
-                    aria-label={showCurrentPassword ? "Hide current PIN" : "Show current PIN"}
-                    onClick={() => setShowCurrentPassword((current) => !current)}
-                  />
-                </label>
-                <label className="settings-account-password">
-                  <span>New PIN</span>
-                  <input
-                    type={showNewPassword ? "text" : "password"}
-                    inputMode="numeric"
-                    autoComplete="off"
-                    value={profile.newPassword}
-                    onChange={(event) =>
-                      setProfile((current) => ({ ...current, newPassword: event.target.value }))
-                    }
-                  />
-                  <button
-                    type="button"
-                    aria-label={showNewPassword ? "Hide new PIN" : "Show new PIN"}
-                    onClick={() => setShowNewPassword((current) => !current)}
-                  />
-                </label>
+                <p className="settings-account-pin-note">PIN must be exactly 6 digits.</p>
+                <SuperAdminPinDigitsField
+                  label="Current PIN"
+                  hint="Locked — use Show to view your current PIN"
+                  value={profile.currentPassword}
+                  readOnly
+                  visible={showCurrentPassword}
+                  onToggleVisible={() => setShowCurrentPassword((current) => !current)}
+                />
+                <SuperAdminPinDigitsField
+                  label="New PIN"
+                  hint="Enter a new 6-digit PIN"
+                  value={profile.newPassword}
+                  visible={showNewPassword}
+                  onToggleVisible={() => setShowNewPassword((current) => !current)}
+                  onChange={(nextPin) =>
+                    setProfile((current) => ({ ...current, newPassword: nextPin }))
+                  }
+                />
               </div>
             </div>
 
@@ -979,31 +1001,38 @@ export default function SettingsPage() {
                 className="settings-account-save"
                 type="button"
                 onClick={async () => {
-                  const nameParts = profile.fullName.trim().split(/\s+/).filter(Boolean);
-                  const firstName = nameParts[0] ?? "";
-                  const lastName = nameParts.slice(1).join(" ");
+                  setAccountSaveError(null);
 
                   try {
-                    await authApi.updateProfile({
-                      firstName,
-                      lastName,
-                      email: profile.email.trim(),
-                      phoneNumber: profile.phoneNumber.trim() || undefined,
-                    });
-                  } catch {
-                    push("Failed to save account profile", "error");
+                    await authApi.updateProfile(buildSuperAdminProfilePayload(profile));
+                  } catch (error) {
+                    const message = extractApiError(error, "Failed to save account profile");
+                    setAccountSaveError(message);
+                    push(message, "error");
                     return;
                   }
 
-                  const changingPin =
-                    profile.currentPassword.trim().length > 0 || profile.newPassword.trim().length > 0;
+                  const changingPin = profile.newPassword.trim().length > 0;
 
                   if (changingPin) {
-                    if (
-                      !/^\d{6}$/.test(profile.currentPassword) ||
-                      !/^\d{6}$/.test(profile.newPassword)
-                    ) {
-                      push("PIN must be exactly 6 digits", "error");
+                    if (!isValidSuperAdminPin(profile.currentPassword)) {
+                      const message = "Current PIN must be exactly 6 digits";
+                      setAccountSaveError(message);
+                      push(message, "error");
+                      return;
+                    }
+
+                    if (!isValidSuperAdminPin(profile.newPassword)) {
+                      const message = "New PIN must be exactly 6 digits";
+                      setAccountSaveError(message);
+                      push(message, "error");
+                      return;
+                    }
+
+                    if (profile.currentPassword === profile.newPassword) {
+                      const message = "New PIN must be different from your current PIN";
+                      setAccountSaveError(message);
+                      push(message, "error");
                       return;
                     }
 
@@ -1014,8 +1043,10 @@ export default function SettingsPage() {
                       });
                       saveSuperAdminKnownPin(profile.newPassword);
                       markSuperAdminPinChanged();
-                    } catch {
-                      push("Failed to update PIN", "error");
+                    } catch (error) {
+                      const message = extractApiError(error, "Failed to update PIN");
+                      setAccountSaveError(message);
+                      push(message, "error");
                       return;
                     }
                   }

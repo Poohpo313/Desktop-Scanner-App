@@ -4,6 +4,7 @@ import { AuthInfoPanel } from "../components/auth/AuthInfoPanel";
 import { AuthPageShell } from "../components/auth/AuthPageShell";
 import { FigmaIcon } from "../components/FigmaIcon";
 import { icons } from "../icons";
+import { buildLockoutMessage } from "../lib/loginLockout";
 
 const LOGIN_BENEFITS = [
   {
@@ -63,7 +64,7 @@ export default function LoginPage() {
         setError("");
         return;
       }
-      setError(`Account locked. Try again in ${secondsRemaining} seconds.`);
+      setError(buildLockoutMessage(secondsRemaining));
     };
 
     updateLockMessage();

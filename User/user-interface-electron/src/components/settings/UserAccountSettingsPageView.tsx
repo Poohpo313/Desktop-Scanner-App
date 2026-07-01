@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { ProfilePhotoIdentityCard } from "../profile/ProfilePhotoIdentityCard";
 import { useProfilePhoto } from "../../hooks/useProfilePhoto";
@@ -8,12 +8,15 @@ import "../../styles/user-account-settings.css";
 import "../../styles/scan-offline.css";
 import { AccountSettingsSavedToast } from "./AccountSettingsSavedToast";
 import {
-  DEFAULT_USER_PASSWORD,
   loadUserKnownPassword,
   markUserPasswordChanged,
-  readUserPasswordChanged,
   saveUserKnownPassword,
 } from "../../lib/userKnownPassword";
+import {
+  getPasswordRequirementCheck,
+  isNewPasswordValid,
+  PASSWORD_REQUIREMENT_SUMMARY,
+} from "../../lib/passwordRules";
 
 const ACCOUNT_SETTINGS_SUCCESS_MS = 3000;
 
@@ -69,7 +72,6 @@ export function UserAccountSettingsPageView() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [passwordChanged, setPasswordChanged] = useState(readUserPasswordChanged);
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -79,11 +81,16 @@ export function UserAccountSettingsPageView() {
   const [adminContactName, setAdminContactName] = useState("-");
   const [adminContactEmail, setAdminContactEmail] = useState("-");
   const [adminContactPhone, setAdminContactPhone] = useState("-");
-  const [currentPassword, setCurrentPassword] = useState(() => loadUserKnownPassword());
+  const [currentPassword, setCurrentPassword] = useState(() => loadUserKnownPassword(session.userId));
   const [newPassword, setNewPassword] = useState("");
   const [photoNotice, setPhotoNotice] = useState<string | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
   const { photoUrl, setPhoto } = useProfilePhoto(session.userId);
+  const passwordRequirements = useMemo(
+    () => getPasswordRequirementCheck(newPassword),
+    [newPassword],
+  );
+  const showPasswordRequirementState = newPassword.length > 0;
 
   useEffect(() => {
     if (!saveSuccess) return;
@@ -93,6 +100,22 @@ export function UserAccountSettingsPageView() {
     }, ACCOUNT_SETTINGS_SUCCESS_MS);
     return () => window.clearTimeout(timer);
   }, [saveSuccess, navigate]);
+
+  useEffect(() => {
+    if (session.userId == null) return;
+
+    void (async () => {
+      let known = loadUserKnownPassword(session.userId);
+      if (window.bukolabs?.auth?.getKnownPassword) {
+        const result = await window.bukolabs.auth.getKnownPassword({ userId: session.userId! });
+        if (result.success && result.password?.trim()) {
+          known = result.password.trim();
+          saveUserKnownPassword(known, session.userId);
+        }
+      }
+      setCurrentPassword(known);
+    })();
+  }, [session.userId]);
 
   useEffect(() => {
     void (async () => {
@@ -114,11 +137,22 @@ export function UserAccountSettingsPageView() {
         setAdminContactName(displayValue(profile.adminContact?.adminName));
         setAdminContactEmail(displayValue(profile.adminContact?.email));
         setAdminContactPhone(displayValue(profile.adminContact?.phoneNumber));
-        setCurrentPassword(loadUserKnownPassword());
+        if (session.userId != null && window.bukolabs?.auth?.getKnownPassword) {
+          const knownResult = await window.bukolabs.auth.getKnownPassword({ userId: session.userId });
+          if (knownResult.success && knownResult.password?.trim()) {
+            const known = knownResult.password.trim();
+            saveUserKnownPassword(known, session.userId);
+            setCurrentPassword(known);
+          } else {
+            setCurrentPassword(loadUserKnownPassword(session.userId));
+          }
+        } else {
+          setCurrentPassword(loadUserKnownPassword(session.userId));
+        }
       }
       setLoading(false);
     })();
-  }, [session.token]);
+  }, [session.token, session.userId]);
 
   async function handleSave() {
     if (!session.token || !window.bukolabs?.auth) return;
@@ -145,9 +179,29 @@ export function UserAccountSettingsPageView() {
     }
 
     if (newPassword.trim()) {
+      if (!currentPassword.trim()) {
+        setSaving(false);
+        setError("Current password is required to set a new password.");
+        return;
+      }
+
+      if (!isNewPasswordValid(newPassword.trim())) {
+        setSaving(false);
+        setError(PASSWORD_REQUIREMENT_SUMMARY);
+        return;
+      }
+
+      let currentForChange = currentPassword.trim();
+      if (session.userId != null && window.bukolabs?.auth?.getKnownPassword) {
+        const knownResult = await window.bukolabs.auth.getKnownPassword({ userId: session.userId });
+        if (knownResult.success && knownResult.password?.trim()) {
+          currentForChange = knownResult.password.trim();
+        }
+      }
+
       const passwordResult = await window.bukolabs.auth.changePassword({
         token: session.token,
-        currentPassword: passwordChanged ? currentPassword : currentPassword || DEFAULT_USER_PASSWORD,
+        currentPassword: currentForChange,
         newPassword: newPassword.trim(),
       });
 
@@ -157,9 +211,8 @@ export function UserAccountSettingsPageView() {
         return;
       }
 
-      markUserPasswordChanged();
-      saveUserKnownPassword(newPassword.trim());
-      setPasswordChanged(true);
+      markUserPasswordChanged(session.userId);
+      saveUserKnownPassword(newPassword.trim(), session.userId);
       setCurrentPassword(newPassword.trim());
       setNewPassword("");
     }
@@ -316,6 +369,44 @@ export function UserAccountSettingsPageView() {
                   value={newPassword}
                   onChange={setNewPassword}
                 />
+              </div>
+              <div className="settings-figma__password-requirements">
+                <p className="settings-figma__password-requirements-title">Password must contain:</p>
+                <ul className="settings-figma__password-requirements-list">
+                  <li
+                    className={
+                      showPasswordRequirementState
+                        ? passwordRequirements.hasMinLength
+                          ? "settings-figma__password-requirements-item--met"
+                          : "settings-figma__password-requirements-item--unmet"
+                        : undefined
+                    }
+                  >
+                    *At least 8 characters
+                  </li>
+                  <li
+                    className={
+                      showPasswordRequirementState
+                        ? passwordRequirements.hasNumber
+                          ? "settings-figma__password-requirements-item--met"
+                          : "settings-figma__password-requirements-item--unmet"
+                        : undefined
+                    }
+                  >
+                    *At least 1 number
+                  </li>
+                  <li
+                    className={
+                      showPasswordRequirementState
+                        ? passwordRequirements.hasSpecialCharacter
+                          ? "settings-figma__password-requirements-item--met"
+                          : "settings-figma__password-requirements-item--unmet"
+                        : undefined
+                    }
+                  >
+                    *At least 1 special character
+                  </li>
+                </ul>
               </div>
             </section>
 

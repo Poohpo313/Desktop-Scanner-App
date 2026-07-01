@@ -898,9 +898,20 @@
 
 .settings-account-form {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(230px, 0.86fr);
+  grid-template-columns: minmax(0, 1fr) minmax(380px, 1fr);
   gap: 24px;
   padding: 0 24px 12px;
+}
+
+.settings-account-form__error {
+  grid-column: 1 / -1;
+  margin: 0;
+  padding: 10px 12px;
+  border-radius: 8px;
+  background: #fef3f2;
+  color: #b42318;
+  font-size: 13px;
+  line-height: 1.4;
 }
 
 .settings-account-form h3 {
@@ -918,7 +929,7 @@
 }
 
 .settings-account-form__right {
-  padding-top: 209px;
+  padding-top: 0;
 }
 
 .settings-account-form label {
@@ -958,10 +969,113 @@
   cursor: not-allowed;
 }
 
-.settings-account-form small {
+.settings-account-form label small {
   color: #ff0000;
   font-size: 11px;
   font-weight: 500;
+}
+
+.settings-account-form small:not(.settings-account-pin-field__hint) {
+  color: #ff0000;
+}
+
+.settings-account-pin-note {
+  margin: 0 0 12px;
+  color: #667085;
+  font-size: 12px;
+  line-height: 1.4;
+}
+
+.settings-account-pin-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+}
+
+.settings-account-pin-field__label {
+  color: #101828;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.settings-account-pin-field__hint {
+  color: #667085;
+  font-size: 11px;
+  font-weight: 400;
+}
+
+.settings-account-pin-row {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 10px;
+}
+
+.settings-account-pin-digits {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 10px;
+  width: 100%;
+  flex-wrap: nowrap;
+}
+
+.settings-account-pin-digits--locked .settings-account-pin-digit--display,
+.settings-account-pin-digits--editable .settings-account-pin-digit--display {
+  background: #f2f4f7;
+  color: #344054;
+}
+
+.settings-account-pin-digits--locked .settings-account-pin-digit--display {
+  cursor: default;
+}
+
+.settings-account-pin-digit {
+  flex: 0 0 52px;
+  width: 52px;
+  min-width: 52px;
+  height: 52px;
+  border: 1px solid #d0d5dd;
+  border-radius: 10px;
+  background: #f2f4f7;
+  color: #344054;
+  font-size: 24px;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  text-align: center;
+  line-height: 1;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.settings-account-pin-digit--display {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  user-select: none;
+}
+
+.settings-account-pin-digit--editable {
+  cursor: text;
+  outline: none;
+}
+
+.settings-account-pin-digit--editable:focus {
+  border-color: #008768;
+  box-shadow: 0 0 0 3px rgba(0, 135, 104, 0.12);
+}
+
+.settings-account-pin-toggle {
+  flex-shrink: 0;
+  align-self: flex-end;
+  border: 0;
+  background: transparent;
+  color: #008768;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
 }
 
 .settings-account-password {

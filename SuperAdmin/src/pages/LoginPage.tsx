@@ -6,6 +6,13 @@ import { authApi } from "../api/auth.api";
 import AdminPinForm from "../components/AdminPinForm";
 import SplashScreen from "../components/SplashScreen";
 import { useAuth } from "../hooks/useAuth";
+import { saveSuperAdminKnownPin } from "../lib/knownPin";
+import {
+  buildLockoutMessage,
+  LOCKOUT_MS,
+  MAX_LOGIN_ATTEMPTS,
+} from "../lib/loginLockout";
+import { isValidSuperAdminPin } from "../lib/pinDigits";
 import { useNotificationStore } from "../store/notificationStore";
 import "../styles/splash.css";
 import "../styles/super-pin.css";
@@ -47,6 +54,7 @@ export default function LoginPage() {
   };
 
   const onDigit = (i: number, v: string) => {
+    if (isLocked || submittingRef.current) return;
     if (!/^\d?$/.test(v)) return;
     const next = [...pin];
     next[i] = v;
@@ -71,10 +79,35 @@ export default function LoginPage() {
   };
 
   const attempts = useRef(0);
-  const lockedUntil = useRef(0);
+  const submittingRef = useRef(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [lockedUntil, setLockedUntil] = useState<number | null>(null);
+  const isLocked = lockedUntil != null && lockedUntil > Date.now();
+
+  useEffect(() => {
+    if (!lockedUntil || lockedUntil <= Date.now()) return;
+
+    const updateLockMessage = () => {
+      const secondsRemaining = Math.max(0, Math.ceil((lockedUntil - Date.now()) / 1000));
+      if (secondsRemaining <= 0) {
+        setLockedUntil(null);
+        setError("");
+        attempts.current = 0;
+        return;
+      }
+      setError(buildLockoutMessage(secondsRemaining));
+    };
+
+    updateLockMessage();
+    const intervalId = window.setInterval(updateLockMessage, 1000);
+    return () => window.clearInterval(intervalId);
+  }, [lockedUntil]);
 
   const getLoginErrorMessage = (error: unknown) => {
     if (axios.isAxiosError(error)) {
+      if (error.code === "ECONNABORTED") {
+        return "Login timed out. Check that the gateway is running on port 3000.";
+      }
       if (!error.response) {
         return "Cannot reach the API server. Start the gateway (port 3000) and restart this app.";
       }
@@ -82,44 +115,76 @@ export default function LoginPage() {
       if (typeof message === "string") return message;
       if (Array.isArray(message)) return message.join(" ");
       if (error.response?.status === 403) {
-        return "Account locked due to failed login attempts. Try again in 15 minutes.";
+        return "locked";
+      }
+      if (error.response?.status === 429) {
+        return "Too many login attempts. Wait a moment and try again.";
       }
     }
     return "Invalid PIN.";
   };
 
+  const getServerLockoutUntil = (error: unknown) => {
+    if (!axios.isAxiosError(error) || error.response?.status !== 403) return null;
+    const lockedUntil = (error.response.data as { lockedUntil?: string })?.lockedUntil;
+    if (!lockedUntil) return null;
+    const untilMs = Date.parse(lockedUntil);
+    return Number.isNaN(untilMs) || untilMs <= Date.now() ? null : untilMs;
+  };
+
   const submitPin = async (value: string) => {
-    setError("");
-    if (lockedUntil.current > Date.now()) {
-      setError("Locked after 5 failed attempts. Try again in 15 minutes.");
+    if (submittingRef.current || isLocked) return;
+
+    if (!isValidSuperAdminPin(value)) {
+      setError("Enter all 6 digits of your PIN.");
+      focusPin(0);
       return;
     }
+
+    submittingRef.current = true;
+    setSubmitting(true);
+    setError("");
+
     try {
       const res = await authApi.login({ pin: value });
       attempts.current = 0;
-      lockedUntil.current = 0;
+      setLockedUntil(null);
       flushSync(() => {
         setSession({ accessToken: res.accessToken, role: "superadmin", userId: res.userId });
       });
+      saveSuperAdminKnownPin(value);
       push("Welcome back, Super Admin", "success");
       navigate("/portal/dashboard", { replace: true });
     } catch (error) {
       const message = getLoginErrorMessage(error);
-      if (message.toLowerCase().includes("locked")) {
-        lockedUntil.current = Date.now() + 15 * 60 * 1000;
-        setError(message);
+      const serverLockoutUntil = getServerLockoutUntil(error);
+      if (message === "locked" || serverLockoutUntil != null) {
+        const until = serverLockoutUntil ?? Date.now() + LOCKOUT_MS;
+        setLockedUntil(until);
+        setError(
+          buildLockoutMessage(Math.max(1, Math.ceil((until - Date.now()) / 1000))),
+        );
+        setPin(emptyPin());
         return;
       }
 
       attempts.current += 1;
-      if (attempts.current >= 5) {
-        lockedUntil.current = Date.now() + 15 * 60 * 1000;
-        setError("Locked after 5 failed attempts.");
+      if (attempts.current >= MAX_LOGIN_ATTEMPTS) {
+        const until = Date.now() + LOCKOUT_MS;
+        setLockedUntil(until);
+        setError(buildLockoutMessage(Math.ceil(LOCKOUT_MS / 1000)));
       } else {
-        setError(`${message} ${5 - attempts.current} attempts left.`);
+        setError(
+          `${message} ${MAX_LOGIN_ATTEMPTS - attempts.current} attempt${
+            MAX_LOGIN_ATTEMPTS - attempts.current === 1 ? "" : "s"
+          } left.`,
+        );
       }
       setPin(emptyPin());
-      focusPin(0);
+      if (!isLocked) focusPin(0);
+    } finally {
+      submittingRef.current = false;
+      setSubmitting(false);
     }
   };
 
@@ -145,9 +210,8 @@ export default function LoginPage() {
     <AdminPinForm
       logoSrc="/assets/Border.svg"
       logoAlt="Bukolabs"
-      title="Administrator Access"
+      title="System Administrator Access"
       subtitle="Enter your administrator PIN to continue"
-      label="Admin PIN"
       error={error}
       pin={pin}
       submitText="Access System"
@@ -156,6 +220,8 @@ export default function LoginPage() {
       onDigit={onDigit}
       onDigitKeyDown={onDigitKeyDown}
       onSubmit={submit}
+      disabled={isLocked}
+      submitting={submitting}
     />
   );
 }

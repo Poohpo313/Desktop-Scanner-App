@@ -25,6 +25,11 @@ import {
   type OnlineActivationPayload,
 } from "./api.service";
 import {
+  initKnownPasswordStore,
+  loadKnownLoginPassword,
+  saveKnownLoginPassword,
+} from "./known-password-store";
+import {
   clearOnlineAuth,
   initOnlineAuthStore,
   loadOnlineAuth,
@@ -52,7 +57,7 @@ const NOT_ACTIVATED_ERROR = "Account not Activated : Activate account first to a
 const sessions = new Map<string, Session>();
 type FailedLoginState = { count: number; lockedUntil: number; lockTier: number };
 const failedAttempts = new Map<string, FailedLoginState>();
-const MAX_LOGIN_ATTEMPTS = 5;
+const MAX_LOGIN_ATTEMPTS = 4;
 const LOGIN_LOCK_DURATIONS_MS = [30_000, 60_000, 120_000, 300_000, 600_000, 900_000, 1_800_000];
 const USER_SESSION_MS = 30 * 24 * 60 * 60 * 1000;
 
@@ -940,6 +945,7 @@ export const authService = {
   initStores(userDataPath: string) {
     initOnlineAuthStore(userDataPath);
     initPendingActivationStore(userDataPath);
+    initKnownPasswordStore(userDataPath);
   },
 
   restorePersistedSessions() {
@@ -1002,6 +1008,7 @@ export const authService = {
 
       void syncUserFromOnline(normalizedUsername, password);
       scheduleDevicePresenceBootstrap(loggedInUserId, normalizedUsername, password);
+      saveKnownLoginPassword(loggedInUserId, password);
 
       return { success: true, token, role: "user" as const, userId: loggedInUserId };
     }
@@ -1037,6 +1044,7 @@ export const authService = {
       );
 
       scheduleDevicePresenceBootstrap(user.user_id, normalizedUsername, password);
+      saveKnownLoginPassword(user.user_id, password);
 
       return { success: true, token, role: "user" as const, userId: user.user_id };
     }
@@ -1339,33 +1347,74 @@ export const authService = {
     const session = sessions.get(token);
     if (!session) return { success: false as const, error: "Session expired" };
 
+    const normalizedCurrent = currentPassword.trim();
+    const normalizedNew = newPassword.trim();
+
+    if (!normalizedCurrent) {
+      return { success: false as const, error: "Current password is required to set a new password." };
+    }
+
+    if (
+      normalizedNew.length < 8 ||
+      !/\d/.test(normalizedNew) ||
+      !/[^A-Za-z0-9]/.test(normalizedNew)
+    ) {
+      return {
+        success: false as const,
+        error:
+          "New password must contain at least 8 characters, 1 number, and 1 special character.",
+      };
+    }
+
     const user = await queryOne<{ password_hash: string }>(
       "SELECT password_hash FROM users WHERE user_id = $1",
       [session.userId],
     );
     if (!user) return { success: false as const, error: "Account not found" };
 
-    const valid = await hashService.verifyPassword(user.password_hash, currentPassword);
-    if (!valid) return { success: false as const, error: "Current password is incorrect" };
-
-    const nextHash = await hashService.hashPassword(newPassword);
-    await query("UPDATE users SET password_hash = $1, updated_at = NOW() WHERE user_id = $2", [
-      nextHash,
-      session.userId,
-    ]);
-
+    const localValid = await hashService.verifyPassword(user.password_hash, normalizedCurrent);
     const gatewayUp = await isOnlineAvailable();
+
+    const applyLocalPassword = async () => {
+      const nextHash = await hashService.hashPassword(normalizedNew);
+      await query("UPDATE users SET password_hash = $1, updated_at = NOW() WHERE user_id = $2", [
+        nextHash,
+        session.userId,
+      ]);
+      saveKnownLoginPassword(session.userId, normalizedNew);
+    };
+
     if (gatewayUp) {
-      const onlineResult = await changeUserPasswordOnline(currentPassword, newPassword);
-      if (!onlineResult.success) {
+      const onlineResult = await changeUserPasswordOnline(normalizedCurrent, normalizedNew);
+      if (onlineResult.success) {
+        await applyLocalPassword();
+        return { success: true as const };
+      }
+
+      if (localValid) {
         return {
           success: false as const,
-          error: onlineResult.error ?? "Could not sync password to the server",
+          error:
+            "Could not verify your current password with the server. Sign out, sign in again, then retry.",
         };
       }
+
+      return {
+        success: false as const,
+        error: onlineResult.error ?? "Current password is incorrect",
+      };
     }
 
+    if (!localValid) {
+      return { success: false as const, error: "Current password is incorrect" };
+    }
+
+    await applyLocalPassword();
     return { success: true as const };
+  },
+
+  getKnownLoginPassword(userId: number) {
+    return { success: true as const, password: loadKnownLoginPassword(userId) };
   },
 
   async getSupportContact(token: string, username?: string, serialKey?: string) {
@@ -1534,9 +1583,12 @@ function loginLockDurationMs(lockTier: number) {
 
 function buildLockedLoginResponse(lock: FailedLoginState) {
   const lockSecondsRemaining = Math.max(1, Math.ceil((lock.lockedUntil - Date.now()) / 1000));
+  const mins = Math.floor(lockSecondsRemaining / 60);
+  const secs = lockSecondsRemaining % 60;
+  const countdown = mins > 0 ? `${mins}m ${secs.toString().padStart(2, "0")}s` : `${secs}s`;
   return {
     success: false as const,
-    error: `Account locked. Try again in ${lockSecondsRemaining} seconds.`,
+    error: `Account locked after ${MAX_LOGIN_ATTEMPTS} invalid attempts. Try again in ${countdown}.`,
     attemptsRemaining: 0,
     lockedUntil: lock.lockedUntil,
     lockSecondsRemaining,

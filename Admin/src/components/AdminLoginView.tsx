@@ -1,8 +1,14 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 import { authApi } from "../api/auth.api";
 import { saveAdminKnownPassword } from "../lib/knownPassword";
+import {
+  buildLockoutMessage,
+  LOCKOUT_MS,
+  MAX_LOGIN_ATTEMPTS,
+} from "../lib/loginLockout";
 import { useAuth } from "../hooks/useAuth";
 import { useNotificationStore } from "../store/notificationStore";
 import { PORTAL } from "../routes/portalPaths";
@@ -21,8 +27,7 @@ import "../styles/auth-shell.css";
 import "../styles/login.css";
 import "../styles/admin-officer-login.css";
 
-const MAX_ATTEMPTS = 5;
-const LOCKOUT_MS = 15 * 60 * 1000;
+const LOCKOUT_MS_LOCAL = LOCKOUT_MS;
 
 const SECURITY_FEATURES = [
   "Secure Authentication",
@@ -47,9 +52,11 @@ export default function AdminLoginView({
   const [rememberMe, setRememberMe] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState("");
+  const [lockedUntil, setLockedUntil] = useState<number | null>(null);
   const attempts = useRef(0);
-  const lockedUntil = useRef(0);
   const recoverHref = variant === "figma" ? "/admin-recover-access" : PORTAL.recoverAccess;
+
+  const isLocked = lockedUntil != null && lockedUntil > Date.now();
 
   useEffect(() => {
     document.body.classList.add(variant === "figma" ? "admin-officer-login-page" : "admin-login-page");
@@ -60,14 +67,30 @@ export default function AdminLoginView({
     };
   }, [variant]);
 
+  useEffect(() => {
+    if (!lockedUntil || lockedUntil <= Date.now()) return;
+
+    const updateLockMessage = () => {
+      const secondsRemaining = Math.max(0, Math.ceil((lockedUntil - Date.now()) / 1000));
+      if (secondsRemaining <= 0) {
+        setLockedUntil(null);
+        setError("");
+        attempts.current = 0;
+        return;
+      }
+      setError(buildLockoutMessage(secondsRemaining));
+    };
+
+    updateLockMessage();
+    const intervalId = window.setInterval(updateLockMessage, 1000);
+    return () => window.clearInterval(intervalId);
+  }, [lockedUntil]);
+
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
     setError("");
 
-    if (lockedUntil.current > Date.now()) {
-      setError("Account locked after 5 failed attempts. Try again later.");
-      return;
-    }
+    if (isLocked) return;
 
     if (variant === "figma") {
       navigate(onSuccessNavigate);
@@ -83,13 +106,25 @@ export default function AdminLoginView({
       });
       push("Login successful", "success");
       navigate(onSuccessNavigate, { replace: true });
-    } catch {
+    } catch (err) {
+      if (axios.isAxiosError(err) && err.response?.status === 403) {
+        const until = Date.now() + LOCKOUT_MS_LOCAL;
+        setLockedUntil(until);
+        setError(buildLockoutMessage(Math.ceil(LOCKOUT_MS_LOCAL / 1000)));
+        return;
+      }
+
       attempts.current += 1;
-      if (attempts.current >= MAX_ATTEMPTS) {
-        lockedUntil.current = Date.now() + LOCKOUT_MS;
-        setError("Account locked after 5 failed attempts. Try again in 15 minutes.");
+      if (attempts.current >= MAX_LOGIN_ATTEMPTS) {
+        const until = Date.now() + LOCKOUT_MS_LOCAL;
+        setLockedUntil(until);
+        setError(buildLockoutMessage(Math.ceil(LOCKOUT_MS_LOCAL / 1000)));
       } else {
-        setError(`Invalid credentials. ${MAX_ATTEMPTS - attempts.current} attempts remaining.`);
+        setError(
+          `Invalid credentials. ${MAX_LOGIN_ATTEMPTS - attempts.current} attempt${
+            MAX_LOGIN_ATTEMPTS - attempts.current === 1 ? "" : "s"
+          } remaining.`,
+        );
       }
     }
   };
@@ -125,6 +160,7 @@ export default function AdminLoginView({
                   placeholder="Enter your username"
                   autoComplete="username"
                   required
+                  disabled={isLocked}
                 />
               </div>
             </div>
@@ -152,6 +188,7 @@ export default function AdminLoginView({
                   placeholder="Enter your password"
                   autoComplete="current-password"
                   required
+                  disabled={isLocked}
                 />
                 <button
                   type="button"
@@ -169,11 +206,12 @@ export default function AdminLoginView({
                 type="checkbox"
                 checked={rememberMe}
                 onChange={(e) => setRememberMe(e.target.checked)}
+                disabled={isLocked}
               />
               <span>Remember me on this device</span>
             </label>
 
-            <button className="admin-officer-login__submit" type="submit">
+            <button className="admin-officer-login__submit" type="submit" disabled={isLocked}>
               <IconLoginArrow className="admin-officer-login__submit-icon" aria-hidden="true" />
               Sign In
             </button>
@@ -239,6 +277,7 @@ export default function AdminLoginView({
                   placeholder="Enter admin username"
                   autoComplete="username"
                   required
+                  disabled={isLocked}
                 />
               </div>
             </div>
@@ -261,6 +300,7 @@ export default function AdminLoginView({
                   placeholder="Enter password"
                   autoComplete="current-password"
                   required
+                  disabled={isLocked}
                 />
                 <button
                   type="button"
@@ -279,6 +319,7 @@ export default function AdminLoginView({
                   type="checkbox"
                   checked={rememberMe}
                   onChange={(e) => setRememberMe(e.target.checked)}
+                  disabled={isLocked}
                 />
                 <span>Remember Me</span>
               </label>
@@ -287,7 +328,7 @@ export default function AdminLoginView({
               </Link>
             </div>
 
-            <button className="admin-login__submit" type="submit">
+            <button className="admin-login__submit" type="submit" disabled={isLocked}>
               <IconLoginArrow className="admin-login__submit-icon" aria-hidden="true" />
               Login
             </button>

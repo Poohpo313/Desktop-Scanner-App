@@ -78,6 +78,15 @@
   margin-bottom: 12px;
 }
 
+.super-pin__pin-header--no-label {
+  justify-content: center;
+}
+
+.super-pin__pin-header--no-label .super-pin__error {
+  width: 100%;
+  text-align: center;
+}
+
 .super-pin__label {
   display: block;
   color: #f4faf8;
@@ -133,8 +142,16 @@
   transform: translateY(-2px);
 }
 
-.super-pin__submit:active {
-  transform: translateY(0);
+.super-pin__submit:disabled {
+  cursor: not-allowed;
+  opacity: 0.72;
+  transform: none;
+  box-shadow: none;
+}
+
+.super-pin__recover--disabled {
+  pointer-events: none;
+  opacity: 0.5;
 }
 
 .super-pin__error {

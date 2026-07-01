@@ -66,6 +66,10 @@ export function registerAuthIpc(ipcMain: IpcMain) {
     ) => authService.changePassword(payload.token, payload.currentPassword, payload.newPassword),
   );
 
+  ipcMain.handle("auth:get-known-password", async (_event, payload: { userId: number }) =>
+    authService.getKnownLoginPassword(payload.userId),
+  );
+
   ipcMain.handle(
     "auth:get-support-contact",
     async (_event, payload: { token?: string; username?: string; serialKey?: string }) =>

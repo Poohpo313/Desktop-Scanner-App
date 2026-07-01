@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { CheckingCredentialsScreen } from "../components/auth/CheckingCredentialsScreen";
 import { useSession } from "../context/SessionContext";
+import { saveUserKnownPassword } from "../lib/userKnownPassword";
 
 type LoginState = {
   username: string;
@@ -65,6 +66,8 @@ export default function CheckingCredentialsPage() {
         });
         return;
       }
+
+      saveUserKnownPassword(state.password, result.userId);
 
       saveSession({
         token: result.token,

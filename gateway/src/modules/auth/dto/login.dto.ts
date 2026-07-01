@@ -1,4 +1,4 @@
-import { IsString, MinLength } from "class-validator";
+import { IsString, Length, Matches, MinLength } from "class-validator";
 
 export class AdminLoginDto {
   @IsString()
@@ -14,6 +14,7 @@ export class UserLoginDto extends AdminLoginDto {}
 
 export class SuperAdminLoginDto {
   @IsString()
-  @MinLength(4)
+  @Length(6, 6)
+  @Matches(/^\d{6}$/)
   pin!: string;
 }

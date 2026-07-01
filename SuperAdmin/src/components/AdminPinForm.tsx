@@ -7,7 +7,7 @@ type Props = {
   logoAlt: string;
   title: string;
   subtitle: string;
-  label: string;
+  label?: string;
   error: string;
   pin: string[];
   submitText: string;
@@ -16,6 +16,8 @@ type Props = {
   onDigit: (index: number, value: string) => void;
   onDigitKeyDown?: (index: number, event: KeyboardEvent<HTMLInputElement>) => void;
   onSubmit: (event: FormEvent) => void;
+  disabled?: boolean;
+  submitting?: boolean;
 };
 
 export default function AdminPinForm({
@@ -32,7 +34,11 @@ export default function AdminPinForm({
   onDigit,
   onDigitKeyDown,
   onSubmit,
+  disabled = false,
+  submitting = false,
 }: Props) {
+  const inputsDisabled = disabled || submitting;
+
   return (
     <div className="super-pin">
       <form className="super-pin__card" onSubmit={onSubmit}>
@@ -45,11 +51,17 @@ export default function AdminPinForm({
         </div>
 
         <div className="super-pin__body">
-          <div className="super-pin__pin-header">
-            <label className="super-pin__label" htmlFor="pin-0">
-              {label}
-            </label>
-            {error && <p className="super-pin__error">{error}</p>}
+          <div
+            className={`super-pin__pin-header${
+              label ? "" : " super-pin__pin-header--no-label"
+            }`}
+          >
+            {label ? (
+              <label className="super-pin__label" htmlFor="pin-0">
+                {label}
+              </label>
+            ) : null}
+            {error ? <p className="super-pin__error">{error}</p> : null}
           </div>
           <div className="super-pin__digits">
             {pin.map((digit, index) => (
@@ -61,16 +73,29 @@ export default function AdminPinForm({
                 inputMode="numeric"
                 maxLength={1}
                 value={digit}
+                disabled={inputsDisabled}
                 onChange={(e) => onDigit(index, e.target.value)}
                 onKeyDown={(e) => onDigitKeyDown?.(index, e)}
-                autoFocus={index === 0}
+                autoFocus={index === 0 && !submitting}
               />
             ))}
           </div>
-          <button className="super-pin__submit" type="submit">
-            {submitText}
+          <button
+            className="super-pin__submit"
+            type="submit"
+            disabled={inputsDisabled}
+            aria-busy={submitting}
+          >
+            {submitting ? "Signing in..." : submitText}
           </button>
-          <Link className="super-pin__recover" to={recoverTo}>
+          <Link
+            className={`super-pin__recover${inputsDisabled ? " super-pin__recover--disabled" : ""}`}
+            to={recoverTo}
+            aria-disabled={inputsDisabled}
+            onClick={(event) => {
+              if (inputsDisabled) event.preventDefault();
+            }}
+          >
             {recoverText}
           </Link>
         </div>

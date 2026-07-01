@@ -1,21 +1,23 @@
-import { IsString, MinLength } from "class-validator";
+import { IsNotEmpty, IsString, Length, Matches, MinLength } from "class-validator";
 
 export class ChangePasswordDto {
   @IsString()
-  @MinLength(10)
+  @IsNotEmpty()
   currentPassword!: string;
 
   @IsString()
-  @MinLength(10)
+  @MinLength(8)
   newPassword!: string;
 }
 
 export class ChangePinDto {
   @IsString()
-  @MinLength(6)
+  @Length(6, 6)
+  @Matches(/^\d{6}$/)
   currentPin!: string;
 
   @IsString()
-  @MinLength(6)
+  @Length(6, 6)
+  @Matches(/^\d{6}$/)
   newPin!: string;
 }

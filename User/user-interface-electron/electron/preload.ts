@@ -24,6 +24,8 @@ contextBridge.exposeInMainWorld("bukolabs", {
     }) => ipcRenderer.invoke("auth:update-profile", payload),
     changePassword: (payload: { token: string; currentPassword: string; newPassword: string }) =>
       ipcRenderer.invoke("auth:change-password", payload),
+    getKnownPassword: (payload: { userId: number }) =>
+      ipcRenderer.invoke("auth:get-known-password", payload),
     getSupportContact: (payload: { token?: string; username?: string; serialKey?: string }) =>
       ipcRenderer.invoke("auth:get-support-contact", payload),
     syncPendingActivations: () => ipcRenderer.invoke("auth:sync-pending-activations"),

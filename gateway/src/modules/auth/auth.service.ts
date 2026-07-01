@@ -26,7 +26,7 @@ export type RecoveryStatusPhase =
   | "identity-verification"
   | "credentials-released";
 
-const MAX_FAILED_ATTEMPTS = 5;
+const MAX_FAILED_ATTEMPTS = 4;
 const LOCKOUT_MINUTES = 15;
 
 @Injectable()
@@ -157,7 +157,10 @@ export class AuthService {
 
   private assertNotLocked(lockedUntil?: Date | null) {
     if (lockedUntil && new Date(lockedUntil) > new Date()) {
-      throw new ForbiddenException("Account locked due to failed login attempts");
+      throw new ForbiddenException({
+        message: "Account locked due to failed login attempts",
+        lockedUntil: new Date(lockedUntil).toISOString(),
+      });
     }
   }
 
@@ -224,10 +227,13 @@ export class AuthService {
   }
 
   async loginWithPin(pin: string): Promise<LoginResponse & { refreshToken: string }> {
+    const candidates = await this.admins.findSuperAdminCandidates();
+    if (!candidates.length) throw new UnauthorizedException("Invalid PIN");
+
+    this.assertNotLocked(candidates[0].lockedUntil);
+
     const admin = await this.admins.findSuperAdminByPin(pin);
     if (!admin) throw new UnauthorizedException("Invalid PIN");
-
-    this.assertNotLocked(admin.lockedUntil);
 
     await this.admins.resetFailedLogin(admin.adminId);
     const refreshToken = await this.createRefreshToken("admin", admin.adminId);
@@ -373,9 +379,15 @@ export class AuthService {
     dto: { currentPin: string; newPin: string }
   ) {
     const admin = await this.admins.findById(adminId);
-    if (!admin?.pinHash) throw new UnauthorizedException("Account not found");
+    const pinHashToVerify =
+      admin?.pinHash?.startsWith("$argon2")
+        ? admin.pinHash
+        : admin?.passwordHash?.startsWith("$argon2")
+          ? admin.passwordHash
+          : null;
+    if (!pinHashToVerify) throw new UnauthorizedException("Account not found");
 
-    const valid = await argon2.verify(admin.pinHash, dto.currentPin);
+    const valid = await argon2.verify(pinHashToVerify, dto.currentPin);
     if (!valid) throw new UnauthorizedException("Current PIN is incorrect");
 
     const pinHash = await argon2.hash(dto.newPin, { type: argon2.argon2id });

@@ -16,7 +16,7 @@ import { AdminScopeService } from "../../shared/services/admin-scope.service";
 import { ADMIN_DEACTIVATED_NOTE } from "../devices/device-status.constants";
 import { UserEntity } from "./entities/user.entity";
 
-const MAX_FAILED_ATTEMPTS = 5;
+const MAX_FAILED_ATTEMPTS = 4;
 const LOCKOUT_MINUTES = 15;
 
 @Injectable()
