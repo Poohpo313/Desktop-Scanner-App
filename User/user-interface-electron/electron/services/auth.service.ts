@@ -13,6 +13,7 @@ import {
 import {
   activateUserAccountOnline,
   changeUserPasswordOnline,
+  ensureOnlineAuthenticated,
   fetchUserSupportContactOnline,
   fetchPublicSupportContactOnline,
   isOnlineAvailable,
@@ -21,6 +22,7 @@ import {
   submitUserRecovery as submitUserRecoveryOnline,
   syncUserAccountOnline,
   updateUserProfileOnline,
+  type OnlineActivationPayload,
 } from "./api.service";
 import {
   clearOnlineAuth,
@@ -82,25 +84,7 @@ function purgeExpiredSessions() {
   if (changed) persistSessions();
 }
 
-type SyncedUserAccount = {
-  userId: number;
-  username: string;
-  firstName?: string | null;
-  lastName?: string | null;
-  email?: string | null;
-  phoneNumber?: string | null;
-  department?: string | null;
-  company?: string | null;
-  accountStatus: string;
-  serialKey?: string | null;
-  serialKeyStatus?: string | null;
-  passwordHash?: string;
-  adminContact?: {
-    adminName?: string | null;
-    email?: string | null;
-    phoneNumber?: string | null;
-  } | null;
-};
+type SyncedUserAccount = OnlineActivationPayload;
 
 function rememberOnlineAuth(userId: number, token: string) {
   setOnlineAccessToken(token);
@@ -176,6 +160,41 @@ function restoreOnlineAuthForSessions() {
   const stored = loadOnlineAuth(latest.userId);
   if (stored?.accessToken) {
     setOnlineAccessToken(stored.accessToken);
+  }
+}
+
+async function findLocalUserById(userId: number) {
+  return queryOne<{ username: string }>(
+    `SELECT username FROM users WHERE user_id = $1 AND deleted_at IS NULL`,
+    [userId],
+  );
+}
+
+async function bootstrapDevicePresence(userId: number, username: string, password?: string) {
+  if (password) {
+    const online = await authenticateOnline(userId, username, password);
+    if (online) {
+      await resolveAccountContext(userId, username);
+      await syncPendingOnlineActivations();
+    }
+  } else {
+    await ensureOnlineAuthenticated(userId);
+  }
+  return deviceService.syncClientDevicesForUser(userId, username);
+}
+
+function scheduleDevicePresenceBootstrap(userId: number, username: string, password?: string) {
+  void bootstrapDevicePresence(userId, username, password);
+}
+
+async function restoreDevicePresenceForSessions() {
+  const activeSessions = [...sessions.values()].filter((session) => session.expiresAt > Date.now());
+  if (activeSessions.length === 0) return;
+
+  const latest = activeSessions.sort((a, b) => b.expiresAt - a.expiresAt)[0];
+  const user = await findLocalUserById(latest.userId);
+  if (user?.username) {
+    await bootstrapDevicePresence(latest.userId, user.username);
   }
 }
 
@@ -665,7 +684,11 @@ async function finishOnlineActivation(
     expiresAt: Date.now() + USER_SESSION_MS,
   });
 
-  void deviceService.syncClientDevicesForUser(resolvedUserId, normalizedUsername);
+  if (onlineActivation.data.accessToken) {
+    rememberOnlineAuth(resolvedUserId, onlineActivation.data.accessToken);
+  }
+
+  await deviceService.syncClientDevicesForUser(resolvedUserId, normalizedUsername);
 
   return { success: true, userId: resolvedUserId, token, role: "user" as const };
 }
@@ -792,7 +815,7 @@ async function tryOfflineActivation(
     expiresAt: Date.now() + USER_SESSION_MS,
   });
 
-  void deviceService.syncClientDevicesForUser(user.user_id, normalizedUsername);
+  scheduleDevicePresenceBootstrap(user.user_id, normalizedUsername);
   setImmediate(() => {
     void syncPendingOnlineActivations();
   });
@@ -923,6 +946,7 @@ export const authService = {
       }
     }
     restoreOnlineAuthForSessions();
+    void restoreDevicePresenceForSessions();
   },
 
   async login(username: string, password: string) {
@@ -973,13 +997,7 @@ export const authService = {
       );
 
       void syncUserFromOnline(normalizedUsername, password);
-      void authenticateOnline(loggedInUserId, normalizedUsername, password).then(async (online) => {
-        if (online) {
-          await resolveAccountContext(loggedInUserId, normalizedUsername);
-          await syncPendingOnlineActivations();
-        }
-      });
-      void deviceService.syncClientDevicesForUser(loggedInUserId, normalizedUsername);
+      scheduleDevicePresenceBootstrap(loggedInUserId, normalizedUsername, password);
 
       return { success: true, token, role: "user" as const, userId: loggedInUserId };
     }
@@ -1014,8 +1032,7 @@ export const authService = {
         [user.user_id, "login", JSON.stringify({ method: "password", source: "online-sync" })],
       );
 
-      void authenticateOnline(user.user_id, normalizedUsername, password);
-      void deviceService.syncClientDevicesForUser(user.user_id, normalizedUsername);
+      scheduleDevicePresenceBootstrap(user.user_id, normalizedUsername, password);
 
       return { success: true, token, role: "user" as const, userId: user.user_id };
     }

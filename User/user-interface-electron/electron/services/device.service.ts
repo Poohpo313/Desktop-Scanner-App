@@ -43,15 +43,17 @@ export const deviceService = {
     username?: string;
   }) {
     const local = await this.registerLocal(data);
-    await registerDeviceOnline({
+    const online = await registerDeviceOnline({
       deviceName: data.deviceName,
       deviceType: data.deviceType,
       serialNumber: data.serialNumber,
       assignedUser: data.assignedUser,
       username: data.username,
     });
-    devicePresenceService.start(data.assignedUser);
-    return local;
+    if (online.success) {
+      devicePresenceService.start(data.assignedUser);
+    }
+    return { ...local, onlineRegistered: online.success };
   },
 
   async syncClientDevicesForUser(assignedUser: number, username: string) {

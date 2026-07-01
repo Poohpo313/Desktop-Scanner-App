@@ -19,11 +19,13 @@ export function isDeviceOnline(device: Pick<Device, "status" | "lastSeen" | "isO
   if (device.status === "unauthorized") return false;
   if (device.status === "inactive") return false;
 
+  if (typeof device.isOnline === "boolean") {
+    return device.isOnline;
+  }
+
   const recent = hasRecentHeartbeat(device);
   if (!recent) return false;
-
-  if (device.status === "active") return true;
-  return device.isOnline === true;
+  return device.status === "active";
 }
 
 export function formatDeviceOnlineStatus(device: Pick<Device, "status" | "lastSeen" | "isOnline">) {

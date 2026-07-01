@@ -1,6 +1,6 @@
 import { getGatewayApiUrl } from "./gateway-config.service";
 import { probeGatewayHealth } from "./gateway-discovery.service";
-import { loadOnlineAuth } from "./online-auth-store";
+import { loadOnlineAuth, saveOnlineAuth } from "./online-auth-store";
 const ONLINE_REQUEST_TIMEOUT_MS = 8_000;
 export const ONLINE_ACTIVATION_TIMEOUT_MS = 1_500;
 
@@ -273,6 +273,27 @@ export async function loginOnline(username: string, password: string) {
   }
 }
 
+export type OnlineActivationPayload = {
+  userId: number;
+  username: string;
+  firstName?: string | null;
+  lastName?: string | null;
+  email?: string | null;
+  phoneNumber?: string | null;
+  department?: string | null;
+  company?: string | null;
+  accountStatus: string;
+  serialKey?: string | null;
+  serialKeyStatus?: string | null;
+  passwordHash?: string;
+  accessToken?: string;
+  adminContact?: {
+    adminName?: string | null;
+    email?: string | null;
+    phoneNumber?: string | null;
+  } | null;
+};
+
 export async function activateUserAccountOnline(payload: {
   serialKey: string;
   username: string;
@@ -283,6 +304,7 @@ export async function activateUserAccountOnline(payload: {
       {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify(payload),
       },
       ONLINE_ACTIVATION_TIMEOUT_MS,
@@ -301,7 +323,11 @@ export async function activateUserAccountOnline(payload: {
       return { success: false as const, error: message };
     }
 
-    return { success: true as const, data: await res.json() };
+    const data = (await res.json()) as OnlineActivationPayload;
+    if (data.accessToken) {
+      accessToken = data.accessToken;
+    }
+    return { success: true as const, data };
   } catch {
     return { success: false as const, error: "Could not reach the online API" };
   }
@@ -455,6 +481,25 @@ export async function registerDeviceOnline(payload: {
       },
       body: JSON.stringify(payload),
     });
+    if (res.status === 401) {
+      const refreshed = await refreshOnlineAccessToken();
+      if (refreshed.success) {
+        saveOnlineAuth(payload.assignedUser, refreshed.accessToken);
+        const retry = await fetchOnline(`${getOnlineApiUrl()}/devices/register`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${refreshed.accessToken}`,
+          },
+          body: JSON.stringify(payload),
+        });
+        if (!retry.ok) {
+          const text = await retry.text();
+          return { success: false as const, error: text || "Device registration failed" };
+        }
+        return { success: true as const, data: await retry.json() };
+      }
+    }
     if (!res.ok) {
       const text = await res.text();
       return { success: false as const, error: text || "Device registration failed" };
@@ -468,20 +513,36 @@ export async function registerDeviceOnline(payload: {
 
 export async function heartbeatDevice(serialNumber: string, userId?: number) {
   try {
-    if (userId == null) return;
+    if (userId == null) return { success: false as const };
     const auth = await ensureOnlineAuthenticated(userId);
-    if (!auth.success || !accessToken) return;
+    if (!auth.success || !accessToken) return { success: false as const };
 
-    await fetchOnline(`${getOnlineApiUrl()}/devices/heartbeat`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${accessToken}`,
-      },
-      body: JSON.stringify({ serialNumber, userId }),
-    });
+    const send = () =>
+      fetchOnline(`${getOnlineApiUrl()}/devices/heartbeat`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
+        },
+        body: JSON.stringify({ serialNumber, userId }),
+      });
+
+    let res = await send();
+    if (res.status === 401) {
+      const refreshed = await refreshOnlineAccessToken();
+      if (refreshed.success) {
+        saveOnlineAuth(userId, refreshed.accessToken);
+        res = await send();
+      }
+    }
+
+    if (res.status === 404) {
+      return { success: false as const, needsRegister: true as const };
+    }
+    if (!res.ok) return { success: false as const };
+    return { success: true as const };
   } catch {
-    // Offline — ignore
+    return { success: false as const };
   }
 }
 

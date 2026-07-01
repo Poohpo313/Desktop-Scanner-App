@@ -623,7 +623,15 @@ export class AuthService {
       { userId: user.userId }
     );
 
-    return this.buildOfflineSyncPayload(user.userId, normalizedKey);
+    const refreshToken = await this.createRefreshToken("user", user.userId);
+    const syncPayload = await this.buildOfflineSyncPayload(user.userId, normalizedKey);
+
+    return {
+      ...syncPayload,
+      accessToken: this.signAccessToken(user.userId, user.username, "user"),
+      refreshToken,
+      role: "user" as const,
+    };
   }
 
   private sanitizeUserOwnedContact(

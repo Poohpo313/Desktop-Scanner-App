@@ -103,8 +103,14 @@ export class AuthController {
 
   @Throttle({ default: { limit: 5, ttl: 60_000 } })
   @Post("user/activate")
-  activateUserAccount(@Body() dto: ActivateUserAccountDto) {
-    return this.auth.activateUserAccount(dto);
+  async activateUserAccount(
+    @Body() dto: ActivateUserAccountDto,
+    @Res({ passthrough: true }) res: Response,
+  ) {
+    const result = await this.auth.activateUserAccount(dto);
+    setRefreshCookie(res, result.refreshToken);
+    const { refreshToken: _ignored, ...body } = result;
+    return body;
   }
 
   @Throttle({ default: { limit: 10, ttl: 60_000 } })
