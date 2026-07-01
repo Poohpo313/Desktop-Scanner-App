@@ -3,7 +3,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import {
   ADMINISTRATOR_OFFICER_ROLE,
-  DEFAULT_ADMIN_PASSWORD,
   DEMO_SETTINGS_PROFILE,
   getPasswordRequirementCheck,
   isNewPasswordValid,
@@ -161,7 +160,6 @@ export default function SettingsScreenBody({ onSaveSettings, onSaveProfile }: Pr
   const saveProfile = useSettingsProfileStore((state) => state.saveProfile);
   const storedFormValues = useSettingsProfileStore((state) => state.formValues);
   const storedAvatarUrl = useSettingsProfileStore((state) => state.avatarUrl);
-  const passwordChanged = useSettingsProfileStore((state) => state.passwordChanged);
   const setAvatarUrl = useSettingsProfileStore((state) => state.setAvatarUrl);
   const initialValues = storedFormValues;
   const lastSavedRef = useRef<SettingsFormValues>(initialValues);
@@ -636,9 +634,9 @@ export default function SettingsScreenBody({ onSaveSettings, onSaveProfile }: Pr
                     <PasswordField
                       id="settings-current-password"
                       label="Current Password"
-                      value={passwordChanged ? currentPassword : currentPassword || DEFAULT_ADMIN_PASSWORD}
+                      value={currentPassword}
                       onChange={setCurrentPassword}
-                      startVisible={!passwordChanged}
+                      startVisible={false}
                     />
                     <PasswordField
                       id="settings-new-password"

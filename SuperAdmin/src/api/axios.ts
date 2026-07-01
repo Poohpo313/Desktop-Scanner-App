@@ -29,7 +29,10 @@ async function refreshAccessToken(): Promise<string | null> {
       })
       .catch((error: AxiosError) => {
         if (error.response?.status === 401) {
-          useAuthStore.getState().clearSession();
+          const hasToken = Boolean(useAuthStore.getState().accessToken);
+          if (!hasToken) {
+            useAuthStore.getState().clearSession();
+          }
         }
         return null;
       })

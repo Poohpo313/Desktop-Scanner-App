@@ -172,7 +172,7 @@ export function UserAccountSettingsPageView() {
 
       markPasswordChanged();
       setPasswordChanged(true);
-      setCurrentPassword("");
+      setCurrentPassword(newPassword.trim());
       setNewPassword("");
     }
 
@@ -318,9 +318,9 @@ export function UserAccountSettingsPageView() {
                 <PasswordField
                   id="user-settings-current-password"
                   label="Current Password"
-                  value={passwordChanged ? currentPassword : currentPassword || DEFAULT_USER_PASSWORD}
+                  value={currentPassword}
                   onChange={setCurrentPassword}
-                  startVisible={!passwordChanged}
+                  startVisible={false}
                 />
                 <PasswordField
                   id="user-settings-new-password"

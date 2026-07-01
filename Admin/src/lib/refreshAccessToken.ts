@@ -29,8 +29,11 @@ export async function refreshAccessToken(): Promise<RefreshAccessTokenResult> {
       })
       .catch((error: AxiosError) => {
         if (error.response?.status === 401) {
-          useAuthStore.getState().clearSession();
-          return { token: null, unauthorized: true };
+          const hasToken = Boolean(useAuthStore.getState().accessToken);
+          if (!hasToken) {
+            useAuthStore.getState().clearSession();
+          }
+          return { token: null, unauthorized: !hasToken };
         }
         return { token: null, unauthorized: false };
       })

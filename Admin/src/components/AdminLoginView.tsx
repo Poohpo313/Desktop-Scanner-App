@@ -1,4 +1,5 @@
 import { FormEvent, useEffect, useRef, useState } from "react";
+import { flushSync } from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 import { authApi } from "../api/auth.api";
 import { useAuth } from "../hooks/useAuth";
@@ -75,9 +76,11 @@ export default function AdminLoginView({
     try {
       const res = await authApi.login({ username, password });
       attempts.current = 0;
-      setSession({ accessToken: res.accessToken, role: "admin", userId: res.userId });
+      flushSync(() => {
+        setSession({ accessToken: res.accessToken, role: "admin", userId: res.userId });
+      });
       push("Login successful", "success");
-      navigate(onSuccessNavigate);
+      navigate(onSuccessNavigate, { replace: true });
     } catch {
       attempts.current += 1;
       if (attempts.current >= MAX_ATTEMPTS) {

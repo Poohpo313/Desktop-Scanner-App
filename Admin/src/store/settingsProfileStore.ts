@@ -2,7 +2,6 @@ import { create } from "zustand";
 import { persist } from "zustand/middleware";
 import {
   ADMINISTRATOR_OFFICER_ROLE,
-  DEFAULT_ADMIN_PASSWORD,
   DEMO_SETTINGS_PROFILE,
   getDefaultSettingsFormValues,
   isNewPasswordValid,
@@ -67,14 +66,16 @@ export const useSettingsProfileStore = create<SettingsProfileState>()(
       passwordChanged: false,
       setAvatarUrl: (url) => set({ avatarUrl: url }),
       markPasswordChanged: () =>
-        set((state) => ({
-          passwordChanged: true,
-          formValues: {
-            ...state.formValues,
-            currentPassword: "",
-            newPassword: "",
-          },
-        })),
+        set((state) => {
+          const rolled = rollPasswordChange(state.formValues);
+          return {
+            passwordChanged: true,
+            formValues: {
+              ...rolled,
+              newPassword: "",
+            },
+          };
+        }),
       hydrateFromApi: (profile) => {
         const fullName = [profile.firstName, profile.lastName].filter(Boolean).join(" ").trim();
         const passwordChanged = get().passwordChanged;
@@ -86,7 +87,7 @@ export const useSettingsProfileStore = create<SettingsProfileState>()(
           username: profile.username,
           organization: profile.company ?? "",
           department: profile.department ?? "",
-          currentPassword: passwordChanged ? "" : DEFAULT_ADMIN_PASSWORD,
+          currentPassword: passwordChanged ? get().formValues.currentPassword : "",
         };
 
         set({
@@ -98,22 +99,23 @@ export const useSettingsProfileStore = create<SettingsProfileState>()(
         });
       },
       saveProfile: (values) => {
-        const nextValues = rollPasswordChange(values);
+        const rolled = rollPasswordChange(values);
         const passwordChanged = get().passwordChanged || Boolean(values.newPassword.trim());
 
         set({
           formValues: {
-            ...nextValues,
-            currentPassword: passwordChanged ? "" : DEFAULT_ADMIN_PASSWORD,
+            ...rolled,
+            newPassword: "",
+            currentPassword: passwordChanged ? rolled.currentPassword : "",
           },
           passwordChanged,
-          headerName: nextValues.fullName,
+          headerName: rolled.fullName,
           headerRole: ADMINISTRATOR_OFFICER_ROLE,
           sidebarName: ADMINISTRATOR_OFFICER_ROLE,
-          sidebarUsername: nextValues.username,
+          sidebarUsername: rolled.username,
         });
 
-        return nextValues;
+        return rolled;
       },
       resetProfile: () => {
         set({

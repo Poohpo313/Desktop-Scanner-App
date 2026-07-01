@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState, type FormEvent, type KeyboardEvent } from "react";
+import { flushSync } from "react-dom";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { authApi } from "../api/auth.api";
@@ -97,7 +98,9 @@ export default function LoginPage() {
       const res = await authApi.login({ pin: value });
       attempts.current = 0;
       lockedUntil.current = 0;
-      setSession({ accessToken: res.accessToken, role: "superadmin", userId: res.userId });
+      flushSync(() => {
+        setSession({ accessToken: res.accessToken, role: "superadmin", userId: res.userId });
+      });
       push("Welcome back, Super Admin", "success");
       navigate("/portal/dashboard", { replace: true });
     } catch (error) {

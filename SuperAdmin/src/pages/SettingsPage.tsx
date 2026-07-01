@@ -106,7 +106,6 @@ const formatDateButtonText = (value: string) => {
   return `${shortMonthNames[monthIndex]} ${day}, ${year}`;
 };
 
-const DEFAULT_SUPERADMIN_PIN = "123456";
 
 export default function SettingsPage() {
   const [activeTab, setActiveTab] = useState<SettingsTab>("system");
@@ -904,16 +903,11 @@ export default function SettingsPage() {
                 <h3>Change PIN</h3>
                 <label className="settings-account-password">
                   <span>Current PIN</span>
-                  <input type="text" readOnly aria-readonly="true" value={DEFAULT_SUPERADMIN_PIN} />
-                  <small>Default Super Admin PIN</small>
-                </label>
-                <label className="settings-account-password">
-                  <span>Enter Current PIN</span>
                   <input
                     type={showCurrentPassword ? "text" : "password"}
                     inputMode="numeric"
                     autoComplete="off"
-                    placeholder={DEFAULT_SUPERADMIN_PIN}
+                    placeholder="Enter current PIN"
                     value={profile.currentPassword}
                     onChange={(event) =>
                       setProfile((current) => ({ ...current, currentPassword: event.target.value }))
@@ -1010,7 +1004,7 @@ export default function SettingsPage() {
 
                   setProfile((current) => ({
                     ...current,
-                    currentPassword: "",
+                    currentPassword: changingPin ? profile.newPassword : current.currentPassword,
                     newPassword: "",
                   }));
                   setAccountOpen(false);

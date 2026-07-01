@@ -9,6 +9,7 @@ import { useAdminScope } from "../hooks/useAdminScope";
 import { useSettingsProfileStore } from "../store/settingsProfileStore";
 import type { SettingsFormValues } from "../data/demoSettingsProfile";
 import { extractApiError } from "../lib/extractApiError";
+import { PORTAL } from "../routes/portalPaths";
 import "../styles/settings-figma-screen.css";
 import "../styles/settings-profile-photo-preview.css";
 import "../styles/page-transition.css";
