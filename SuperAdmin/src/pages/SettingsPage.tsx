@@ -15,6 +15,11 @@ import {
   settleRecycleBinRequest,
 } from "../lib/loadRecycleBin";
 import { extractApiError } from "../lib/extractApiError";
+import {
+  loadSuperAdminKnownPin,
+  markSuperAdminPinChanged,
+  saveSuperAdminKnownPin,
+} from "../lib/knownPin";
 import { useNotificationStore } from "../store/notificationStore";
 import type { AdminAccount, AdminUser, BackupRecord, Device, SerialKey, SystemConfig } from "../types";
 import "../styles/settings.css";
@@ -143,7 +148,7 @@ export default function SettingsPage() {
     phoneNumber: "+639171225214",
     username: "Superadmin",
     role: "System Administrator",
-    currentPassword: "",
+    currentPassword: loadSuperAdminKnownPin(),
     newPassword: "",
   });
   const { logout } = useAuth();
@@ -154,6 +159,17 @@ export default function SettingsPage() {
     const timer = window.setTimeout(() => setSuccessOpen(false), 3000);
     return () => window.clearTimeout(timer);
   }, [successOpen]);
+
+  useEffect(() => {
+    if (!accountOpen) return;
+    const knownPin = loadSuperAdminKnownPin();
+    setProfile((current) => ({
+      ...current,
+      currentPassword: knownPin,
+      newPassword: "",
+    }));
+    setShowCurrentPassword(false);
+  }, [accountOpen]);
 
   const activeSettingsLabel: Record<SettingsTab, string> = {
     system: "System Configuration",
@@ -949,7 +965,7 @@ export default function SettingsPage() {
                 onClick={() =>
                   setProfile((current) => ({
                     ...current,
-                    currentPassword: "",
+                    currentPassword: loadSuperAdminKnownPin(),
                     newPassword: "",
                   }))
                 }
@@ -996,6 +1012,8 @@ export default function SettingsPage() {
                         currentPin: profile.currentPassword,
                         newPin: profile.newPassword,
                       });
+                      saveSuperAdminKnownPin(profile.newPassword);
+                      markSuperAdminPinChanged();
                     } catch {
                       push("Failed to update PIN", "error");
                       return;
@@ -1004,7 +1022,7 @@ export default function SettingsPage() {
 
                   setProfile((current) => ({
                     ...current,
-                    currentPassword: changingPin ? profile.newPassword : current.currentPassword,
+                    currentPassword: changingPin ? profile.newPassword : loadSuperAdminKnownPin(),
                     newPassword: "",
                   }));
                   setAccountOpen(false);

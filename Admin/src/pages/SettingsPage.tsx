@@ -64,7 +64,6 @@ export default function SettingsPage() {
           currentPassword: values.currentPassword,
           newPassword: values.newPassword,
         });
-        useSettingsProfileStore.getState().markPasswordChanged();
       }
 
       const profile = await authApi.me();

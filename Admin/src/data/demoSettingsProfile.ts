@@ -7,8 +7,8 @@ export const SETTINGS_NAV_ITEMS: Array<{ id: SettingsNavId; label: string }> = [
 ];
 
 export const ADMINISTRATOR_OFFICER_ROLE = "Administrator Officer";
-export const DEFAULT_ADMIN_PIN = "123456";
-export const DEFAULT_ADMIN_PASSWORD = "123456";
+import { DEFAULT_ADMIN_PASSWORD } from "../lib/knownPassword";
+export { DEFAULT_ADMIN_PASSWORD };
 
 export const DEMO_SETTINGS_PROFILE = {
   headerName: "",
@@ -47,7 +47,7 @@ export function getDefaultSettingsFormValues(): SettingsFormValues {
     username: DEMO_SETTINGS_PROFILE.username,
     organization: DEMO_SETTINGS_PROFILE.organization,
     department: DEMO_SETTINGS_PROFILE.department,
-    currentPassword: DEMO_SETTINGS_PROFILE.currentPassword,
+    currentPassword: DEFAULT_ADMIN_PASSWORD,
     newPassword: DEMO_SETTINGS_PROFILE.newPassword,
   };
 }

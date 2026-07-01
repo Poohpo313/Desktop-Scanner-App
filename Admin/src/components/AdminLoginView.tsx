@@ -2,6 +2,7 @@ import { FormEvent, useEffect, useRef, useState } from "react";
 import { flushSync } from "react-dom";
 import { Link, useNavigate } from "react-router-dom";
 import { authApi } from "../api/auth.api";
+import { saveAdminKnownPassword } from "../lib/knownPassword";
 import { useAuth } from "../hooks/useAuth";
 import { useNotificationStore } from "../store/notificationStore";
 import { PORTAL } from "../routes/portalPaths";
@@ -76,6 +77,7 @@ export default function AdminLoginView({
     try {
       const res = await authApi.login({ username, password });
       attempts.current = 0;
+      saveAdminKnownPassword(password);
       flushSync(() => {
         setSession({ accessToken: res.accessToken, role: "admin", userId: res.userId });
       });

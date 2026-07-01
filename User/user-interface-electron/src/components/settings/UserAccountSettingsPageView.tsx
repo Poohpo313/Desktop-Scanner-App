@@ -7,26 +7,15 @@ import "../../styles/settings-figma-screen.css";
 import "../../styles/user-account-settings.css";
 import "../../styles/scan-offline.css";
 import { AccountSettingsSavedToast } from "./AccountSettingsSavedToast";
+import {
+  DEFAULT_USER_PASSWORD,
+  loadUserKnownPassword,
+  markUserPasswordChanged,
+  readUserPasswordChanged,
+  saveUserKnownPassword,
+} from "../../lib/userKnownPassword";
 
 const ACCOUNT_SETTINGS_SUCCESS_MS = 3000;
-const DEFAULT_USER_PASSWORD = "user123";
-const PASSWORD_CHANGED_KEY = "bukolabs.userPasswordChanged";
-
-function readPasswordChanged() {
-  try {
-    return localStorage.getItem(PASSWORD_CHANGED_KEY) === "true";
-  } catch {
-    return false;
-  }
-}
-
-function markPasswordChanged() {
-  try {
-    localStorage.setItem(PASSWORD_CHANGED_KEY, "true");
-  } catch {
-    /* ignore */
-  }
-}
 
 function displayValue(value?: string | null) {
   const trimmed = value?.trim();
@@ -80,7 +69,7 @@ export function UserAccountSettingsPageView() {
   const [loading, setLoading] = useState(true);
   const [saving, setSaving] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const [passwordChanged, setPasswordChanged] = useState(readPasswordChanged);
+  const [passwordChanged, setPasswordChanged] = useState(readUserPasswordChanged);
   const [fullName, setFullName] = useState("");
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
@@ -90,7 +79,7 @@ export function UserAccountSettingsPageView() {
   const [adminContactName, setAdminContactName] = useState("-");
   const [adminContactEmail, setAdminContactEmail] = useState("-");
   const [adminContactPhone, setAdminContactPhone] = useState("-");
-  const [currentPassword, setCurrentPassword] = useState("");
+  const [currentPassword, setCurrentPassword] = useState(() => loadUserKnownPassword());
   const [newPassword, setNewPassword] = useState("");
   const [photoNotice, setPhotoNotice] = useState<string | null>(null);
   const [saveSuccess, setSaveSuccess] = useState(false);
@@ -125,9 +114,7 @@ export function UserAccountSettingsPageView() {
         setAdminContactName(displayValue(profile.adminContact?.adminName));
         setAdminContactEmail(displayValue(profile.adminContact?.email));
         setAdminContactPhone(displayValue(profile.adminContact?.phoneNumber));
-        if (!readPasswordChanged()) {
-          setCurrentPassword(DEFAULT_USER_PASSWORD);
-        }
+        setCurrentPassword(loadUserKnownPassword());
       }
       setLoading(false);
     })();
@@ -170,7 +157,8 @@ export function UserAccountSettingsPageView() {
         return;
       }
 
-      markPasswordChanged();
+      markUserPasswordChanged();
+      saveUserKnownPassword(newPassword.trim());
       setPasswordChanged(true);
       setCurrentPassword(newPassword.trim());
       setNewPassword("");

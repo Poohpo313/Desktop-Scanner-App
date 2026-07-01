@@ -7,6 +7,13 @@ import {
   isNewPasswordValid,
   type SettingsFormValues,
 } from "../data/demoSettingsProfile";
+import {
+  DEFAULT_ADMIN_PASSWORD,
+  isLegacySuperadminPinValue,
+  loadAdminKnownPassword,
+  markAdminPasswordChanged,
+  saveAdminKnownPassword,
+} from "../lib/knownPassword";
 
 function normalizeSidebarUsername(formUsername: string | undefined): string {
   const candidate = formUsername?.trim() || "";
@@ -52,6 +59,15 @@ type SettingsProfileState = {
   resetProfile: () => void;
 };
 
+function resolveKnownPassword(values: SettingsFormValues, passwordChanged: boolean) {
+  const stored = values.currentPassword.trim();
+  if (stored && !isLegacySuperadminPinValue(stored)) return stored;
+  const known = loadAdminKnownPassword();
+  if (known) return known;
+  if (passwordChanged) return stored;
+  return DEFAULT_ADMIN_PASSWORD;
+}
+
 const defaultValues = getDefaultSettingsFormValues();
 
 export const useSettingsProfileStore = create<SettingsProfileState>()(
@@ -68,10 +84,13 @@ export const useSettingsProfileStore = create<SettingsProfileState>()(
       markPasswordChanged: () =>
         set((state) => {
           const rolled = rollPasswordChange(state.formValues);
+          const knownPassword = rolled.currentPassword || state.formValues.currentPassword || DEFAULT_ADMIN_PASSWORD;
           return {
             passwordChanged: true,
             formValues: {
+              ...state.formValues,
               ...rolled,
+              currentPassword: knownPassword,
               newPassword: "",
             },
           };
@@ -79,6 +98,7 @@ export const useSettingsProfileStore = create<SettingsProfileState>()(
       hydrateFromApi: (profile) => {
         const fullName = [profile.firstName, profile.lastName].filter(Boolean).join(" ").trim();
         const passwordChanged = get().passwordChanged;
+        const knownPassword = resolveKnownPassword(get().formValues, passwordChanged);
         const nextValues: SettingsFormValues = {
           ...defaultValues,
           fullName: fullName || profile.username,
@@ -87,7 +107,8 @@ export const useSettingsProfileStore = create<SettingsProfileState>()(
           username: profile.username,
           organization: profile.company ?? "",
           department: profile.department ?? "",
-          currentPassword: passwordChanged ? get().formValues.currentPassword : "",
+          currentPassword: knownPassword,
+          newPassword: "",
         };
 
         set({
@@ -100,22 +121,33 @@ export const useSettingsProfileStore = create<SettingsProfileState>()(
       },
       saveProfile: (values) => {
         const rolled = rollPasswordChange(values);
-        const passwordChanged = get().passwordChanged || Boolean(values.newPassword.trim());
+        const didChangePassword = Boolean(values.newPassword.trim());
+        const passwordChanged = get().passwordChanged || didChangePassword;
+        const knownPassword = didChangePassword
+          ? rolled.currentPassword
+          : resolveKnownPassword(values, passwordChanged);
+
+        if (didChangePassword) {
+          saveAdminKnownPassword(knownPassword);
+          markAdminPasswordChanged();
+        }
+
+        const nextValues: SettingsFormValues = {
+          ...rolled,
+          newPassword: "",
+          currentPassword: knownPassword,
+        };
 
         set({
-          formValues: {
-            ...rolled,
-            newPassword: "",
-            currentPassword: passwordChanged ? rolled.currentPassword : "",
-          },
+          formValues: nextValues,
           passwordChanged,
-          headerName: rolled.fullName,
+          headerName: nextValues.fullName,
           headerRole: ADMINISTRATOR_OFFICER_ROLE,
           sidebarName: ADMINISTRATOR_OFFICER_ROLE,
-          sidebarUsername: rolled.username,
+          sidebarUsername: nextValues.username,
         });
 
-        return rolled;
+        return nextValues;
       },
       resetProfile: () => {
         set({
@@ -131,7 +163,7 @@ export const useSettingsProfileStore = create<SettingsProfileState>()(
     }),
     {
       name: "admin-settings-profile",
-      version: 4,
+      version: 6,
       migrate: (persistedState, version) => {
         const state = persistedState as Partial<SettingsProfileState> & { sidebarEmail?: string };
         const formUsername = state.formValues?.username;
@@ -148,6 +180,21 @@ export const useSettingsProfileStore = create<SettingsProfileState>()(
         if (version < 4) {
           state.sidebarName = ADMINISTRATOR_OFFICER_ROLE;
           state.headerRole = ADMINISTRATOR_OFFICER_ROLE;
+        }
+
+        if (version < 5 && state.formValues) {
+          if (!state.formValues.currentPassword?.trim()) {
+            state.formValues.currentPassword = state.passwordChanged
+              ? state.formValues.currentPassword
+              : DEFAULT_ADMIN_PASSWORD;
+          }
+        }
+
+        if (version < 6 && state.formValues) {
+          const current = state.formValues.currentPassword?.trim() ?? "";
+          if (!state.passwordChanged && isLegacySuperadminPinValue(current)) {
+            state.formValues.currentPassword = DEFAULT_ADMIN_PASSWORD;
+          }
         }
 
         return state as SettingsProfileState;

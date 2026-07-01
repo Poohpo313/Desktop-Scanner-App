@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../hooks/useAuth";
 import {
   ADMINISTRATOR_OFFICER_ROLE,
+  DEFAULT_ADMIN_PASSWORD,
   DEMO_SETTINGS_PROFILE,
   getPasswordRequirementCheck,
   isNewPasswordValid,
@@ -10,6 +11,10 @@ import {
   type SettingsFormValues,
   type SettingsNavId,
 } from "../../data/demoSettingsProfile";
+import {
+  isLegacySuperadminPinValue,
+  loadAdminKnownPassword,
+} from "../../lib/knownPassword";
 import { useSettingsProfileStore } from "../../store/settingsProfileStore";
 import SettingsNotificationPreferences from "./SettingsNotificationPreferences";
 import SettingsActivityHistory from "./SettingsActivityHistory";
@@ -159,6 +164,7 @@ export default function SettingsScreenBody({ onSaveSettings, onSaveProfile }: Pr
   const { logout } = useAuth();
   const saveProfile = useSettingsProfileStore((state) => state.saveProfile);
   const storedFormValues = useSettingsProfileStore((state) => state.formValues);
+  const passwordChanged = useSettingsProfileStore((state) => state.passwordChanged);
   const storedAvatarUrl = useSettingsProfileStore((state) => state.avatarUrl);
   const setAvatarUrl = useSettingsProfileStore((state) => state.setAvatarUrl);
   const initialValues = storedFormValues;
@@ -173,7 +179,11 @@ export default function SettingsScreenBody({ onSaveSettings, onSaveProfile }: Pr
   const [username, setUsername] = useState<string>(initialValues.username);
   const [organization, setOrganization] = useState<string>(initialValues.organization);
   const [department, setDepartment] = useState<string>(initialValues.department);
-  const [currentPassword, setCurrentPassword] = useState<string>(initialValues.currentPassword);
+  const [currentPassword, setCurrentPassword] = useState<string>(() => {
+    const stored = storedFormValues.currentPassword?.trim() ?? "";
+    if (stored && !isLegacySuperadminPinValue(stored)) return stored;
+    return loadAdminKnownPassword() || DEFAULT_ADMIN_PASSWORD;
+  });
   const [newPassword, setNewPassword] = useState<string>(initialValues.newPassword);
   const [formRevision, setFormRevision] = useState(0);
   const [actionNotice, setActionNotice] = useState<ActionNotice | null>(null);
@@ -206,6 +216,17 @@ export default function SettingsScreenBody({ onSaveSettings, onSaveProfile }: Pr
       }
     };
   }, [saveSuccessOpen]);
+
+  useEffect(() => {
+    const stored = storedFormValues.currentPassword?.trim() ?? "";
+    const knownPassword =
+      stored && !isLegacySuperadminPinValue(stored)
+        ? stored
+        : loadAdminKnownPassword() || (!passwordChanged ? DEFAULT_ADMIN_PASSWORD : "");
+    if (knownPassword) {
+      setCurrentPassword(knownPassword);
+    }
+  }, [storedFormValues.currentPassword, passwordChanged]);
 
   useEffect(() => {
     return () => {
