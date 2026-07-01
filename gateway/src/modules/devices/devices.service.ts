@@ -21,6 +21,7 @@ import { DeviceEntity } from "./entities/device.entity";
 
 const HEARTBEAT_TIMEOUT_MINUTES = 3;
 const UNAUTHORIZED_DEVICE_NOTE = "Unauthorized Device";
+const ADMIN_DEACTIVATED_NOTE = "Device deactivated by administrator";
 
 const DEVICE_LIST_SELECT = `
   SELECT
@@ -218,6 +219,9 @@ export class DevicesService {
         existing.status = "unauthorized";
       } else {
         existing.status = "active";
+        if (existing.warningNote === ADMIN_DEACTIVATED_NOTE) {
+          existing.warningNote = null;
+        }
       }
 
       const saved = await this.devices.save(existing);
@@ -297,8 +301,19 @@ export class DevicesService {
   async heartbeat(serialNumber: string, userId: number) {
     const device = await this.assertDeviceOwnedByUser(serialNumber, userId);
     device.lastSeen = new Date();
-    if (device.warningNote !== UNAUTHORIZED_DEVICE_NOTE) {
+
+    const adminDeactivated =
+      device.status === "inactive" && device.warningNote === ADMIN_DEACTIVATED_NOTE;
+    if (adminDeactivated) {
+      const saved = await this.devices.save(device);
+      return { success: true, deviceId: saved.deviceId, status: saved.status };
+    }
+
+    if (device.warningNote === UNAUTHORIZED_DEVICE_NOTE) {
+      device.status = "unauthorized";
+    } else {
       device.status = "active";
+      device.warningNote = null;
     }
     const saved = await this.devices.save(device);
     const owner = await this.resolveDeviceOwnerScope(saved.assignedUser);
@@ -328,10 +343,10 @@ export class DevicesService {
 
     const device = await this.assertDeviceOwnedByUser(normalized, userId);
 
-    device.lastSeen = device.lastSeen ?? new Date();
-    if (device.warningNote !== UNAUTHORIZED_DEVICE_NOTE) {
-      device.status = "inactive";
-    }
+    // Mark presence offline without changing registration status (inactive = admin "allow new device").
+    device.lastSeen = new Date(
+      Date.now() - (HEARTBEAT_TIMEOUT_MINUTES + 1) * 60 * 1000,
+    );
     await this.devices.save(device);
     const owner = await this.resolveDeviceOwnerScope(device.assignedUser);
     this.notifications.emitDeviceInactive({
@@ -377,6 +392,7 @@ export class DevicesService {
     const device = await this.devices.findOne({ where: { deviceId: id } });
     if (!device) throw new NotFoundException("Device not found");
     device.status = "inactive";
+    device.warningNote = ADMIN_DEACTIVATED_NOTE;
     const saved = await this.devices.save(device);
     await this.activityLog.log("device.flagged_inactive", { deviceId: id }, { adminId });
     return saved;
@@ -408,6 +424,17 @@ export class DevicesService {
   }
 
   async detectInactiveDevices() {
+    await this.devices.query(
+      `UPDATE devices d
+       SET status = 'active', warning_note = NULL
+       WHERE d.device_type = 'workstation'
+         AND d.status = 'inactive'
+         AND (d.warning_note IS NULL OR d.warning_note <> $2)
+         AND d.last_seen IS NOT NULL
+         AND d.last_seen >= NOW() - ($1 || ' minutes')::interval`,
+      [HEARTBEAT_TIMEOUT_MINUTES, ADMIN_DEACTIVATED_NOTE],
+    );
+
     const stale = (await this.devices.query(
       `SELECT d.device_id, d.serial_number, d.assigned_user, u.company, u.department
        FROM devices d

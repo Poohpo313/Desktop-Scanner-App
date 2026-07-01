@@ -27,6 +27,7 @@ export type DeviceCatalogRow = {
   /** Server registration state (active = in use, inactive = allow-new-device completed). */
   registrationStatus: string;
   lastSeen?: string | null;
+  isOnline?: boolean;
   isPrimary?: boolean;
   parentDeviceId?: number | null;
   parentDeviceName?: string | null;

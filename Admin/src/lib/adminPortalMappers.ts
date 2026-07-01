@@ -236,6 +236,7 @@ export function mapDevicesToCatalogRows(
         status: mapDeviceStatus(device),
         registrationStatus: device.status ?? "active",
         lastSeen: device.lastSeen ?? null,
+        isOnline: device.isOnline,
         isPrimary: Boolean(device.isPrimary),
         parentDeviceId: device.parentDeviceId ?? null,
         parentDeviceName: device.parentDeviceName ?? null,
@@ -263,7 +264,11 @@ export function buildDeviceDepartmentOptions(rows: DeviceCatalogRow[]) {
 
 export function buildDeviceStats(rows: DeviceCatalogRow[]) {
   const active = rows.filter((row) =>
-    isDeviceOnline({ status: row.registrationStatus, lastSeen: row.lastSeen }),
+    isDeviceOnline({
+      status: row.registrationStatus,
+      lastSeen: row.lastSeen,
+      isOnline: row.isOnline,
+    }),
   ).length;
   return {
     total: rows.length,

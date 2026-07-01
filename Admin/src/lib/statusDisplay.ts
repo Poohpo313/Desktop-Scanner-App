@@ -3,13 +3,30 @@ import type { Device } from "../types";
 
 export const DEVICE_ONLINE_TIMEOUT_MS = 3 * 60 * 1000;
 
-export function isDeviceOnline(device: Pick<Device, "status" | "lastSeen">) {
-  if (device.status !== "active") return false;
-  if (!device.lastSeen) return false;
-  return Date.now() - new Date(device.lastSeen).getTime() < DEVICE_ONLINE_TIMEOUT_MS;
+function parseLastSeenMs(value?: string | null) {
+  if (!value) return null;
+  const ms = new Date(value).getTime();
+  return Number.isFinite(ms) ? ms : null;
 }
 
-export function formatDeviceOnlineStatus(device: Pick<Device, "status" | "lastSeen">) {
+function hasRecentHeartbeat(device: Pick<Device, "lastSeen">) {
+  const lastSeenMs = parseLastSeenMs(device.lastSeen);
+  if (lastSeenMs == null) return false;
+  return Date.now() - lastSeenMs < DEVICE_ONLINE_TIMEOUT_MS;
+}
+
+export function isDeviceOnline(device: Pick<Device, "status" | "lastSeen" | "isOnline">) {
+  if (device.status === "unauthorized") return false;
+  if (device.status === "inactive") return false;
+
+  const recent = hasRecentHeartbeat(device);
+  if (!recent) return false;
+
+  if (device.status === "active") return true;
+  return device.isOnline === true;
+}
+
+export function formatDeviceOnlineStatus(device: Pick<Device, "status" | "lastSeen" | "isOnline">) {
   return isDeviceOnline(device) ? "Online" : "Offline";
 }
 

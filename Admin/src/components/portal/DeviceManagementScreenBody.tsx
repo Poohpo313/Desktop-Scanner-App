@@ -130,7 +130,11 @@ export default function DeviceManagementScreenBody({
   useDeviceOnlineClock();
 
   const rowConnectionStatus = (row: DeviceCatalogRow): "active" | "inactive" =>
-    isDeviceOnline({ status: row.registrationStatus, lastSeen: row.lastSeen })
+    isDeviceOnline({
+      status: row.registrationStatus,
+      lastSeen: row.lastSeen,
+      isOnline: row.isOnline,
+    })
       ? "active"
       : "inactive";
 

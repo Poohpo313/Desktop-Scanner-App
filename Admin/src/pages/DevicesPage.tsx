@@ -76,13 +76,20 @@ export default function DevicesPage() {
     void load();
   }, [load]);
 
+  useEffect(() => {
+    const timer = window.setInterval(() => {
+      void load();
+    }, 45_000);
+    return () => window.clearInterval(timer);
+  }, [load]);
+
   const { onRefresh, refreshing, refreshToken } = useTopBarRefresh(load, "Devices refreshed");
 
   const presenceTick = useDeviceOnlineClock();
 
   const deviceRows = useMemo(
     () => mapDevicesToCatalogRows(devices, users, scope.company),
-    [devices, users, scope.company],
+    [devices, users, scope.company, presenceTick],
   );
 
   const deviceStats = useMemo(() => buildDeviceStats(deviceRows), [deviceRows, presenceTick]);
