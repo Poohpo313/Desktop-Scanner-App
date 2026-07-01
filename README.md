@@ -3,17 +3,45 @@
 **Client:** Bukolabs.io · **Dev Team:** Aethera Digital & Syn7rgy  
 **Stack:** Electron + React (Desktop) · React (Web) · NestJS · PostgreSQL (online + offline)
 
+## Requirements
+
+| Tool | Version |
+|------|---------|
+| **Node.js** | **20 LTS** (`>=20.0.0 <21`) — see `.nvmrc` |
+| **npm** | `>=10.0.0` |
+| **PostgreSQL** | 14+ (local or server) |
+
+Switch to Node 20 before installing dependencies:
+
+```powershell
+# nvm-windows
+nvm install 20
+nvm use 20
+
+# fnm
+fnm install 20
+fnm use 20
+
+cd "c:\Desktop Scanner App"
+node -v   # should print v20.x.x
+npm install
+```
+
+The repo uses `engine-strict=true` (`.npmrc`). `npm install` fails on Node 22+.
+
 ## Project layout
 
 | Path | Role |
 |------|------|
-| `admin-interface-react/` | Admin portal — production UI at `/portal/*` |
-| `super-admin-interface-react/` | Super Admin portal — production UI at `/portal/*` |
-| `user-interface-electron/` | User desktop app — Electron + React + IPC |
-| `apps/backend/` | NestJS API (shared by all three apps) |
-| `packages/shared-types/` | Shared TypeScript types |
-| `scripts/` | Database setup helpers |
-| `Figma/` | **Screen map** — all 180 screens, flows, API functions |
+| `Admin/` | Admin portal — production UI at `/portal/*` |
+| `SuperAdmin/` | Super Admin portal — production UI at `/portal/*` |
+| `User/user-interface-electron/` | User desktop app — Electron + React + IPC |
+| `gateway/` | NestJS API gateway (online PostgreSQL) |
+| `Admin/apps/backend/`, `SuperAdmin/apps/backend/`, `User/apps/backend/` | Thin wrappers around `@bukolabs/gateway` |
+| `User/packages/shared-types/` | Shared TypeScript types |
+| `backend-modules/shared/` | Migrations, entities, shared DB assets |
+| `scripts/` | Database setup and deployment helpers |
+| `Figma/` | Screen map — flows and API reference |
 
 ## Quick start
 
@@ -27,9 +55,19 @@ npm run dev:api     # http://localhost:3000/api/docs
 npm run dev:admin        # http://localhost:5174/portal/login
 npm run dev:superadmin   # http://localhost:5175/portal/login
 npm run dev:user         # User Electron app
-
-npm run figma:map        # regenerate Figma/ screen + flow maps
 ```
+
+## Production server (gateway)
+
+Deploy the gateway on a host running **Node.js 20 LTS**:
+
+```powershell
+npm install
+npm run build -w @bukolabs/gateway
+npm run install:gateway-service   # Windows service (run as Administrator)
+```
+
+See [`gateway/README.md`](gateway/README.md) for architecture and deployment notes.
 
 ## Figma screen map
 

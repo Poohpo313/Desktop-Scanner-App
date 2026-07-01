@@ -4,6 +4,12 @@ Unified connector for all **online PostgreSQL** APIs. Admin, Super Admin, and Us
 
 **Cloud storage** (`/cloud/*`, e.g. Google Cloud Bucket) is a **separate planned extension** — those routes return placeholders only.
 
+## Requirements
+
+- **Node.js 20 LTS** (`>=20.0.0 <21`) on the deployment server
+- **PostgreSQL** 14+ with database `bukolabs_online`
+- Copy `gateway/.env.example` → `gateway/.env` and set credentials
+
 ## Architecture
 
 ```
@@ -31,7 +37,7 @@ Unified connector for all **online PostgreSQL** APIs. Admin, Super Admin, and Us
 
 ## Commands
 
-From repo root:
+From repo root (Node 20 required — run `nvm use` / `fnm use` first):
 
 ```bash
 npm install
@@ -39,7 +45,12 @@ npm run setup:all-databases
 npm run dev:gateway
 ```
 
-Copy `gateway/.env.example` to `gateway/.env` and set PostgreSQL credentials.
+Build for production:
+
+```bash
+npm run build -w @bukolabs/gateway
+node gateway/dist/main.js
+```
 
 ## Production deployment (always-on, no browser)
 
@@ -48,7 +59,7 @@ End users **only open the Desktop Scanner `.exe`**. They never open a browser or
 The gateway is a **background server** (like PostgreSQL). Install it once on your office server or cloud host so it runs automatically:
 
 ```powershell
-# Run once as Administrator on the server PC
+# Run once as Administrator on the server PC (Node 20 must be on PATH)
 npm run install:gateway-service
 ```
 
@@ -56,7 +67,7 @@ This registers a Windows task that starts the gateway when Windows boots and kee
 
 | Who | What they do |
 |-----|----------------|
-| **IT / Admin** | Install PostgreSQL + gateway service once (`install:gateway-service`) |
+| **IT / Admin** | Install PostgreSQL + Node 20 + gateway service once (`install:gateway-service`) |
 | **End users** | Install Scanner `.exe`, set gateway URL once, then use the app normally |
 | **Nobody** | Opens `localhost:3000` in a browser for daily work |
 

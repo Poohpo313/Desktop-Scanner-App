@@ -35,8 +35,8 @@
     "autoprefixer": "^10.4.21",
     "concurrently": "^9.1.2",
     "cross-env": "^7.0.3",
-    "electron": "42.3.0",
-    "electron-builder": "^26.0.12",
+    "electron": "36.4.0",
+    "electron-builder": "^25.1.8",
     "electron-updater": "^6.6.2",
     "postcss": "^8.5.3",
     "tailwindcss": "^3.4.17",
@@ -45,7 +45,7 @@
     "wait-on": "^8.0.3"
   },
   "build": {
-    "electronVersion": "42.3.0",
+    "electronVersion": "36.4.0",
     "appId": "io.bukolabs.desktop-scanner",
     "productName": "Desktop Scanner App",
     "copyright": "Copyright © Bukolabs.io",

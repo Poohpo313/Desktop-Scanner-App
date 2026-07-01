@@ -1,3 +1,26 @@
+# Bukolabs.io — Desktop Scanner (Electron + React)
+
+## Developer setup
+
+| Requirement | Version |
+|-------------|---------|
+| Node.js | **20 LTS** (`>=20.0.0 <21`) — use `nvm use` at repo root |
+| npm | `>=10.0.0` |
+
+From the **monorepo root**:
+
+```powershell
+cd "c:\Desktop Scanner App"
+npm install
+npm run dev:user
+```
+
+Browser-only: `npm run dev:web -w user-interface-electron` → http://localhost:5173
+
+Pack Windows installer: `npm run build:user` (from repo root).
+
+---
+
 # CURSOR PROMPT — DESKTOP APP (Electron + React)
 # Bukolabs.io — Desktop Scanner App
 # Complete screen-by-screen UI + flow implementation guide

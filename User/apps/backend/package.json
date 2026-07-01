@@ -3,6 +3,9 @@
   "version": "1.0.0",
   "private": true,
   "description": "User cloud/sync online API (subset of @bukolabs/gateway)",
+  "engines": {
+    "node": ">=20.0.0 <21.0.0"
+  },
   "scripts": {
     "build": "npm run build --prefix ../../../gateway",
     "start": "cross-env BACKEND_ROLE=user PORT=3003 node ../../../gateway/dist/main.js",

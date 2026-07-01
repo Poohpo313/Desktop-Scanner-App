@@ -2,6 +2,13 @@
 
 This folder contains reusable backend building blocks used by `user`, `admin`, and `super-admin` modules.
 
+## Requirements
+
+- **Node.js 20 LTS** at the repo root (`>=20.0.0 <21`)
+- **PostgreSQL** 14+
+
+Run all commands from the **repository root**, not this folder.
+
 ## Database Schema
 
 Core tables and purpose:
@@ -24,6 +31,7 @@ Core tables and purpose:
 ```powershell
 npm run setup:db
 npm run test:postgres-online
+npm run migrate:pending
 ```
 
 Migration: `migrations/online/001_initial_schema.postgres.sql`  

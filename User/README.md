@@ -1,10 +1,36 @@
-# Bukolabs Desktop Scanner
+# Bukolabs Desktop Scanner (User app)
+
+Electron desktop client for scanning, documents, and offline/online sync.
+
+## Requirements
+
+| Tool | Version |
+|------|---------|
+| **Node.js** | **20 LTS** (`>=20.0.0 <21`) |
+| **npm** | `>=10.0.0` |
+
+Install **Node.js 20 LTS** from https://nodejs.org/en/download/ (20.x line), or from the **monorepo root**:
+
+```powershell
+cd "c:\Desktop Scanner App"
+nvm use 20
+npm install
+```
 
 ## Quick start
 
-From this folder (`user-interface-electron` — the repo root):
+From the **repository root** (recommended — installs all workspaces):
 
 ```powershell
+cd "c:\Desktop Scanner App"
+npm install
+npm run dev:user
+```
+
+Or from this folder only (nested workspace):
+
+```powershell
+cd User
 npm install
 npm run dev
 ```
@@ -14,8 +40,7 @@ This starts **Vite** on http://localhost:5173 and opens the **Electron** desktop
 ### Browser-only preview (no Electron)
 
 ```powershell
-cd user-interface-electron
-npm run dev:web
+npm run dev:web -w user-interface-electron
 ```
 
 Then open http://localhost:5173 in your browser.
@@ -23,19 +48,23 @@ Then open http://localhost:5173 in your browser.
 ## Troubleshooting
 
 ### `npm` not recognized
-Install Node.js LTS from https://nodejs.org and restart the terminal.
+
+Install Node.js 20 LTS and restart the terminal.
+
+### `EBADENGINE` on `npm install`
+
+You are not on Node 20. Run `node -v` — it must show `v20.x.x`. Use `nvm use` in the repo root (see `.nvmrc`).
 
 ### PowerShell blocks `npm` scripts
+
 Either run:
 
 ```powershell
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-(note the space before `-Scope`), or use `npm.cmd` instead of `npm`.
-
-### `Could not read package.json`
-Run commands from **this** folder (where this README lives), not only from a parent download folder.
+or use `npm.cmd` instead of `npm`.
 
 ### First `npm run dev` is slow
-Electron downloads its binary on first launch. Wait until you see `VITE ready` and the app window opens.
+
+The Electron main process is compiled on first launch; later starts are faster.
