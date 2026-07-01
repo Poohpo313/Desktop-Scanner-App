@@ -304,11 +304,6 @@ export const fsService = {
   },
 
   async openDocumentWithApp(targetPath: string): Promise<{ success: boolean; error?: string }> {
-    const ext = path.extname(targetPath).toLowerCase();
-    if ([".doc", ".docx", ".rtf"].includes(ext)) {
-      const wordResult = await this.openInWord(targetPath);
-      if (wordResult.success) return wordResult;
-    }
     return this.openPath(targetPath);
   },
 

@@ -2,7 +2,7 @@ import { ChevronDown } from "lucide-react";
 import { FormEvent, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDocuments } from "../../context/DocumentsContext";
-import { openDocumentFile, openDocumentInWord } from "../../lib/openDocumentFile";
+import { openDocumentFile } from "../../lib/openDocumentFile";
 import { ConsolePageHeader } from "../layout/ConsolePageHeader";
 import { getConsolePageSubtitle, getConsolePageTitle } from "../layout/consolePageMeta";
 import { AdvancedFiltersDrawer } from "./AdvancedFiltersDrawer";
@@ -71,14 +71,6 @@ export function SearchView() {
     const result = await openDocumentFile(savePath);
     if (!result.success) {
       setOpenError(result.error ?? "Could not open file.");
-    }
-  }
-
-  async function handleEditInWord(savePath: string) {
-    setOpenError(null);
-    const result = await openDocumentInWord(savePath);
-    if (!result.success) {
-      setOpenError(result.error ?? "Could not open file in Word.");
     }
   }
 
@@ -168,7 +160,7 @@ export function SearchView() {
                     result={result}
                     query={submittedQuery}
                     onOpen={() => void handleOpenResult(result.savePath)}
-                    onEditInWord={() => void handleEditInWord(result.savePath)}
+                    onOpenFile={() => void handleOpenResult(result.savePath)}
                     onShowInDocuments={() => openInDocuments(result.id)}
                   />
                 ))

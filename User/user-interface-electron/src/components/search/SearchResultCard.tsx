@@ -1,4 +1,4 @@
-import { ExternalLink, FileImage, FileText, PenLine } from "lucide-react";
+import { ExternalLink, FileImage, FileText, Files } from "lucide-react";
 import { formatResultMeta } from "./searchHelpers";
 import { HighlightedText } from "./HighlightedText";
 import type { SearchResult } from "./searchTypes";
@@ -7,7 +7,7 @@ type SearchResultCardProps = {
   result: SearchResult;
   query: string;
   onOpen: () => void;
-  onEditInWord: () => void;
+  onOpenFile: () => void;
   onShowInDocuments: () => void;
 };
 
@@ -22,7 +22,7 @@ export function SearchResultCard({
   result,
   query,
   onOpen,
-  onEditInWord,
+  onOpenFile,
   onShowInDocuments,
 }: SearchResultCardProps) {
   return (
@@ -55,12 +55,12 @@ export function SearchResultCard({
         </div>
       </button>
       <div className="search-result-card__actions">
-        <button type="button" className="search-result-card__documents-link" onClick={onEditInWord}>
-          <PenLine className="h-4 w-4" strokeWidth={2} />
-          Edit in Word
+        <button type="button" className="search-result-card__documents-link" onClick={onOpenFile}>
+          <ExternalLink className="h-4 w-4" strokeWidth={2} />
+          Open
         </button>
         <button type="button" className="search-result-card__documents-link" onClick={onShowInDocuments}>
-          <ExternalLink className="h-4 w-4" strokeWidth={2} />
+          <Files className="h-4 w-4" strokeWidth={2} />
           Show in Documents
         </button>
       </div>
