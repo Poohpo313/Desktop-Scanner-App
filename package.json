@@ -25,7 +25,7 @@
     "User/user-interface-electron"
   ],
   "scripts": {
-    "dev:gateway": "npm run start:dev -w @bukolabs/gateway",
+    "dev:gateway": "node scripts/dev-gateway.cjs",
     "dev:admin-api": "npm run start:dev -w @bukolabs/admin-backend",
     "dev:superadmin-api": "npm run start:dev -w @bukolabs/superadmin-backend",
     "dev:user-api": "npm run start:dev -w @bukolabs/user-backend",
@@ -48,6 +48,7 @@
     "build:user:dir": "powershell -ExecutionPolicy Bypass -File scripts/build-user-exe.ps1 -DirOnly",
     "start:gateway:bg": "powershell -ExecutionPolicy Bypass -File scripts/start-gateway-background.ps1",
     "start:gateway:latest": "powershell -ExecutionPolicy Bypass -File scripts/start-gateway-latest.ps1",
+    "stop:gateway-service": "powershell -ExecutionPolicy Bypass -File scripts/stop-gateway-service.ps1",
     "install:gateway-service": "powershell -ExecutionPolicy Bypass -File scripts/install-gateway-service.ps1",
     "open-gateway-firewall": "powershell -ExecutionPolicy Bypass -File scripts/open-gateway-firewall.ps1",
     "uninstall:gateway-service": "powershell -ExecutionPolicy Bypass -File scripts/uninstall-gateway-service.ps1",

@@ -78,3 +78,10 @@ Dev-only (manual, does not survive reboot):
 ```powershell
 npm run start:gateway:bg
 ```
+
+If `npm run dev:gateway` reports port 3000 is in use, the **BukolabsGateway** background task is usually already running. Either use that instance, or stop it (Administrator PowerShell):
+
+```powershell
+npm run stop:gateway-service
+npm run dev:gateway
+```
