@@ -91,7 +91,6 @@ export function getLicenseKeyCatalogSummaryStats() {
   };
 }
 
-/** @deprecated Use getLicenseKeyCatalogSummaryStats instead */
 export function computeLicenseKeyCatalogStats(
   _rows: LicenseKeyCatalogRow[],
   _organization: LicenseKeyCatalogOrganizationFilter = "all",

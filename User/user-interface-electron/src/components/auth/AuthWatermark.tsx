@@ -1,7 +1,3 @@
-/**
- * Figma auth watermark — large rotated oblong rings + Bukolabs mark.
- * Same placement on login (1.1) and activate (1.2).
- */
 export function AuthWatermark() {
   return (
     <div className="auth-watermark" aria-hidden="true">

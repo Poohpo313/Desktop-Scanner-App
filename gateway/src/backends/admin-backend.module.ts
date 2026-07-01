@@ -8,7 +8,6 @@ import { UserConcernsModule } from "../modules/user-concerns/user-concerns.modul
 import { UsersModule } from "../modules/users/users.module";
 import { CoreModule } from "../core/core.module";
 
-/** Admin portal API — online PostgreSQL only. */
 @Module({
   imports: [
     CoreModule,

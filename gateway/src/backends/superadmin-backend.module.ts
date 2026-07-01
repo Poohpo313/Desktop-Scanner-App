@@ -14,7 +14,6 @@ import { SchedulesModule } from "../modules/schedules/schedules.module";
 import { UsersModule } from "../modules/users/users.module";
 import { CoreModule } from "../core/core.module";
 
-/** Super Admin portal API — online PostgreSQL only. */
 @Module({
   imports: [
     CoreModule,

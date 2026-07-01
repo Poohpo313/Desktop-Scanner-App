@@ -1,6 +1,3 @@
-/**
- * Nav & UI icons — backed by Figma exports in src/icons
- */
 import { icons, type IconName } from "../icons";
 import { FigmaIcon } from "./FigmaIcon";
 

@@ -4,11 +4,15 @@ node_modules/
 
 # Electron build output
 dist/
+dist-electron/
 build/
 release/
 release-build/
 release-pack/
 out/
+
+# Runtime backup dumps
+gateway/backups/
 
 # Temporary files
 *.log

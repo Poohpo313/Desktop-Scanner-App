@@ -1,6 +1,5 @@
 /**
- * Triggers a CSV download in the browser. Keeps the blob URL alive briefly so
- * the download is not cancelled when revokeObjectURL runs too early.
+ * Keeps the blob URL alive briefly so the download is not cancelled too early.
  */
 export function downloadCsvInBrowser(content: string, filename: string, mime = "text/csv;charset=utf-8;"): number {
   const csvBody = content.startsWith("\uFEFF") ? content : `\uFEFF${content}`;

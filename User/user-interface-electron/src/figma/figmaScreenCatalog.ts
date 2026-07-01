@@ -1,7 +1,3 @@
-/**
- * Catalog synced with public/screens/*.html and public/figma-assets/*
- * Source: screens-manifest.json + figma-asset-map.json
- */
 import assetMap from "../../figma-asset-map.json";
 import manifest from "../../screens-manifest.json";
 
@@ -43,7 +39,6 @@ export const figmaScreenCatalog: Record<string, FigmaScreenMeta> = Object.fromEn
   })
 );
 
-/** Welcome frame — Figma node 1802:1272 (no entry in screens-manifest) */
 figmaScreenCatalog["welcome-screen"] = {
   slug: "welcome-screen",
   name: "Welcome Screen",
@@ -57,7 +52,6 @@ export function getFigmaScreen(slug: string): FigmaScreenMeta | undefined {
   return figmaScreenCatalog[slug];
 }
 
-/** Production route → Figma screen slug (excludes splash) */
 export const routeFigmaSlug: Record<string, string> = {
   "/welcome": "welcome-screen",
   "/login": "section-1-1-returning-user-login",

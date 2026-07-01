@@ -1,6 +1,3 @@
-/**
- * Bukolabs Figma asset registry — logos and UI icons from src/icons
- */
 import bukolabsLogoPrimary from "./bukolabs-logo 1-1.png";
 import bukolabsLogoAlt1 from "./bukolabs-logo 1.png";
 import bukolabsLogoAlt2 from "./bukolabs-logo 2.png";

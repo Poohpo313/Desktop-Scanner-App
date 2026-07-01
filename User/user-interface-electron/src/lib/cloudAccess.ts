@@ -1,6 +1,3 @@
-/**
- * Cloud sync is only available when the app is online and connected to the gateway API.
- */
 export function hasCloudAccess(isOnline: boolean, gatewayReachable: boolean | null): boolean {
   return isOnline && gatewayReachable === true;
 }

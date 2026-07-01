@@ -8,7 +8,6 @@ export const DEFAULT_STORAGE_FOLDER_NAME = "Desktop Scanner Documents";
 export const LEGACY_SCANNED_DOCUMENTS_ROOT = "C:\\Scanned Documents";
 export const LEGACY_PLACEHOLDER_SAVE_PATH = "C:\\Users\\John\\Documents\\Desktop Scanner";
 
-/** @deprecated Use getDefaultStorageRootCache() or settings storageRoot after ensureUserStorageRoot. */
 export const DEFAULT_SCANNED_DOCUMENTS_ROOT = LEGACY_SCANNED_DOCUMENTS_ROOT;
 
 let defaultStorageRootCache: string | null = null;

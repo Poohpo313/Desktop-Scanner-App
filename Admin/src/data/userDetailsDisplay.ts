@@ -172,7 +172,6 @@ export function buildUserDetailsProfileById(userId?: number | string): UserDetai
   return profileFromAdminUser(getDemoAdminUserById(id));
 }
 
-/** @deprecated use buildUserDetailsProfileById */
 export const buildDemoDetailsProfile = buildUserDetailsProfileById;
 
 export function buildUserDetailsProfile(user?: AdminUser | null): UserDetailsProfile {

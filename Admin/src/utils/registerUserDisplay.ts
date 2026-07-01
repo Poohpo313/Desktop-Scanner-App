@@ -40,7 +40,6 @@ export function getRegisterAdminContactPhone(
   return data.adminContactPhone.trim();
 }
 
-/** @deprecated Use getRegisterAdminContactEmail for registration summaries. */
 export function getRegisterUserEmail(data: Pick<RegisterUserFormData, "adminContactEmail">): string {
   return getRegisterAdminContactEmail(data);
 }

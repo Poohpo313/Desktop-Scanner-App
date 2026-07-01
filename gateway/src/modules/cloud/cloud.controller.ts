@@ -5,7 +5,6 @@ import { JwtAuthGuard } from "../auth/guards/jwt-auth.guard";
 import { RolesGuard } from "../auth/guards/roles.guard";
 import { CloudService } from "./cloud.service";
 
-/** Placeholder routes for a future cloud storage provider (e.g. Google Cloud Bucket). */
 @ApiTags("cloud")
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard, RolesGuard)

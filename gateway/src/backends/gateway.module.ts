@@ -18,10 +18,6 @@ import { UserConcernsModule } from "../modules/user-concerns/user-concerns.modul
 import { HealthModule } from "../modules/health/health.module";
 import { CoreModule } from "../core/core.module";
 
-/**
- * Unified connector — mounts Admin, SuperAdmin, and User online APIs together.
- * All routes share /api/v1 and the online PostgreSQL database.
- */
 @Module({
   imports: [
     CoreModule,

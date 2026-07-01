@@ -37,7 +37,7 @@ export class ActivityLogsController {
   }
 }
 
-/** SuperAdmin frontend expects GET /logs */
+// SuperAdmin UI calls GET /logs
 @ApiTags("logs")
 @ApiBearerAuth()
 @UseGuards(JwtAuthGuard, RolesGuard)

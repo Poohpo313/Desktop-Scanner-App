@@ -9,10 +9,7 @@ export type SaveTextFileResult = {
   usedBrowserDownload: boolean;
 };
 
-/**
- * Saves a CSV to the fixed export folder in Electron, or downloads it in the browser.
- * No save dialog is shown in either case.
- */
+// Electron writes to a fixed folder; browser falls back to download.
 export async function saveTextFile(
   content: string,
   filename: string,

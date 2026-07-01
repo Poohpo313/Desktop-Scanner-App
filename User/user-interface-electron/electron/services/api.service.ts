@@ -1,7 +1,3 @@
-/**
- * HTTP client for the online PostgreSQL API (gateway).
- * Not related to the planned cloud storage / Google Bucket integration.
- */
 import { getGatewayApiUrl } from "./gateway-config.service";
 import { probeGatewayHealth } from "./gateway-discovery.service";
 import { loadOnlineAuth } from "./online-auth-store";
