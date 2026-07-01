@@ -5,8 +5,10 @@ import { useProfilePhoto } from "../../hooks/useProfilePhoto";
 import { useSession } from "../../context/SessionContext";
 import "../../styles/settings-figma-screen.css";
 import "../../styles/user-account-settings.css";
-import "../../styles/profile-photo-modals.css";
+import "../../styles/scan-offline.css";
+import { AccountSettingsSavedToast } from "./AccountSettingsSavedToast";
 
+const ACCOUNT_SETTINGS_SUCCESS_MS = 3000;
 const DEFAULT_USER_PASSWORD = "user123";
 const PASSWORD_CHANGED_KEY = "bukolabs.userPasswordChanged";
 
@@ -91,7 +93,17 @@ export function UserAccountSettingsPageView() {
   const [currentPassword, setCurrentPassword] = useState("");
   const [newPassword, setNewPassword] = useState("");
   const [photoNotice, setPhotoNotice] = useState<string | null>(null);
+  const [saveSuccess, setSaveSuccess] = useState(false);
   const { photoUrl, setPhoto } = useProfilePhoto(session.userId);
+
+  useEffect(() => {
+    if (!saveSuccess) return;
+    const timer = window.setTimeout(() => {
+      setSaveSuccess(false);
+      navigate(-1);
+    }, ACCOUNT_SETTINGS_SUCCESS_MS);
+    return () => window.clearTimeout(timer);
+  }, [saveSuccess, navigate]);
 
   useEffect(() => {
     void (async () => {
@@ -165,11 +177,19 @@ export function UserAccountSettingsPageView() {
     }
 
     setSaving(false);
-    navigate(-1);
+    setSaveSuccess(true);
   }
 
   return (
     <div className="user-account-settings-backdrop" role="presentation">
+      {saveSuccess ? (
+        <div className="user-account-settings-success-wrap">
+          <AccountSettingsSavedToast onClose={() => {
+            setSaveSuccess(false);
+            navigate(-1);
+          }} />
+        </div>
+      ) : null}
       <section
         className="user-account-settings-window settings-figma"
         role="dialog"

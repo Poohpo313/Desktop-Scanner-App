@@ -185,6 +185,29 @@ export default function SettingsScreenBody({ onSaveSettings, onSaveProfile }: Pr
   const [clickedButton, setClickedButton] = useState<ActionButtonId | null>(null);
   const clickFlashTimeoutRef = useRef<number | null>(null);
   const signOutTimeoutRef = useRef<number | null>(null);
+  const saveSuccessTimeoutRef = useRef<number | null>(null);
+
+  const ACCOUNT_SETTINGS_SUCCESS_MS = 3000;
+
+  useEffect(() => {
+    if (!saveSuccessOpen) return;
+
+    if (saveSuccessTimeoutRef.current !== null) {
+      window.clearTimeout(saveSuccessTimeoutRef.current);
+    }
+
+    saveSuccessTimeoutRef.current = window.setTimeout(() => {
+      setSaveSuccessOpen(false);
+      saveSuccessTimeoutRef.current = null;
+    }, ACCOUNT_SETTINGS_SUCCESS_MS);
+
+    return () => {
+      if (saveSuccessTimeoutRef.current !== null) {
+        window.clearTimeout(saveSuccessTimeoutRef.current);
+        saveSuccessTimeoutRef.current = null;
+      }
+    };
+  }, [saveSuccessOpen]);
 
   useEffect(() => {
     return () => {
@@ -274,9 +297,11 @@ export default function SettingsScreenBody({ onSaveSettings, onSaveProfile }: Pr
       applyFormValues(nextSaved);
       setFormRevision((revision) => revision + 1);
       setSaveSuccessOpen(true);
-      onSaveSettings?.();
-    } catch {
-      showActionNotice({ text: "Failed to save settings. Please try again.", tone: "danger" });
+    } catch (error) {
+      showActionNotice({
+        text: error instanceof Error ? error.message : "Failed to save settings. Please try again.",
+        tone: "danger",
+      });
     }
   };
 

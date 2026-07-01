@@ -8,7 +8,7 @@ import { useTopBarRefresh } from "../hooks/useTopBarRefresh";
 import { useAdminScope } from "../hooks/useAdminScope";
 import { useSettingsProfileStore } from "../store/settingsProfileStore";
 import type { SettingsFormValues } from "../data/demoSettingsProfile";
-import { PORTAL } from "../routes/portalPaths";
+import { extractApiError } from "../lib/extractApiError";
 import "../styles/settings-figma-screen.css";
 import "../styles/settings-profile-photo-preview.css";
 import "../styles/page-transition.css";
@@ -48,26 +48,30 @@ export default function SettingsPage() {
   );
 
   const handleSaveProfile = async (values: SettingsFormValues) => {
-    const { firstName, lastName } = splitFullName(values.fullName);
+    try {
+      const { firstName, lastName } = splitFullName(values.fullName);
 
-    await authApi.updateProfile({
-      firstName,
-      lastName,
-      email: values.email.trim(),
-      phoneNumber: values.phone.trim() || undefined,
-    });
-
-    if (values.newPassword.trim()) {
-      await authApi.changePassword({
-        currentPassword: values.currentPassword,
-        newPassword: values.newPassword,
+      await authApi.updateProfile({
+        firstName,
+        lastName,
+        email: values.email.trim(),
+        phoneNumber: values.phone.trim() || undefined,
       });
-      useSettingsProfileStore.getState().markPasswordChanged();
-    }
 
-    const profile = await authApi.me();
-    hydrateFromApi(profile);
-    await reloadScope();
+      if (values.newPassword.trim()) {
+        await authApi.changePassword({
+          currentPassword: values.currentPassword,
+          newPassword: values.newPassword,
+        });
+        useSettingsProfileStore.getState().markPasswordChanged();
+      }
+
+      const profile = await authApi.me();
+      hydrateFromApi(profile);
+      await reloadScope();
+    } catch (error) {
+      throw new Error(extractApiError(error, "Failed to save account settings"));
+    }
   };
 
   return (
@@ -79,10 +83,7 @@ export default function SettingsPage() {
         showUtilities={false}
       />
       <ScreenRefreshFrame refreshToken={refreshToken}>
-        <SettingsScreenBody
-          onSaveProfile={handleSaveProfile}
-          onSaveSettings={() => push("Settings saved", "success")}
-        />
+        <SettingsScreenBody onSaveProfile={handleSaveProfile} />
       </ScreenRefreshFrame>
     </>
   );

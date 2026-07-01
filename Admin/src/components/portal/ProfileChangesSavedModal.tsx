@@ -26,7 +26,7 @@ export default function ProfileChangesSavedModal({ onClose }: Props) {
     <FigmaModal className="figma-modal--profile-changes-saved" hideHeader hideClose success>
       <div className="profile-changes-saved">
         <SuccessCheckIcon />
-        <h2 className="profile-changes-saved__title">Changes Saved Successfully!</h2>
+        <h2 className="profile-changes-saved__title">Account settings changed successfully</h2>
         <button type="button" className="profile-changes-saved__ok-btn" onClick={onClose}>
           OK
         </button>

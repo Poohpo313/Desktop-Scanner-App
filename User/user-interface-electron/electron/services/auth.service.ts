@@ -1316,12 +1316,21 @@ export const authService = {
       ],
     );
 
-    void updateUserProfileOnline({
-      firstName: payload.firstName,
-      lastName: payload.lastName,
-      email: sanitized.email ?? undefined,
-      phoneNumber: sanitized.phoneNumber ?? undefined,
-    });
+    const gatewayUp = await isOnlineAvailable();
+    if (gatewayUp) {
+      const onlineResult = await updateUserProfileOnline({
+        firstName: payload.firstName,
+        lastName: payload.lastName,
+        email: sanitized.email ?? undefined,
+        phoneNumber: sanitized.phoneNumber ?? undefined,
+      });
+      if (!onlineResult.success) {
+        return {
+          success: false as const,
+          error: onlineResult.error ?? "Could not sync profile to the server",
+        };
+      }
+    }
 
     return this.getProfile(token);
   },
@@ -1345,7 +1354,16 @@ export const authService = {
       session.userId,
     ]);
 
-    void changeUserPasswordOnline(currentPassword, newPassword);
+    const gatewayUp = await isOnlineAvailable();
+    if (gatewayUp) {
+      const onlineResult = await changeUserPasswordOnline(currentPassword, newPassword);
+      if (!onlineResult.success) {
+        return {
+          success: false as const,
+          error: onlineResult.error ?? "Could not sync password to the server",
+        };
+      }
+    }
 
     return { success: true as const };
   },

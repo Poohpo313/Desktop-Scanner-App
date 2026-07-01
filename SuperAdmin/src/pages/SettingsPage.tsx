@@ -149,6 +149,13 @@ export default function SettingsPage() {
   });
   const { logout } = useAuth();
   const push = useNotificationStore((state) => state.push);
+
+  useEffect(() => {
+    if (!successOpen) return;
+    const timer = window.setTimeout(() => setSuccessOpen(false), 3000);
+    return () => window.clearTimeout(timer);
+  }, [successOpen]);
+
   const activeSettingsLabel: Record<SettingsTab, string> = {
     system: "System Configuration",
     recycle: "Recycle Bin",
@@ -1001,7 +1008,6 @@ export default function SettingsPage() {
                     }
                   }
 
-                  push("Account settings updated successfully", "success");
                   setProfile((current) => ({
                     ...current,
                     currentPassword: "",
@@ -1082,7 +1088,7 @@ export default function SettingsPage() {
             <div className="settings-success-icon" aria-hidden="true">
               ✓
             </div>
-            <h2>Changes Saved Successfully!</h2>
+            <h2>Account settings changed successfully</h2>
             <button type="button" onClick={() => setSuccessOpen(false)}>
               OK
             </button>
