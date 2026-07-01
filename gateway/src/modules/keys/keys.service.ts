@@ -16,6 +16,7 @@ import { queryScopedList } from "../../shared/scoped-query";
 import { AdminScopeService } from "../../shared/services/admin-scope.service";
 import type { JwtPayload } from "../../shared/types/index";
 import { AdminsService } from "../admins/admins.service";
+import { ADMIN_DEACTIVATED_NOTE } from "../devices/device-status.constants";
 import { NotificationsGateway } from "../notifications/notifications.gateway";
 import { SerialKeyEntity } from "./entities/key.entity";
 
@@ -494,9 +495,9 @@ export class KeysService {
       );
       await this.keys.query(
         `UPDATE devices
-         SET status = 'inactive', last_seen = NOW()
+         SET status = 'inactive', warning_note = $2, last_seen = NOW()
          WHERE assigned_user = $1 AND device_type = 'workstation'`,
-        [key.assignedTo]
+        [key.assignedTo, ADMIN_DEACTIVATED_NOTE]
       );
     }
 
@@ -705,8 +706,8 @@ export class KeysService {
       await this.revoke(request.target_id, adminId);
     } else {
       await this.keys.query(
-        `UPDATE devices SET status = 'inactive', last_seen = NOW() WHERE device_id = $1`,
-        [request.target_id]
+        `UPDATE devices SET status = 'inactive', warning_note = $2, last_seen = NOW() WHERE device_id = $1`,
+        [request.target_id, ADMIN_DEACTIVATED_NOTE]
       );
       await this.activityLog.log(
         "device.flagged_inactive",

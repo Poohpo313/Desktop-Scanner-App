@@ -17,11 +17,11 @@ import type { PaginationInput } from "../../shared/pagination";
 import { queryScopedList } from "../../shared/scoped-query";
 import { AdminScopeService } from "../../shared/services/admin-scope.service";
 import { NotificationsGateway } from "../notifications/notifications.gateway";
+import { ADMIN_DEACTIVATED_NOTE } from "./device-status.constants";
 import { DeviceEntity } from "./entities/device.entity";
 
 const HEARTBEAT_TIMEOUT_MINUTES = 3;
 const UNAUTHORIZED_DEVICE_NOTE = "Unauthorized Device";
-const ADMIN_DEACTIVATED_NOTE = "Device deactivated by administrator";
 
 const DEVICE_LIST_SELECT = `
   SELECT

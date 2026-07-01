@@ -13,6 +13,7 @@ import {
 import type { PaginationInput } from "../../shared/pagination";
 import { queryScopedList } from "../../shared/scoped-query";
 import { AdminScopeService } from "../../shared/services/admin-scope.service";
+import { ADMIN_DEACTIVATED_NOTE } from "../devices/device-status.constants";
 import { UserEntity } from "./entities/user.entity";
 
 const MAX_FAILED_ATTEMPTS = 5;
@@ -166,16 +167,19 @@ export class UsersService {
         AND u.account_status <> 'deleted'
     `);
 
-    await this.users.query(`
+    await this.users.query(
+      `
       UPDATE devices d
-      SET status = 'inactive', last_seen = NOW()
+      SET status = 'inactive', warning_note = $1, last_seen = NOW()
       FROM users u
       INNER JOIN serial_keys sk ON sk.assigned_to = u.user_id
       WHERE d.assigned_user = u.user_id
         AND d.device_type = 'workstation'
         AND sk.status IN ('revoked', 'deactivated')
         AND d.status = 'active'
-    `);
+    `,
+      [ADMIN_DEACTIVATED_NOTE],
+    );
   }
 
   findDeleted() {
