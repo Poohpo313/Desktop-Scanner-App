@@ -239,7 +239,8 @@ export class KeysService {
   }
 
   private async reconcileStaleRevocationRequests() {
-    await this.keys.query(`
+    try {
+      await this.keys.query(`
       UPDATE revocation_requests rr
       SET status = 'rejected',
           resolved_at = COALESCE(rr.resolved_at, NOW())
@@ -257,6 +258,9 @@ export class KeysService {
           ))
         )
     `);
+    } catch {
+      /* revocation_requests or device hierarchy schema may be missing on older databases */
+    }
   }
 
   private async findRevocationRequestsByStatus(status: "pending") {
@@ -267,7 +271,12 @@ export class KeysService {
           'request-' || rr.request_id AS "recordId",
           CASE WHEN rr.request_type = 'key' THEN rr.target_id END AS "serialId",
           CASE WHEN rr.request_type = 'device' THEN rr.target_id END AS "deviceId",
-          COALESCE(sk.serial_key, d.serial_number) AS "serialKey",
+          COALESCE(
+            sk.serial_key,
+            d.serial_number,
+            d.device_name,
+            CASE WHEN d.device_id IS NOT NULL THEN 'Device #' || d.device_id::text END
+          ) AS "serialKey",
           COALESCE(sk.status, d.status) AS status,
           COALESCE(sk.generated_at, d.last_seen, rr.created_at) AS "generatedAt",
           COALESCE(u.company, sk.company) AS company,
@@ -332,7 +341,7 @@ export class KeysService {
             NULL::text AS "reason"
           FROM serial_keys sk
           LEFT JOIN users u ON u.user_id = sk.assigned_to
-          WHERE sk.status IN ('revoked', 'deactivated')
+          WHERE sk.status = 'revoked'
             AND NOT EXISTS (
               SELECT 1
               FROM revocation_requests rr
@@ -355,7 +364,7 @@ export class KeysService {
             u.username,
             u.first_name AS "firstName",
             u.last_name AS "lastName",
-            CASE WHEN d.status = 'unauthorized' THEN 'device.revoked' ELSE 'device.flagged_inactive' END AS action,
+            'device.revoked' AS action,
             COALESCE(d.last_seen, NOW()) AS "revokedAt",
             NULL::varchar AS "revokedByUsername",
             NULL::varchar AS "revokedByFirstName",
@@ -366,7 +375,8 @@ export class KeysService {
             NULL::text AS "reason"
           FROM devices d
           LEFT JOIN users u ON u.user_id = d.assigned_user
-          WHERE d.status IN ('unauthorized', 'inactive')
+          WHERE d.status = 'unauthorized'
+            AND d.warning_note IS NULL
             AND NOT EXISTS (
               SELECT 1
               FROM revocation_requests rr
@@ -730,7 +740,7 @@ export class KeysService {
           rr.target_id AS "targetId",
           rr.status,
           rr.created_at AS "createdAt",
-          COALESCE(sk.serial_key, d.serial_number, '-') AS "referenceId"
+          COALESCE(sk.serial_key, d.serial_number, d.device_name, 'Device #' || d.device_id::text) AS "referenceId"
         FROM revocation_requests rr
         LEFT JOIN serial_keys sk ON rr.request_type = 'key' AND sk.serial_id = rr.target_id
         LEFT JOIN devices d ON rr.request_type = 'device' AND d.device_id = rr.target_id

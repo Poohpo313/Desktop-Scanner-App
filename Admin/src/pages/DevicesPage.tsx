@@ -16,6 +16,8 @@ import {
   buildDeviceStats,
   mapDevicesToCatalogRows,
 } from "../lib/adminPortalMappers";
+import { useDeviceOnlineClock } from "../lib/statusDisplay";
+import { extractApiError } from "../lib/extractApiError";
 import { PORTAL } from "../routes/portalPaths";
 import type { AdminUser, Device } from "../types";
 import type { DeviceCatalogRow } from "../data/demoDeviceCatalog";
@@ -36,6 +38,7 @@ export default function DevicesPage() {
   const [provisionOpen, setProvisionOpen] = useState(
     Boolean((location.state as { provision?: boolean } | null)?.provision),
   );
+  const [loading, setLoading] = useState(true);
   const push = useNotificationStore((s) => s.push);
 
   useEffect(() => {
@@ -45,27 +48,44 @@ export default function DevicesPage() {
     }
   }, [location.pathname, location.state, navigate]);
 
-  const load = useCallback(() => {
-    Promise.all([devicesApi.list(), usersApi.list()])
-      .then(([nextDevices, nextUsers]) => {
-        setDevices(nextDevices);
-        setUsers(nextUsers);
-      })
-      .catch(() => push("Failed to load devices", "error"));
+  const load = useCallback(async () => {
+    setLoading(true);
+    const [devicesResult, usersResult] = await Promise.allSettled([
+      devicesApi.list(),
+      usersApi.list(),
+    ]);
+
+    if (devicesResult.status === "fulfilled") {
+      setDevices(devicesResult.value);
+    } else {
+      push(extractApiError(devicesResult.reason, "Failed to load devices"), "error");
+      setDevices([]);
+    }
+
+    if (usersResult.status === "fulfilled") {
+      setUsers(usersResult.value);
+    } else {
+      push(extractApiError(usersResult.reason, "Failed to load users"), "error");
+      setUsers([]);
+    }
+
+    setLoading(false);
   }, [push]);
 
   useEffect(() => {
-    load();
+    void load();
   }, [load]);
 
   const { onRefresh, refreshing, refreshToken } = useTopBarRefresh(load, "Devices refreshed");
+
+  const presenceTick = useDeviceOnlineClock();
 
   const deviceRows = useMemo(
     () => mapDevicesToCatalogRows(devices, users, scope.company),
     [devices, users, scope.company],
   );
 
-  const deviceStats = useMemo(() => buildDeviceStats(deviceRows), [deviceRows]);
+  const deviceStats = useMemo(() => buildDeviceStats(deviceRows), [deviceRows, presenceTick]);
 
   const departmentOptions = useMemo(
     () => buildDeviceDepartmentOptions(deviceRows),
@@ -119,6 +139,7 @@ export default function DevicesPage() {
           rows={deviceRows}
           stats={deviceStats}
           departmentOptions={departmentOptions}
+          loading={loading}
           onRevokeRequest={handleRevokeRequest}
           onDeactivateDevice={handleDeactivateDevice}
         />

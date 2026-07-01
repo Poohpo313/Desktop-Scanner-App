@@ -14,7 +14,7 @@ export class DeviceEntity {
   @Column({ name: "serial_number", nullable: true })
   serialNumber?: string;
 
-  @Column({ name: "assigned_user", nullable: true })
+  @Column({ name: "assigned_user", type: "int", nullable: true })
   assignedUser?: number;
 
   @Column({ default: "active" })
@@ -26,9 +26,9 @@ export class DeviceEntity {
   @Column({ name: "is_primary", default: false })
   isPrimary!: boolean;
 
-  @Column({ name: "parent_device_id", nullable: true })
+  @Column({ name: "parent_device_id", type: "int", nullable: true })
   parentDeviceId?: number | null;
 
-  @Column({ name: "warning_note", nullable: true })
+  @Column({ name: "warning_note", type: "text", nullable: true })
   warningNote?: string | null;
 }

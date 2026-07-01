@@ -1,5 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { keysApi } from "../../api/keys.api";
+import { extractApiError } from "../../lib/extractApiError";
+import { useNotificationStore } from "../../store/notificationStore";
 import { IconSearch } from "../icons/AdminIcons";
 import FilterPickerDropdown from "./FilterPickerDropdown";
 import PortalOverlay from "./PortalOverlay";
@@ -150,18 +152,20 @@ export default function SettingsActivityHistory() {
   const [cancelConfirmOpen, setCancelConfirmOpen] = useState(false);
   const [cancelSuccessOpen, setCancelSuccessOpen] = useState(false);
   const [pendingCancelRow, setPendingCancelRow] = useState<SettingsRevocationRequestRow | null>(null);
+  const push = useNotificationStore((s) => s.push);
 
   const loadRows = useCallback(async () => {
     setLoading(true);
     try {
       const next = await keysApi.listRevocationRequests();
       setRows(next.map(mapApiRow));
-    } catch {
+    } catch (error) {
       setRows([]);
+      push(extractApiError(error, "Failed to load revocation requests"), "error");
     } finally {
       setLoading(false);
     }
-  }, []);
+  }, [push]);
 
   useEffect(() => {
     void loadRows();

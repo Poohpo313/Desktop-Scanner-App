@@ -48,10 +48,13 @@ export function appendAdminContactHint(
   channel: "email" | "sms",
 ) {
   if (channel === "email" && contact?.email) {
-    return `${base} Your administrator email is ${contact.email}.`;
+    return `${base} Contact ${contact.adminName?.trim() || "your administrator"} at ${contact.email}.`;
   }
   if (channel === "sms" && contact?.phoneNumber) {
-    return `${base} Your administrator number is ${contact.phoneNumber}.`;
+    return `${base} Contact ${contact.adminName?.trim() || "your administrator"} at ${contact.phoneNumber}.`;
+  }
+  if (contact?.adminName?.trim()) {
+    return `${base} Contact ${contact.adminName.trim()} for assistance.`;
   }
   return base;
 }

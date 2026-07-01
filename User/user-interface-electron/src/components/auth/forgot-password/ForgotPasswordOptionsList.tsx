@@ -50,7 +50,7 @@ export function ForgotPasswordOptionsList() {
         <input
           className="w-full rounded-[10px] border border-[#CBD5E1] bg-[#F8FAFC] px-3 py-2.5 font-sans text-[14px] text-[#0F172A]"
           value={usernameInput}
-          placeholder="Enter your username to load admin contact"
+          placeholder="Enter your username to load your administrator (Super Admin shown if empty)"
           onChange={(event) => setUsernameInput(event.target.value)}
           autoComplete="username"
         />

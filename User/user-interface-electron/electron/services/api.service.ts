@@ -203,21 +203,22 @@ export async function fetchUserSupportContactOnline() {
 export async function fetchPublicSupportContactOnline(params: {
   username?: string;
   serialKey?: string;
-}) {
+} = {}) {
   const username = params.username?.trim();
   const serialKey = params.serialKey?.trim();
-  if (!username && !serialKey) {
-    return { success: false as const, error: "Username or serial key required" };
-  }
 
   const query = new URLSearchParams();
   if (username) query.set("username", username);
   if (serialKey) query.set("serialKey", serialKey);
+  const querySuffix = query.toString();
 
   try {
-    const res = await fetchOnline(`${getOnlineApiUrl()}/auth/user/public-support-contact?${query}`, {
-      method: "GET",
-    });
+    const res = await fetchOnline(
+      `${getOnlineApiUrl()}/auth/user/public-support-contact${querySuffix ? `?${querySuffix}` : ""}`,
+      {
+        method: "GET",
+      },
+    );
 
     if (!res.ok) {
       const text = await res.text();

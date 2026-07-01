@@ -6,6 +6,7 @@ import FilterPickerDropdown from "./FilterPickerDropdown";
 import PortalOverlay from "./PortalOverlay";
 import DeviceDeleteRequestModal from "./DeviceDeleteRequestModal";
 import DeviceDeleteRequestSubmittedModal from "./DeviceDeleteRequestSubmittedModal";
+import { isDeviceOnline, useDeviceOnlineClock } from "../../lib/statusDisplay";
 import {
   DEVICE_CATALOG_DEPARTMENTS,
   DEVICE_CATALOG_PAGE_SIZE,
@@ -71,6 +72,7 @@ type Props = {
   rows?: DeviceCatalogRow[];
   stats?: { total: number; active: number; inactive: number };
   departmentOptions?: Array<{ value: string; label: string }>;
+  loading?: boolean;
   onRevokeRequest?: (row: DeviceCatalogRow) => void | Promise<void>;
   onDeactivateDevice?: (row: DeviceCatalogRow) => void | Promise<void>;
 };
@@ -79,6 +81,7 @@ export default function DeviceManagementScreenBody({
   rows: rowsProp,
   stats: statsProp,
   departmentOptions,
+  loading = false,
   onRevokeRequest,
   onDeactivateDevice,
 }: Props) {
@@ -123,6 +126,13 @@ export default function DeviceManagementScreenBody({
     DEVICE_CATALOG_SORT_OPTIONS.find((option) => option.value === sortFilter)?.label ?? "Sort By";
 
   const isRegisteredActive = (row: DeviceCatalogRow) => row.registrationStatus === "active";
+
+  useDeviceOnlineClock();
+
+  const rowConnectionStatus = (row: DeviceCatalogRow): "active" | "inactive" =>
+    isDeviceOnline({ status: row.registrationStatus, lastSeen: row.lastSeen })
+      ? "active"
+      : "inactive";
 
   useEffect(() => {
     setPage(1);
@@ -251,14 +261,22 @@ export default function DeviceManagementScreenBody({
               </tr>
             </thead>
             <tbody>
-              {pageRows.length === 0 ? (
+              {loading ? (
+                <tr>
+                  <td colSpan={6} className="device-catalog__empty">
+                    Loading devices...
+                  </td>
+                </tr>
+              ) : pageRows.length === 0 ? (
                 <tr>
                   <td colSpan={6} className="device-catalog__empty">
                     No devices match your filters
                   </td>
                 </tr>
               ) : (
-                pageRows.map((row) => (
+                pageRows.map((row) => {
+                  const connectionStatus = rowConnectionStatus(row);
+                  return (
                   <tr
                     key={row.id}
                     className={row.isChildRow ? "device-catalog__row--child" : undefined}
@@ -279,9 +297,9 @@ export default function DeviceManagementScreenBody({
                         <span className="device-catalog__warning-note">{row.warningNote}</span>
                       ) : (
                         <span
-                          className={`device-catalog__status device-catalog__status--${row.status}`}
+                          className={`device-catalog__status device-catalog__status--${connectionStatus}`}
                         >
-                          {row.status === "active" ? "Online" : "Offline"}
+                          {connectionStatus === "active" ? "Online" : "Offline"}
                         </span>
                       )}
                     </td>
@@ -308,7 +326,8 @@ export default function DeviceManagementScreenBody({
                       </div>
                     </td>
                   </tr>
-                ))
+                  );
+                })
               )}
             </tbody>
           </table>

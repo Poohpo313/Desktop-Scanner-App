@@ -22,10 +22,11 @@ export type DeviceCatalogRow = {
   registeredUser: string;
   department: string;
   departmentKey: DeviceCatalogDepartmentFilter;
-  /** Online/offline connection state for display. */
+  /** Online/offline connection state for display (derived at render from lastSeen). */
   status: DeviceCatalogStatus;
   /** Server registration state (active = in use, inactive = allow-new-device completed). */
   registrationStatus: string;
+  lastSeen?: string | null;
   isPrimary?: boolean;
   parentDeviceId?: number | null;
   parentDeviceName?: string | null;

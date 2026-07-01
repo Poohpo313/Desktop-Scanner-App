@@ -35,8 +35,23 @@ const DEVICE_LIST_SELECT = `
     d.parent_device_id AS "parentDeviceId",
     d.warning_note AS "warningNote",
     parent.device_name AS "parentDeviceName",
+    NULLIF(
+      TRIM(
+        COALESCE(
+          (
+            SELECT sk.serial_key
+            FROM serial_keys sk
+            WHERE sk.assigned_to = u.user_id
+            ORDER BY sk.serial_id DESC
+            LIMIT 1
+          ),
+          u.serial_key
+        )
+      ),
+      ''
+    ) AS "licenseSerialKey",
     (
-      d.status IN ('active', 'unauthorized')
+      d.status = 'active'
       AND d.last_seen IS NOT NULL
       AND d.last_seen >= NOW() - ($1 || ' minutes')::interval
       AND COALESCE(u.account_status, '') = 'active'
@@ -411,22 +426,15 @@ export class DevicesService {
     }>;
 
     if (stale.length > 0) {
-      await this.devices.query(
-        `UPDATE devices
-         SET status = 'inactive'
-         WHERE device_id = ANY($1::int[])`,
-        [stale.map((device) => device.device_id)],
-      );
-    }
-
-    for (const device of stale) {
-      this.notifications.emitDeviceInactive({
-        deviceId: device.device_id,
-        serialNumber: device.serial_number,
-        userId: device.assigned_user,
-        company: device.company,
-        department: device.department,
-      });
+      for (const device of stale) {
+        this.notifications.emitDeviceInactive({
+          deviceId: device.device_id,
+          serialNumber: device.serial_number,
+          userId: device.assigned_user,
+          company: device.company,
+          department: device.department,
+        });
+      }
     }
 
     return { flagged: stale.length };

@@ -15,7 +15,7 @@ export function CloseButton({ fallbackTo = "/activate" }: CloseButtonProps) {
   return (
     <button
       type="button"
-      className="absolute right-4 top-4 flex h-9 w-9 items-center justify-center rounded-[10px] text-[#64748B] transition-colors hover:bg-[rgba(15,23,42,0.05)]"
+      className="absolute right-4 top-4 z-10 flex h-9 w-9 items-center justify-center rounded-[10px] text-[#64748B] transition-colors hover:bg-[rgba(15,23,42,0.05)]"
       onClick={handleClose}
       aria-label="Close"
     >

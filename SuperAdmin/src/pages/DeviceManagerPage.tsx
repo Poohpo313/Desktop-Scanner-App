@@ -11,6 +11,7 @@ import { useNotificationStore } from "../store/notificationStore";
 import { extractApiError } from "../lib/extractApiError";
 import { isActionableRevocationRecord } from "../lib/normalizeRevocations";
 import { isUnauthorizedSecondaryDevice, orderDevicesForHierarchy } from "../lib/deviceHierarchy";
+import { isDeviceOnline, useDeviceOnlineClock } from "../lib/statusDisplay";
 import type { AdminUser, Device, RevocationRecord } from "../types";
 import "../styles/device-management.css";
 
@@ -91,16 +92,38 @@ export default function DeviceManagerPage() {
   const [revocationQuery, setRevocationQuery] = useState("");
   const [loadingRevocations, setLoadingRevocations] = useState(false);
   const [refreshing, setRefreshing] = useState(false);
+  const [loadingDevices, setLoadingDevices] = useState(true);
   const push = useNotificationStore((s) => s.push);
 
-  const load = useCallback(() => {
-    return Promise.all([devicesApi.list(), usersApi.list(), usersApi.departments()])
-      .then(([nextDevices, nextUsers, nextDepartments]) => {
-        setDevices(nextDevices);
-        setUsers(nextUsers);
-        setDepartmentOptions(nextDepartments);
-      })
-      .catch(() => push("Failed to load devices", "error"));
+  const load = useCallback(async () => {
+    setLoadingDevices(true);
+    const [devicesResult, usersResult, departmentsResult] = await Promise.allSettled([
+      devicesApi.list(),
+      usersApi.list(),
+      usersApi.departments(),
+    ]);
+
+    if (devicesResult.status === "fulfilled") {
+      setDevices(devicesResult.value);
+    } else {
+      push(extractApiError(devicesResult.reason, "Failed to load devices"), "error");
+      setDevices([]);
+    }
+
+    if (usersResult.status === "fulfilled") {
+      setUsers(usersResult.value);
+    } else {
+      push(extractApiError(usersResult.reason, "Failed to load users"), "error");
+      setUsers([]);
+    }
+
+    if (departmentsResult.status === "fulfilled") {
+      setDepartmentOptions(Array.isArray(departmentsResult.value) ? departmentsResult.value : []);
+    } else {
+      setDepartmentOptions([]);
+    }
+
+    setLoadingDevices(false);
   }, [push]);
 
   const handleRefresh = useCallback(async () => {
@@ -138,6 +161,8 @@ export default function DeviceManagerPage() {
     if (revocationsOpen) loadRevocations();
   }, [loadRevocations, revocationsOpen]);
 
+  const presenceTick = useDeviceOnlineClock();
+
   const filteredDevices = useMemo(() => {
     const normalizedQuery = query.trim().toLowerCase();
     const list = orderDevicesForHierarchy(devices).filter((device) => {
@@ -169,7 +194,7 @@ export default function DeviceManagerPage() {
     }
 
     return list;
-  }, [departmentFilter, devices, query, sortBy, users]);
+  }, [departmentFilter, devices, presenceTick, query, sortBy, users]);
 
   const actionableRevocations = useMemo(() => revocations.filter(isActionableRevocation), [revocations]);
 
@@ -349,6 +374,10 @@ export default function DeviceManagerPage() {
         </div>
 
         <DeviceGrid devices={filteredDevices} users={users} onRevoke={setRevokeTarget} />
+
+        {loadingDevices && filteredDevices.length === 0 && (
+          <p className="device-management-table__empty">Loading devices...</p>
+        )}
 
         {openFilter && (
           <div className="device-filter-backdrop" role="presentation">
@@ -539,10 +568,14 @@ export default function DeviceManagerPage() {
           className="mt-4 w-full rounded-lg bg-red-600 py-2 text-white text-sm"
           onClick={async () => {
             if (!revokeTarget) return;
-            await devicesApi.revoke(revokeTarget.deviceId);
-            push("Device revoked", "success");
-            setRevokeTarget(null);
-            load();
+            try {
+              await devicesApi.revoke(revokeTarget.deviceId);
+              push("Device revoked", "success");
+              setRevokeTarget(null);
+              await load();
+            } catch (error) {
+              push(extractApiError(error, "Failed to revoke device"), "error");
+            }
           }}
         >
           Confirm delete

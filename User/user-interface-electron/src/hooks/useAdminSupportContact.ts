@@ -21,7 +21,18 @@ export function useAdminSupportContact({ username, serialKey, token }: Params) {
 
     async function loadContact() {
       if (!window.bukolabs?.auth?.getSupportContact) {
-        if (!cancelled) setLoading(false);
+        if (!cancelled) {
+          if (!username?.trim() && !serialKey?.trim()) {
+            setContact({
+              adminName: "Super Admin",
+              email: "info@bukolabs.io",
+              phoneNumber: "+639171225214",
+            });
+          } else {
+            setContact({ adminName: null, email: null, phoneNumber: null });
+          }
+          setLoading(false);
+        }
         return;
       }
 

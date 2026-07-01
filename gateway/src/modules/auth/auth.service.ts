@@ -767,6 +767,39 @@ export class AuthService {
     return fromAssignedUser[0] ?? { adminName: null, email: null, phoneNumber: null };
   }
 
+  private hasAdminContact(contact: {
+    adminName?: string | null;
+    email?: string | null;
+    phoneNumber?: string | null;
+  }) {
+    return Boolean(
+      contact.adminName?.trim() || contact.email?.trim() || contact.phoneNumber?.trim()
+    );
+  }
+
+  private async getSuperAdminContact() {
+    type AdminContactRow = {
+      adminName: string | null;
+      email: string | null;
+      phoneNumber: string | null;
+    };
+
+    const rows = (await this.db.query(
+      `SELECT
+         NULLIF(TRIM(CONCAT(COALESCE(a.first_name, ''), ' ', COALESCE(a.last_name, ''))), '') AS "adminName",
+         NULLIF(TRIM(a.email), '') AS email,
+         NULLIF(TRIM(a.phone_number), '') AS "phoneNumber"
+       FROM admins a
+       INNER JOIN roles r ON r.role_id = a.role_id
+       WHERE r.role_name = 'superadmin'
+         AND a.account_status = 'active'
+       ORDER BY a.admin_id ASC
+       LIMIT 1`
+    )) as AdminContactRow[];
+
+    return rows[0] ?? { adminName: null, email: null, phoneNumber: null };
+  }
+
   async getPublicSupportContact(params: { username?: string; serialKey?: string }) {
     const username = params.username?.trim();
     const serialKey = params.serialKey?.trim();
@@ -775,19 +808,25 @@ export class AuthService {
       const user = await this.users.findByUsernameIgnoreCase(username);
       if (user) {
         const contact = await this.getUserSupportContact(user.userId);
-        return {
-          adminName: contact.adminName,
-          email: contact.email,
-          phoneNumber: contact.phoneNumber,
-        };
+        if (this.hasAdminContact(contact)) {
+          return {
+            adminName: contact.adminName,
+            email: contact.email,
+            phoneNumber: contact.phoneNumber,
+          };
+        }
       }
     }
 
     if (serialKey) {
       const contact = await this.getAdminContactForSerialKey(serialKey);
-      if (contact.email || contact.phoneNumber || contact.adminName) {
+      if (this.hasAdminContact(contact)) {
         return contact;
       }
+    }
+
+    if (!username && !serialKey) {
+      return this.getSuperAdminContact();
     }
 
     return { adminName: null, email: null, phoneNumber: null };

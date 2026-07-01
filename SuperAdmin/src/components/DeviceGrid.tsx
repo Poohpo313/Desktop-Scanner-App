@@ -62,7 +62,7 @@ export default function DeviceGrid({ devices, users, onRevoke }: Props) {
                     ) : null}
                     {device.deviceName ?? "-"}
                   </td>
-                  <td>{device.serialNumber ?? "-"}</td>
+                  <td>{device.licenseSerialKey ?? user?.serialKey ?? "-"}</td>
                   <td>{getUserName(user)}</td>
                   <td>{getUserOrganization(user)}</td>
                   <td>{department}</td>

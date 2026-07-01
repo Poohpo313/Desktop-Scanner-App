@@ -20,7 +20,7 @@ export function RequestEmailModal({ context = "activation" }: RequestEmailModalP
   const [searchParams] = useSearchParams();
   const username = searchParams.get("username")?.trim() || undefined;
   const serialKey = searchParams.get("serialKey")?.trim() || undefined;
-  const { contact } = useAdminSupportContact({ username, serialKey });
+  const { contact, loading } = useAdminSupportContact({ username, serialKey });
 
   const closeTo = requestSupportCloseTarget(context, { username, serialKey });
   const returnTo = requestSupportContinueTarget(context);
@@ -43,7 +43,10 @@ export function RequestEmailModal({ context = "activation" }: RequestEmailModalP
         Request Through Email
       </h1>
 
-      <AdminContactDescription text={description} highlight={contact?.email} />
+      <AdminContactDescription
+        text={loading ? "Loading administrator contact..." : description}
+        highlight={contact?.email}
+      />
 
       <ModalActions>
         <ContinueButton onClick={() => navigate(returnTo)} />

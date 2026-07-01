@@ -107,6 +107,16 @@ function rememberOnlineAuth(userId: number, token: string) {
   saveOnlineAuth(userId, token);
 }
 
+const SUPERADMIN_SUPPORT_CACHE_KEY = "__superadmin__";
+
+function defaultSuperAdminSupportContact() {
+  return {
+    adminName: process.env.SUPERADMIN_CONTACT_NAME?.trim() || "Super Admin",
+    email: process.env.SUPERADMIN_CONTACT_EMAIL?.trim() || "info@bukolabs.io",
+    phoneNumber: process.env.SUPERADMIN_CONTACT_PHONE?.trim() || "+639171225214",
+  };
+}
+
 function rememberSupportContact(
   userId: number,
   username: string,
@@ -1357,6 +1367,8 @@ export const authService = {
             phoneNumber: publicOnline.contact.phoneNumber ?? null,
           });
         }
+      } else if (!normalizedSerialKey) {
+        rememberSupportContact(0, SUPERADMIN_SUPPORT_CACHE_KEY, publicOnline.contact);
       }
       return { success: true as const, contact: publicOnline.contact };
     }
@@ -1441,7 +1453,10 @@ export const authService = {
 
     const cached =
       (session ? loadSupportContact(session.userId) : null) ??
-      (normalizedUsername ? loadSupportContact(undefined, normalizedUsername) : loadSupportContact());
+      (normalizedUsername ? loadSupportContact(undefined, normalizedUsername) : null) ??
+      (!normalizedUsername && !normalizedSerialKey
+        ? loadSupportContact(0, SUPERADMIN_SUPPORT_CACHE_KEY)
+        : null);
 
     if (cached && hasContact(cached)) {
       return {
@@ -1452,6 +1467,12 @@ export const authService = {
           phoneNumber: cached.phoneNumber,
         },
       };
+    }
+
+    if (!normalizedUsername && !normalizedSerialKey) {
+      const fallback = defaultSuperAdminSupportContact();
+      rememberSupportContact(0, SUPERADMIN_SUPPORT_CACHE_KEY, fallback);
+      return { success: true as const, contact: fallback };
     }
 
     return {

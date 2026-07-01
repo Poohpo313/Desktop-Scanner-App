@@ -203,6 +203,13 @@ function mapDeviceStatus(device: Device): DeviceCatalogStatus {
   return isDeviceOnline(device) ? "active" : "inactive";
 }
 
+function resolveLicenseSerialKey(device: Device, user?: AdminUser) {
+  const fromDevice = (device as Device & { licenseSerialKey?: string | null }).licenseSerialKey;
+  if (fromDevice?.trim()) return fromDevice.trim();
+  if (user?.serialKey?.trim()) return user.serialKey.trim();
+  return "-";
+}
+
 export function mapDevicesToCatalogRows(
   devices: Device[],
   users: AdminUser[],
@@ -222,12 +229,13 @@ export function mapDevicesToCatalogRows(
       return {
         id: device.deviceId,
         deviceName: device.deviceName ?? "Unknown device",
-        serialKey: device.serialNumber ?? "-",
+        serialKey: resolveLicenseSerialKey(device, user),
         registeredUser,
         department,
         departmentKey: slug(department) as DeviceCatalogRow["departmentKey"],
         status: mapDeviceStatus(device),
         registrationStatus: device.status ?? "active",
+        lastSeen: device.lastSeen ?? null,
         isPrimary: Boolean(device.isPrimary),
         parentDeviceId: device.parentDeviceId ?? null,
         parentDeviceName: device.parentDeviceName ?? null,
@@ -254,7 +262,9 @@ export function buildDeviceDepartmentOptions(rows: DeviceCatalogRow[]) {
 }
 
 export function buildDeviceStats(rows: DeviceCatalogRow[]) {
-  const active = rows.filter((row) => row.status === "active").length;
+  const active = rows.filter((row) =>
+    isDeviceOnline({ status: row.registrationStatus, lastSeen: row.lastSeen }),
+  ).length;
   return {
     total: rows.length,
     active,

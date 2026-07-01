@@ -20,7 +20,7 @@ export function RequestSMSModal({ context = "activation" }: RequestSMSModalProps
   const [searchParams] = useSearchParams();
   const username = searchParams.get("username")?.trim() || undefined;
   const serialKey = searchParams.get("serialKey")?.trim() || undefined;
-  const { contact } = useAdminSupportContact({ username, serialKey });
+  const { contact, loading } = useAdminSupportContact({ username, serialKey });
 
   const closeTo = requestSupportCloseTarget(context, { username, serialKey });
   const returnTo = requestSupportContinueTarget(context);
@@ -43,7 +43,10 @@ export function RequestSMSModal({ context = "activation" }: RequestSMSModalProps
         Request Through SMS
       </h1>
 
-      <AdminContactDescription text={description} highlight={contact?.phoneNumber} />
+      <AdminContactDescription
+        text={loading ? "Loading administrator contact..." : description}
+        highlight={contact?.phoneNumber}
+      />
 
       <ModalActions>
         <ContinueButton onClick={() => navigate(returnTo)} />

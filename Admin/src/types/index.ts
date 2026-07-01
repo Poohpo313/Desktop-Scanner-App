@@ -41,6 +41,7 @@ export type Device = {
   parentDeviceName?: string | null;
   warningNote?: string | null;
   isOnline?: boolean;
+  licenseSerialKey?: string | null;
 };
 
 export type ActivityLog = {

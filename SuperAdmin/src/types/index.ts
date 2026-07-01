@@ -59,6 +59,7 @@ export type Device = {
   parentDeviceName?: string | null;
   warningNote?: string | null;
   isOnline?: boolean;
+  licenseSerialKey?: string | null;
 };
 
 export type CloudStorage = {
@@ -131,6 +132,7 @@ export type RevocationRecord = {
   revokedByUsername?: string | null;
   revokedByFirstName?: string | null;
   revokedByLastName?: string | null;
+  revokedByRole?: string | null;
   requestId?: number | null;
   requestStatus?: string | null;
 };

@@ -37,7 +37,8 @@ $migrations = @(
   (Join-Path $repoRoot "backend-modules\shared\migrations\online\008_revocation_requests.postgres.sql"),
   (Join-Path $repoRoot "backend-modules\shared\migrations\online\009_user_concern_replies.postgres.sql"),
   (Join-Path $repoRoot "gateway\src\database\migrations\010_companies_departments.sql"),
-  (Join-Path $repoRoot "gateway\src\database\migrations\011_key_extension.sql")
+  (Join-Path $repoRoot "gateway\src\database\migrations\011_key_extension.sql"),
+  (Join-Path $repoRoot "backend-modules\shared\migrations\online\012_device_hierarchy.postgres.sql")
 )
 
 $env:PGPASSWORD = $env:DB_PASSWORD

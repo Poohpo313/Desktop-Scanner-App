@@ -43,11 +43,18 @@ export function normalizeRevocationRecord(raw: Record<string, unknown>): Revocat
 
 export function isActionableRevocationRecord(record: RevocationRecord) {
   if (record.requestStatus === "approved") return false;
-  if (!record.serialKey || record.serialKey === "-") return false;
 
-  return Boolean(
-    (record.requestStatus === "pending" && record.requestId) || record.serialId || record.deviceId,
-  );
+  if (record.requestStatus === "pending" && record.requestId) {
+    return Boolean(
+      (record.serialKey && record.serialKey !== "-") || record.serialId || record.deviceId,
+    );
+  }
+
+  if (record.action === "device.revoked" || record.action === "key.revoked") {
+    return Boolean(record.serialId || record.deviceId);
+  }
+
+  return false;
 }
 
 export function normalizeRevocationList(rows: unknown): RevocationRecord[] {
