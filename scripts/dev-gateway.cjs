@@ -32,7 +32,11 @@ async function main() {
     console.log(`Gateway is already running at http://localhost:${PORT}/api/v1`);
     console.log("Use that instance for Admin, SuperAdmin, and User apps.");
     console.log(
-      "To run watch mode instead, stop the background service (Admin PowerShell): npm run stop:gateway-service",
+      "If device presence or other API behavior looks stale, rebuild the service (Admin PowerShell):",
+    );
+    console.log("  npm run rebuild:gateway-service");
+    console.log(
+      "Or stop it and run watch mode: npm run stop:gateway-service && npm run dev:gateway",
     );
     return;
   }

@@ -86,9 +86,9 @@ function purgeExpiredSessions() {
 
 type SyncedUserAccount = OnlineActivationPayload;
 
-function rememberOnlineAuth(userId: number, token: string) {
+function rememberOnlineAuth(userId: number, token: string, refreshToken?: string) {
   setOnlineAccessToken(token);
-  saveOnlineAuth(userId, token);
+  saveOnlineAuth(userId, token, refreshToken);
 }
 
 const SUPERADMIN_SUPPORT_CACHE_KEY = "__superadmin__";
@@ -118,7 +118,7 @@ function rememberSupportContact(
 async function authenticateOnline(userId: number, username: string, password: string) {
   const onlineLogin = await loginOnline(username, password);
   if (onlineLogin.success) {
-    rememberOnlineAuth(userId, onlineLogin.accessToken);
+    rememberOnlineAuth(userId, onlineLogin.accessToken, onlineLogin.refreshToken);
     return true;
   }
 
@@ -685,7 +685,11 @@ async function finishOnlineActivation(
   });
 
   if (onlineActivation.data.accessToken) {
-    rememberOnlineAuth(resolvedUserId, onlineActivation.data.accessToken);
+    rememberOnlineAuth(
+      resolvedUserId,
+      onlineActivation.data.accessToken,
+      onlineActivation.data.refreshToken,
+    );
   }
 
   await deviceService.syncClientDevicesForUser(resolvedUserId, normalizedUsername);

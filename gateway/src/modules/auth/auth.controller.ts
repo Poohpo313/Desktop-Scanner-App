@@ -97,8 +97,8 @@ export class AuthController {
       "user"
     );
     setRefreshCookie(res, result.refreshToken);
-    const { refreshToken: _ignored, ...body } = result;
-    return body;
+    const { refreshToken, ...body } = result;
+    return { ...body, refreshToken };
   }
 
   @Throttle({ default: { limit: 5, ttl: 60_000 } })
@@ -109,8 +109,8 @@ export class AuthController {
   ) {
     const result = await this.auth.activateUserAccount(dto);
     setRefreshCookie(res, result.refreshToken);
-    const { refreshToken: _ignored, ...body } = result;
-    return body;
+    const { refreshToken, ...body } = result;
+    return { ...body, refreshToken };
   }
 
   @Throttle({ default: { limit: 10, ttl: 60_000 } })
@@ -161,13 +161,17 @@ export class AuthController {
   @Post("refresh")
   async refresh(
     @Req() req: Request,
-    @Res({ passthrough: true }) res: Response
+    @Res({ passthrough: true }) res: Response,
+    @Body() body?: { refreshToken?: string },
   ) {
-    const raw = req.cookies?.[REFRESH_COOKIE] as string | undefined;
-    const result = await this.auth.refreshSession(raw ?? "");
+    const raw =
+      body?.refreshToken?.trim() ||
+      (req.cookies?.[REFRESH_COOKIE] as string | undefined) ||
+      "";
+    const result = await this.auth.refreshSession(raw);
     setRefreshCookie(res, result.refreshToken);
-    const { refreshToken: _ignored, ...body } = result;
-    return body;
+    const { refreshToken, ...rest } = result;
+    return { ...rest, refreshToken };
   }
 
   @Throttle({ default: { limit: 3, ttl: 60_000 } })

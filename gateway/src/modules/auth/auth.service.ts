@@ -44,7 +44,7 @@ export class AuthService {
   private sessionExpiry(role: UserRole): string {
     if (role === "superadmin") return "5m";
     if (role === "admin") return "8h";
-    return "15m";
+    return "12h";
   }
 
   private signAccessToken(

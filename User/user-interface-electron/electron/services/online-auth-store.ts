@@ -4,6 +4,7 @@ import path from "path";
 export type StoredOnlineAuth = {
   userId: number;
   accessToken: string;
+  refreshToken?: string;
   savedAt: number;
 };
 
@@ -40,10 +41,16 @@ function writeJsonFile(filePath: string | null, value: unknown) {
   fs.writeFileSync(filePath, JSON.stringify(value, null, 2), "utf8");
 }
 
-export function saveOnlineAuth(userId: number, accessToken: string) {
+export function saveOnlineAuth(
+  userId: number,
+  accessToken: string,
+  refreshToken?: string,
+) {
+  const existing = loadOnlineAuth(userId);
   writeJsonFile(onlineAuthFile, {
     userId,
     accessToken,
+    refreshToken: refreshToken ?? existing?.refreshToken,
     savedAt: Date.now(),
   } satisfies StoredOnlineAuth);
 }

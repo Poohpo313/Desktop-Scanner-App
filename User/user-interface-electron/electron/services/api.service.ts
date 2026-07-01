@@ -41,19 +41,52 @@ export function getOnlineAccessToken() {
   return accessToken;
 }
 
-export async function refreshOnlineAccessToken() {
+function decodeJwtExp(token: string): number | null {
   try {
+    const segment = token.split(".")[1];
+    if (!segment) return null;
+    const json = JSON.parse(Buffer.from(segment, "base64url").toString("utf8")) as {
+      exp?: number;
+    };
+    return typeof json.exp === "number" ? json.exp : null;
+  } catch {
+    return null;
+  }
+}
+
+function accessTokenNeedsRefresh(token: string, skewSec = 60) {
+  const exp = decodeJwtExp(token);
+  if (!exp) return true;
+  return exp * 1000 <= Date.now() + skewSec * 1000;
+}
+
+export async function refreshOnlineAccessToken(userId?: number) {
+  try {
+    const stored = loadOnlineAuth(userId);
+    const body = stored?.refreshToken
+      ? JSON.stringify({ refreshToken: stored.refreshToken })
+      : undefined;
+
     const res = await fetchOnline(`${getOnlineApiUrl()}/auth/refresh`, {
       method: "POST",
       credentials: "include",
+      headers: body ? { "Content-Type": "application/json" } : undefined,
+      body,
     });
 
     if (!res.ok) {
       return { success: false as const };
     }
 
-    const data = (await res.json()) as { accessToken: string };
+    const data = (await res.json()) as { accessToken: string; refreshToken?: string };
     accessToken = data.accessToken;
+    if (stored) {
+      saveOnlineAuth(
+        stored.userId,
+        data.accessToken,
+        data.refreshToken ?? stored.refreshToken,
+      );
+    }
     return { success: true as const, accessToken: data.accessToken };
   } catch {
     return { success: false as const };
@@ -61,28 +94,26 @@ export async function refreshOnlineAccessToken() {
 }
 
 export async function ensureOnlineAuthenticated(userId?: number) {
-  if (!accessToken && userId != null) {
-    const stored = loadOnlineAuth(userId);
-    if (stored?.accessToken) {
-      accessToken = stored.accessToken;
-    }
+  const stored = userId != null ? loadOnlineAuth(userId) : loadOnlineAuth();
+
+  if (!accessToken && stored?.accessToken) {
+    accessToken = stored.accessToken;
   }
 
-  if (accessToken) {
+  if (accessToken && !accessTokenNeedsRefresh(accessToken)) {
     return { success: true as const, accessToken };
   }
 
-  const refreshed = await refreshOnlineAccessToken();
-  if (refreshed.success) {
-    return refreshed;
+  if (accessToken || stored?.refreshToken) {
+    const refreshed = await refreshOnlineAccessToken(userId ?? stored?.userId);
+    if (refreshed.success) {
+      return refreshed;
+    }
   }
 
-  if (userId != null) {
-    const stored = loadOnlineAuth(userId);
-    if (stored?.accessToken) {
-      accessToken = stored.accessToken;
-      return { success: true as const, accessToken: stored.accessToken };
-    }
+  if (stored?.accessToken) {
+    accessToken = stored.accessToken;
+    return { success: true as const, accessToken: stored.accessToken };
   }
 
   return {
@@ -265,9 +296,13 @@ export async function loginOnline(username: string, password: string) {
       return { success: false as const, error: text || "Online login failed" };
     }
 
-    const data = (await res.json()) as { accessToken: string };
+    const data = (await res.json()) as { accessToken: string; refreshToken?: string };
     accessToken = data.accessToken;
-    return { success: true as const, accessToken: data.accessToken };
+    return {
+      success: true as const,
+      accessToken: data.accessToken,
+      refreshToken: data.refreshToken,
+    };
   } catch {
     return { success: false as const, error: "Could not reach the online API" };
   }
@@ -287,6 +322,7 @@ export type OnlineActivationPayload = {
   serialKeyStatus?: string | null;
   passwordHash?: string;
   accessToken?: string;
+  refreshToken?: string;
   adminContact?: {
     adminName?: string | null;
     email?: string | null;
@@ -323,7 +359,7 @@ export async function activateUserAccountOnline(payload: {
       return { success: false as const, error: message };
     }
 
-    const data = (await res.json()) as OnlineActivationPayload;
+    const data = (await res.json()) as OnlineActivationPayload & { refreshToken?: string };
     if (data.accessToken) {
       accessToken = data.accessToken;
     }
@@ -482,9 +518,8 @@ export async function registerDeviceOnline(payload: {
       body: JSON.stringify(payload),
     });
     if (res.status === 401) {
-      const refreshed = await refreshOnlineAccessToken();
+      const refreshed = await refreshOnlineAccessToken(payload.assignedUser);
       if (refreshed.success) {
-        saveOnlineAuth(payload.assignedUser, refreshed.accessToken);
         const retry = await fetchOnline(`${getOnlineApiUrl()}/devices/register`, {
           method: "POST",
           headers: {
@@ -529,9 +564,8 @@ export async function heartbeatDevice(serialNumber: string, userId?: number) {
 
     let res = await send();
     if (res.status === 401) {
-      const refreshed = await refreshOnlineAccessToken();
+      const refreshed = await refreshOnlineAccessToken(userId);
       if (refreshed.success) {
-        saveOnlineAuth(userId, refreshed.accessToken);
         res = await send();
       }
     }

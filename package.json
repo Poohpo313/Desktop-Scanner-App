@@ -52,7 +52,9 @@
     "install:gateway-service": "powershell -ExecutionPolicy Bypass -File scripts/install-gateway-service.ps1",
     "open-gateway-firewall": "powershell -ExecutionPolicy Bypass -File scripts/open-gateway-firewall.ps1",
     "uninstall:gateway-service": "powershell -ExecutionPolicy Bypass -File scripts/uninstall-gateway-service.ps1",
-    "build": "npm run build -w @bukolabs/gateway && npm run build -w @bukolabs/shared-types"
+    "build": "npm run build -w @bukolabs/gateway && npm run build -w @bukolabs/shared-types",
+    "rebuild:gateway": "npm run build -w @bukolabs/gateway",
+    "rebuild:gateway-service": "powershell -ExecutionPolicy Bypass -File scripts/install-gateway-service.ps1"
   },
   "author": "Aethera Digital & Syn7rgy",
   "license": "UNLICENSED"
